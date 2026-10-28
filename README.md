@@ -155,6 +155,10 @@ Responsible owners compare the actual artifact with acceptance criteria. Skill n
 Visual claims need relevant observed views tied to the artifact revision. Claims about published appearance need evidence from that served version.
 Record missing observations. Use proportional checks, without a blanket browser gate, repeated full-site review, or new user approval flow.
 
+Help people complete primary tasks on first use. Give defaults that work, clear entry points and states, and a way to correct errors.
+Use the [usability baseline](skills/cto-agent-team/references/ui-design.md#usability-baseline) from handoff through actual artifact acceptance.
+Keep details progressive and accessibility appropriate. Record observations without calling an agent walkthrough real user research or claiming universal usability.
+
 ## Capacity recovery
 
 Retry only a confirmed failed or stopped turn caused by temporary model capacity, with unfinished authorized work remaining.
