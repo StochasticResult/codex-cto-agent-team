@@ -159,6 +159,34 @@ class RoutingTests(unittest.TestCase):
         self.escalation(selected)
         self.blocked('pinned_model')
 
+    def test_shipped_pin_cannot_bypass_critical_route_support(self):
+        self.doc = json.loads((ROOT / 'skills/cto-agent-team/assets/routing.example.json').read_text(encoding='utf-8'))
+        self.doc['workflow']['complexity'] = 'complex'
+        self.doc['workflow']['risk'] = 'critical'
+        result = self.module.select(self.doc, now=NOW)
+        self.assertEqual(result['state'], 'blocked')
+        self.assertIsNone(result['parameters'])
+        # An eligible alternative must not replace the explicit pin either.
+        self.doc['catalog']['models'].append(
+            candidate('alternative', 'complex_engineering', {'effort': 'high'}))
+        result = self.module.select(self.doc, now=NOW)
+        self.assertEqual(result['state'], 'blocked')
+        self.assertIsNone(result['parameters'])
+
+    def test_pin_settings_must_belong_to_selected_route(self):
+        model = self.doc['catalog']['models'][0]
+        model['native_settings'].append({'effort': 'high'})
+        model['route_support'].append(
+            {'route': 'scoped_engineering', 'native_settings': {'effort': 'high'}})
+        self.doc['policy']['task_routes']['extract'] = 'scoped_engineering'
+        self.doc['request']['pinned_model'] = 'compact'
+        self.doc['request']['native_settings'] = {'effort': 'medium'}
+        self.blocked('pinned_model_unavailable')
+        self.doc['request']['native_settings'] = {'effort': 'high'}
+        result = self.select()
+        self.assertEqual(result['parameters'], {'model': 'compact', 'effort': 'high'})
+        self.assertTrue(result['user_pin'])
+
     def test_allowlist_and_verified_new_candidates(self):
         self.doc['policy']['candidate_authority'] = 'explicit_allowlist'
         self.blocked('no_eligible_model')

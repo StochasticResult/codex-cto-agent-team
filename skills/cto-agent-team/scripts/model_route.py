@@ -261,8 +261,6 @@ def decide(doc, now, profile):
                 or set(work.get('quality_requirements', [])) - set(model['quality_capabilities'])):
             continue
         settings_list = [r['native_settings'] for r in model['route_support'] if r['route'] == route]
-        if pin is not None and request['native_settings']:
-            settings_list = [request['native_settings']]
         for settings in settings_list:
             if settings not in model['native_settings']:
                 continue
