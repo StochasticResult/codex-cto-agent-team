@@ -1,6 +1,6 @@
 # Recovery from temporary model-capacity failure
 
-The CTO owns recovery for PM chats. Each PM owns recovery for its own engineers. Use one recovery owner per chat. An observer must not send a competing retry. Reuse the user's authorization for internal task messages within its scope.
+The CTO owns recovery for PM chats and may designate one authorized supervisor as the sole PM retry executor. Each PM owns recovery for its own engineers. Record one recovery owner and one retry executor per chat. An observer must not send a competing retry. The executor's own model does not change the failed worker's configuration. Reuse the user's authorization for internal task messages within its scope.
 
 Keep the failed turn's verified requested model and reasoning level. Read its dispatch record and tool evidence. Do not infer that configuration from a role default or the latest [task routing policy](model-routing.md). A policy update does not alter an earlier turn's request. If the request is unknown, reconcile the evidence before retrying. Do not change the model or effort to get capacity. A change outside the user's approved scope requires explicit approval. Do not reset an existing override to a default.
 

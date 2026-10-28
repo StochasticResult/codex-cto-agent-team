@@ -8,8 +8,9 @@ Use these default routes unless the user supplies another policy. Record the use
 | `scoped_engineering` | Scoped fixes, UI implementation, visual checks, and computer actions with a clear target | `gpt-6.1-terra` | `high` |
 | `extraction` | Simple structured extraction or routine summaries from supplied material | `gpt-6.1-terra` | `medium` |
 | `complex_engineering` | Complex coding, architecture, transactions, permissions, critical review, and releases across systems | `gpt-6.1-sol` | `xhigh` |
+| `mechanical_supervision` | Routine status checks, deterministic retry bookkeeping, deduplication, and routing completion candidates | `gpt-6-luna` | `low` |
 
-Escalate within the approved scope when the task needs it:
+For substantive tasks, escalate within the approved scope when needed:
 
 - For conflicting constraints, a critical decision, or acceptance with high impact, use Sol / `xhigh`.
 - For complex state across modules or a substantive acceptance failure, use Sol / `xhigh`.
@@ -28,3 +29,13 @@ Record the tool outcome and the affected turn when available. Tool acceptance co
 For a capacity retry, use the failed turn's verified request, even when it differs from a new default. Read [recovery.md](recovery.md). If that request is unknown, reconcile the evidence before sending a retry. Capacity failure is not a reason to escalate, downgrade, or reset a model.
 
 Keep the CTO's current settings, speed, subscription, and budget unchanged. Do not add model trials or paid benchmarks as a release gate. Preserve required acceptance checks. Reuse passed evidence for unchanged inputs.
+
+## Mechanical supervision
+
+Assign routine supervision to a suitable existing agent where possible. Keep the CTO responsible for intake, assignment, cross-team decisions, and final delivery. Substantive execution stays with suitable engineers and PMs under the four substantive routes above. Mechanical supervision does not grant business acceptance or release authority.
+
+Inspect the current monitoring tool and its supported model settings. Apply Luna / `low` through supported parameters, or verify documented inheritance from the supervisor chat. Read back the configuration and retain the tool outcome privately. Distinguish the requested route, the configured monitor, and an independently verified backend model. A prompt label such as "use Luna" proves none of these settings. If the tool cannot apply or verify the configuration, record that limit. Do not silently use a more expensive model or a standalone scheduled job as a workaround.
+
+Use bounded status snapshots and saved cursors. Check a shared PM once per cycle. Reuse supervision across tasks when appropriate, with one logical owner per task. Keep task revisions, acceptance criteria, retry ownership, and notification keys distinct. Do not build a high-cost CTO loop to watch the supervisor. A supervisor's own capacity failure does not authorize a model change or recursive monitoring.
+
+For capacity recovery, the supervisor's model is separate from the failed worker's model. The designated owner may delegate PM retry execution to one authorized supervisor. Record that sole retry executor and avoid competing sends. PMs retain engineer recovery. Every continuation still uses the failed turn's verified request from [recovery.md](recovery.md).
