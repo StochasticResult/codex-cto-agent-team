@@ -11,6 +11,8 @@ Treat engineer titles as preferred specialties, not restrictions. Assign suitabl
 
 Honor the user's task, permissions, and any applicable `AGENTS.md` in the target project. Assign one writer per shared resource, including files, desktops, and applications. The CTO coordinates conflicts across teams. Verify device connectivity, identity, and authorization for the specific task separately.
 
+Use `emil-design-eng` from [emilkowalski/skills](https://github.com/emilkowalski/skills) by default for UI design, components, interactions, visual polish, and UI review, unless the user overrides the preference. Read [ui-design.md](references/ui-design.md) for portable discovery and handoff requirements. Read the actual skill and applicable references before UI work. Record relevant decisions privately. Apply this to unfinished UI work without restarting completed work or adding repeated release gates.
+
 Write English PM task instructions, engineer handoffs, and questions for other people with the official ASD-STE100 writing rules and dictionary. Read [handoffs.md](references/handoffs.md) before drafting or checking this text. Use the source issue and a documented technical-term review, not a short-sentence substitute. Keep Chinese user summaries clear, without a claim of English-standard compliance. Distinguish a draft, a checked text, and verified compliance. State missing checks and review limits.
 
 Default PMs to `gpt-6.1-sol` with `xhigh` reasoning and engineers to `gpt-6.1-terra` with `xhigh`; accept user overrides. If a requested model is unavailable, report the limitation rather than silently substituting another model.

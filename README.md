@@ -80,6 +80,12 @@ CTO 聊天是持续接单入口。每条独立需求先建立唯一任务编号�
 
 同一共享文件或操作保持一名写入负责人，实际线上切换保持唯一负责人；候选准备、发布政策和技能更新等独立工作可同时推进。剩余工作若只能串行，记录具体原因。没有新价值就不凑足人数、不重复审查、不重跑输入未变且已通过的检查；聊天数量与 active 状态均不能证明实际并行计算能力。详见[调度工作流](skills/cto-agent-team/references/workflow.md)。
 
+## 默认 UI 设计技能
+
+UI 设计、组件实现、交互、视觉细节和 UI 审阅默认使用 [emilkowalski/skills](https://github.com/emilkowalski/skills) 的 `emil-design-eng`，后续用户指定优先。通过当前技能目录查找并读取实际内容及相关参考，交接时要求工程师应用到具体界面，并把设计选择、理由和验证局限写入私有任务证据，不能只列技能名称。
+
+保留产品要求、现有设计系统、可用性、可访问性和任务速度；动画须有实际用途。其他上游技能仍按各自适用条件与显式调用规则使用。偏好适用于未完成的 UI 工作，不因此重启已验收工作或重复发布检查；纯后端等无关工作不增加设计步骤。安装与依赖发现方法见[UI 指南](skills/cto-agent-team/references/ui-design.md)，本仓库不复制第三方技能全文或本机安装路径。
+
 ## ASD-STE100 交接文字
 
 英文 PM 工单、工程师交接和向他人提出的问题，使用官方 ASD-STE100 的写作规则与词典。当前参考为 [Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)，并链接[官方 FAQ](https://www.asd-ste100.org/STE_faq.html)。逐项核对词义、词性、词形、技术术语和适用写作规则，不能用“句子短”替代标准。文件名、代码标识和命令保留原值；缩写、单位与技术术语结合项目规范检查。
@@ -129,6 +135,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [SKILL.md](skills/cto-agent-team/SKILL.md)：发现条件、模式选择和执行入口。
 - [workflow.md](skills/cto-agent-team/references/workflow.md)：派单、工具使用、回报与验收。
 - [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
+- [ui-design.md](skills/cto-agent-team/references/ui-design.md)：默认 UI 技能、可移植依赖发现和具体设计证据。
 - [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
