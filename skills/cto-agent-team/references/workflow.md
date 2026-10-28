@@ -44,9 +44,19 @@ After authorized task forwarding, when wait_threads is available, each PM reads 
 
 ## Coordinate work
 
+### Schedule useful parallel work
+
+Engineer specialties guide assignment but do not prevent suitable work outside a title. Keep five PM teams with ten engineer roles each, and preserve requested models and reasoning. Each PM schedules its own engineers. The CTO coordinates help between teams. Do not impose a fixed one- or two-engineer wave or apply a collaboration-tree limit to independent chats. Follow the current tools and actual account capacity.
+
+Divide authorized work by useful outputs and dependencies. For each item, name its owner, required inputs, deliverable, acceptance criteria, and writable resources. Dispatch independent ready items in parallel, especially those that hold up integration or delivery. For example, release-policy work, candidate preparation, and a skill update can proceed independently when they have different writers and resources. Only the live release switch needs its one activation owner. Public skill source still has one writer.
+
+When any item completes, review its evidence and assign the next ready item to a suitable free engineer. Do not wait for the rest of a wave. Reuse passed checks for unchanged inputs. Add work or repeat a review only when a changed input, a failure, or an unresolved concern justifies it. Do not occupy every role merely to increase the active-chat count.
+
+Record active items, ready unassigned items, dependency waits, capacity failures, and completed outputs in private task state. If work must be serial, name the actual shared operation or dependency and the next eligible action. Measure delivery and waiting time only from observed evidence. Chat status does not measure simultaneous model computation. Apply [recovery.md](recovery.md) to capacity failures without changing model settings.
+
 The CTO owns cross-team coordination and the aggregate index; each PM manages only its ten engineers and is responsible for its team's logical registration. Coordinate shared registry writes as described in [state.md](state.md). Engineers do not spawn or dispatch subordinates. Give each task one writer for every shared file, desktop, or application; coordinate dependencies and avoid overwriting others' changes. Read the target project's applicable `AGENTS.md`. For a device, separately establish connection, identity, and task authorization; an organization-wide delegation grant does not authorize all devices.
 
-For each business task, the CTO specifies the goal, target host and absolute path, authorization boundary, completion criteria, and cross-team dependencies. The PM assigns a single engineer with explicit writable resources and acceptance criteria. The engineer returns deliverables, actual validation results, and unfinished work; the PM accepts the work or requests rework and closes authorized delivery. The CTO or its authorized completion monitor reviews the final evidence for the user's result notification without keeping the intake turn open.
+For each business task, the CTO specifies the goal, target host and absolute path, authorization boundary, completion criteria, and cross-team dependencies. The PM assigns each independent work item to a clear owner with explicit writable resources and acceptance criteria. Engineers return deliverables, actual validation results, and unfinished work; the PM accepts each item or requests rework and closes authorized delivery. The CTO or its authorized completion monitor reviews the final evidence for the user's result notification without keeping the intake turn open.
 
 Distinguish role definitions, verified real chats, ready acknowledgments, and currently active computation. Readiness and saved chat existence do not imply permanent availability. Parallel execution depends on platform and account capacity; do not promise simultaneous execution for all roles. When there is no business task, end the turn and do not install background monitoring unless the user requests it.
 

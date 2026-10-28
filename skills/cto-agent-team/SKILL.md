@@ -7,6 +7,8 @@ description: Coordinate a reusable CTO, product manager, and engineering team wh
 
 Coordinate a CTO, five product managers (PMs), and ten engineers (CS) per PM. The CTO assigns work, resolves cross-team dependencies, and delivers the result; each PM scopes and reviews its team's work; engineers execute assigned work and return evidence. Consult `assets/roster.json` for the role definitions.
 
+Treat engineer titles as preferred specialties, not restrictions. Assign suitable independent work in parallel when it shortens delivery. Keep the five teams and requested model settings. Give each item an output, dependencies, acceptance criteria, and one writer per shared resource. Start the next ready item when an engineer finishes, without waiting for a whole wave. Prioritize work that blocks delivery. Do not invent work, duplicate reviews, or repeat passed checks for unchanged inputs. Record a concrete reason when the remaining work must be serial.
+
 Honor the user's task, permissions, and any applicable `AGENTS.md` in the target project. Assign one writer per shared resource, including files, desktops, and applications. The CTO coordinates conflicts across teams. Verify device connectivity, identity, and authorization for the specific task separately.
 
 Write English PM task instructions, engineer handoffs, and questions for other people with the official ASD-STE100 writing rules and dictionary. Read [handoffs.md](references/handoffs.md) before drafting or checking this text. Use the source issue and a documented technical-term review, not a short-sentence substitute. Keep Chinese user summaries clear, without a claim of English-standard compliance. Distinguish a draft, a checked text, and verified compliance. State missing checks and review limits.
