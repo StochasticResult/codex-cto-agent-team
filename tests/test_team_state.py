@@ -52,6 +52,12 @@ class TeamStateTests(unittest.TestCase):
         self.assertTrue(all(len(t['engineers']) == 10 for t in org['teams']))
         self.assertEqual(len(registry['roles']), 55)
         self.assertNotIn('CTO', registry['roles'])
+        self.assertEqual(org['models'], {
+            'pm': {'model': 'gpt-6.1-sol', 'reasoning_effort': 'high'},
+            'engineer': {'model': 'gpt-6.1-terra', 'reasoning_effort': 'high'},
+        })
+        for entry in registry['roles'].values():
+            self.assertEqual(entry['model'], org['models'][entry['kind']])
         self.assertTrue(all(e['status'] == 'planned' and e['registration'] == 'unregistered'
                             and e['thread_id'] is None and e['host_id'] is None
                             and e['model_status'] == 'requested'
@@ -76,6 +82,16 @@ class TeamStateTests(unittest.TestCase):
         self.assertEqual(before, ((self.state / 'org.json').read_bytes(), (self.state / 'registry.json').read_bytes()))
         self.cli('init', '--pm-model', 'custom-pm', '--engineer-model', 'custom-eng', '--effort', 'high')
         self.cli('validate')
+
+    def test_legacy_xhigh_snapshot_retained_after_default_change(self):
+        self.cli('init', '--effort', 'xhigh')
+        self.register('PM01', uuid.uuid4(), 'ready')
+        before = {name: (self.state / name).read_bytes()
+                  for name in ('org.json', 'registry.json')}
+        self.cli('validate')
+        self.cli('init', ok=False)
+        self.cli('init', '--effort', 'xhigh')
+        self.assertEqual(before, {name: (self.state / name).read_bytes() for name in before})
 
     def test_register_guards_and_idempotence(self):
         self.cli('init')

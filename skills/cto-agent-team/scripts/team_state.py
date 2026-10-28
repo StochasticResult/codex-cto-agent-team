@@ -2,7 +2,8 @@
 """Manage private team registration; callers must serialize shared registry writes.
 
 This helper records supplied tool results only. It does not create chats, verify
-model availability, or lock against concurrent processes.
+model availability, apply per-task routes, or lock against concurrent processes.
+Model fields are role-registration snapshots, not live chat settings.
 """
 import argparse
 import copy
@@ -253,11 +254,11 @@ def register(args, directory):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    init = commands.add_parser('init', help='Initialize private planned organization state')
+    init = commands.add_parser('init', help='Initialize private role snapshots; does not apply task routes')
     init.add_argument('--state-dir', required=True)
     init.add_argument('--pm-model')
     init.add_argument('--engineer-model')
-    init.add_argument('--effort')
+    init.add_argument('--effort', help='Override reasoning for both role snapshots; not per-task dispatch')
     reg = commands.add_parser('register', help='Record a supplied chat identity; serialize registry writes')
     reg.add_argument('--state-dir', required=True)
     reg.add_argument('--role', required=True)

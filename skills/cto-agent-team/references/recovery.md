@@ -2,7 +2,7 @@
 
 The CTO owns recovery for PM chats. Each PM owns recovery for its own engineers. Use one recovery owner per chat. An observer must not send a competing retry. Reuse the user's authorization for internal task messages within its scope.
 
-Keep the task's requested model and reasoning level. Defaults remain PM `gpt-6.1-sol` / `xhigh` and engineer `gpt-6.1-terra` / `xhigh`. Do not choose a different model or lower effort to get capacity. A change requires explicit user approval. Do not change a user's existing model override back to the default.
+Keep the failed turn's verified requested model and reasoning level. Read its dispatch record and tool evidence. Do not infer that configuration from a role default or the latest [task routing policy](model-routing.md). A policy update does not alter an earlier turn's request. If the request is unknown, reconcile the evidence before retrying. Do not change the model or effort to get capacity. A change outside the user's approved scope requires explicit approval. Do not reset an existing override to a default.
 
 ## Identify the failure
 
@@ -12,7 +12,7 @@ Do not send a retry while a turn is active. Do not retry completed or cancelled 
 
 ## Resume with evidence
 
-Before each send, inspect current task and turn state again. Read saved outputs, accepted work, running processes, release ownership, and any external-operation evidence relevant to the unfinished step. Continue in the same chat with the existing model settings. Use the current supported message tool and its schema. Do not create replacement engineers or duplicate chats to get around capacity.
+Before each send, inspect current task and turn state again. Read saved outputs, accepted work, running processes, release ownership, and any external-operation evidence relevant to the unfinished step. Continue in the same chat with the failed turn's recorded configuration. Pass its `model` and `thinking` explicitly where supported. Use the current supported message tool and its schema. Do not create replacement engineers or duplicate chats to get around capacity.
 
 Record a pending attempt before sending. Identify the failed-turn record with the chat ID and failed turn ID. Keep a chain attempt count across related capacity failures so a new failed turn does not reset the delay. The same observed failure must not generate multiple pending attempts.
 

@@ -4,11 +4,11 @@
   "models": {
     "pm": {
       "model": "gpt-6.1-sol",
-      "reasoning_effort": "xhigh"
+      "reasoning_effort": "high"
     },
     "engineer": {
       "model": "gpt-6.1-terra",
-      "reasoning_effort": "xhigh"
+      "reasoning_effort": "high"
     }
   },
   "teams": [

@@ -19,12 +19,25 @@ flowchart TD
 
 完整编制为 56 个角色，包含现有 CTO。岗位定义、实际聊天、READY 和正在计算的实例分别核实；会话数量不代表并发额度，也不保证永久在线。具体工单只启用需要的岗位。
 
-| 层级 | 默认模型 | 默认推理 |
+| 岗位登记 | 默认模型 | 默认推理 |
 | --- | --- | --- |
-| PM01–PM05 | `gpt-6.1-sol` | `xhigh` |
-| CS 工程师 | `gpt-6.1-terra` | `xhigh` |
+| PM01–PM05 | `gpt-6.1-sol` | `high` |
+| CS 工程师 | `gpt-6.1-terra` | `high` |
 
-用户可以覆盖模型和推理参数。请求的模型不可用时报告限制，取得替代选择后再继续，不静默更换。
+实际派单按任务选择配置，用户可覆盖。岗位登记默认不代表所有现有聊天已经切换；请求被工具接受也不等于独立核实了后端模型。请求的配置不可用时报告限制，不静默更换。
+
+## 任务模型路由
+
+| 路由 | 适用任务 | 模型 | 推理 |
+| --- | --- | --- | --- |
+| `coordination_research` | PM 日常统筹、多来源研究 | `gpt-6.1-sol` | `high` |
+| `scoped_engineering` | 范围明确修复、UI 实现、视觉检查、目标明确的电脑操作 | `gpt-6.1-terra` | `high` |
+| `extraction` | 已给材料的简单结构化提取、常规摘要 | `gpt-6.1-terra` | `medium` |
+| `complex_engineering` | 复杂编码、架构、事务、权限、关键审阅、跨系统发布 | `gpt-6.1-sol` | `xhigh` |
+
+在用户批准的路由范围内升级：约束冲突、关键决策或高影响验收使用 Sol/xhigh；跨模块复杂状态或实质验收失败使用 Sol/xhigh。简单提取出现关键歧义时先使用 Terra/high，复杂分析使用 Sol/high 或 Sol/xhigh。范围外配置仍需用户同意。
+
+新建或继续聊天时，按当前工具支持的参数显式传入 `model` 和 `thinking`，私下记录路由、原因、请求与工具结果。新策略从下一次授权派单生效；不为改设置中断在途工作、唤醒待命工程师或覆盖历史请求。已有关键发布沿用其记录的配置。CTO 当前设置、速度、订阅和预算不变，也不增加模型试验或付费基准作为上线门槛。完整说明见[模型路由](skills/cto-agent-team/references/model-routing.md)。
 
 ## 安装
 
@@ -102,7 +115,7 @@ UI 设计、组件实现、交互、视觉细节和 UI 审阅默认使用 [emilk
 
 ## 临时模型容量故障恢复
 
-CTO 负责 PM 的恢复，各 PM 负责本队工程师的恢复。确认属于临时模型容量故障后，读取工单、最近轮次和已保存证据，在原聊天继续未完成部分，不让用户逐次点击重试。保留原模型和推理强度；未经用户明确同意，不更换模型或降低推理档位。
+CTO 负责 PM 的恢复，各 PM 负责本队工程师的恢复。确认属于临时模型容量故障后，读取工单、最近轮次和已保存证据，在原聊天继续未完成部分，不让用户逐次点击重试。保留失败回合已核实的模型和推理强度，显式传回其请求参数；新路由或岗位默认不覆盖旧回合。配置未知时先核对证据，不因容量故障换模型、降档或机械恢复旧默认。
 
 恢复前核实当前状态，不重启运行中的轮次，不重复已完成工作。按记录的 0、2、5、10、15 分钟间隔退避，后续采用 15 分钟间隔；服务方要求更久时遵守其 retry-after。记录失败轮次及每次尝试，发送结果不明时先查实际状态，不盲目重发。构建、发布、数据写入和对外消息也须按已有证据避免重复。
 
@@ -120,7 +133,9 @@ python "$skillTarget/scripts/team_state.py" init --state-dir "$teamStateDir"
 python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 ```
 
-初始化可通过 `--pm-model`、`--engineer-model` 和 `--effort` 覆盖默认请求参数。初始登记为 55 个 PM 和 CS 的 `planned` 岗位，CTO 沿用当前聊天；普通 `validate` 允许岗位尚未创建。脚本只生成与检查本地登记，不联网、不创建聊天，也不改变会话中的实际模型。
+初始化可通过 `--pm-model`、`--engineer-model` 和 `--effort` 覆盖岗位登记快照；`--effort` 同时作用于两类岗位。初始登记为 55 个 PM 和 CS 的 `planned` 岗位，CTO 沿用当前聊天；普通 `validate` 允许岗位尚未创建。脚本只生成与检查本地登记，不联网、不创建聊天、不执行任务路由，也不改变会话中的实际模型。每次任务派单配置另存私有任务记录。
+
+旧私有登记保持原值，`validate` 不迁移历史配置。重复 `init` 遇到不同配置会拒绝覆盖；旧登记可继续直接验证。如需重复初始化，传入当时的覆盖值，例如旧版全员 xhigh 登记使用 `--effort xhigh`。
 
 创建工具成功返回真实标识后再登记；以下标识是占位符，不能直接用于登记：
 
@@ -143,6 +158,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
 - [ui-design.md](skills/cto-agent-team/references/ui-design.md)：默认 UI 技能、可移植依赖发现和具体设计证据。
 - [coding.md](skills/cto-agent-team/references/coding.md)：Ponytail 核心指导、完整实现及平台能力边界。
+- [model-routing.md](skills/cto-agent-team/references/model-routing.md)：任务模型路由、批准范围、升级及派单记录。
 - [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
