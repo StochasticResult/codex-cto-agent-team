@@ -122,6 +122,14 @@ Ponytail 控制实现复杂度，UI 指导按任务选择。独立核心技能�
 
 已有授权、目标项目规则、单写入负责人和模型路由优先。不机械加入审批门槛、每任务新工作树、额外 agent 树、全套测试重复或每次回复与心跳加载。脚本、hook、会话扫描或视觉服务器等能力另行核实，不能仅因参考文件提到就启动。详见[编码指南](skills/cto-agent-team/references/coding.md)。
 
+## 跨项目恢复与有界改进
+
+在新项目或电脑上按[可移植安装与恢复](skills/cto-agent-team/references/state.md#portable-setup-and-resume)选择明确路径，保存依赖来源、版本、许可和兼容边界。沿用有效授权，只在受保护操作需要时补齐缺失的凭据或设备权限，不能从复制的状态推定它们。隔离本机目录的验证不等于另一台设备验证。
+
+在任务完成或同类故障复发事件中记录[有界改进](skills/cto-agent-team/references/workflow.md#evidence-based-improvement)：观察、证据、负责人、验证、采用或试用决定及回退方法。有限证据继续标记试用；恢复不能抹去较新的通知证据。未知费用保持未知。本仓库不包含监督状态补丁工具或持续优化服务。
+
+数据或工具边界发生变化时，采用[面向真实消费者的契约证据](skills/cto-agent-team/references/coding.md#consumer-contract-evidence)；长任务的实际转折点保存简短[决定与续接记录](skills/cto-agent-team/references/state.md#decision-and-resume-checkpoints)。这些方法不安装 pstack，不增加日志服务或模型探测。
+
 ## ASD-STE100 交接文字
 
 英文 PM 工单、工程师交接和向他人提出的问题，使用官方 ASD-STE100 的写作规则与词典。当前参考为 [Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)，并链接[官方 FAQ](https://www.asd-ste100.org/STE_faq.html)。逐项核对词义、词性、词形、技术术语和适用写作规则，不能用“句子短”替代标准。文件名、代码标识和命令保留原值；缩写、单位与技术术语结合项目规范检查。

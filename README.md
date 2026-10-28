@@ -198,6 +198,22 @@ Ordinary validation permits uncreated roles. Existing private snapshots retain t
 If repeating initialization of an older all-xhigh snapshot, supply its original overrides, including `--effort xhigh`.
 See [state.md](skills/cto-agent-team/references/state.md).
 
+## Portable use and improvement
+
+For another project or machine, follow [portable setup and resume](skills/cto-agent-team/references/state.md#portable-setup-and-resume).
+Choose explicit paths and record dependency sources, versions, licenses, and compatibility limits.
+Keep valid authorization. Establish missing credentials or device permission only when a protected operation needs them.
+Copied state grants neither. An isolated local directory test does not verify another device.
+
+Use task-completion or recurring-failure events for [bounded improvements](skills/cto-agent-team/references/workflow.md#evidence-based-improvement).
+Record the observation, evidence, owner, validation, decision, and rollback method privately.
+Keep limited evidence under trial. Preserve newer notification evidence during recovery.
+Unknown costs remain unknown. This repository does not include a supervisor-state patch tool or an optimization service.
+
+For changed data or tool boundaries, use [consumer-specific contract evidence](skills/cto-agent-team/references/coding.md#consumer-contract-evidence).
+For a long task's turning points, keep short [decision/resume checkpoints](skills/cto-agent-team/references/state.md#decision-and-resume-checkpoints).
+These methods add no pstack installation, logging service, or model probe.
+
 ## Writing and review limits
 
 Use the official ASD-STE100 writing rules and dictionary for applicable English task instructions, handoffs, and questions.

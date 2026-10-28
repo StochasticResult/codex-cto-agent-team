@@ -68,4 +68,14 @@ For each business task, the CTO specifies the goal, target host and absolute pat
 
 Distinguish role definitions, verified real chats, ready acknowledgments, and currently active computation. Readiness and saved chat existence do not imply permanent availability. Parallel execution depends on platform and account capacity; do not promise simultaneous execution for all roles. When there is no business task, end the turn and do not install background monitoring unless the user requests it.
 
+## Evidence-based improvement
+
+Use an existing task-completion or recurring-failure event. Do not add a periodic optimization monitor. Record a short private item with the observation, source evidence, impact, owner, bounded change, validation, decision, and rollback method. Prefer gaps that lose task state, duplicate effects, or block delivery. Extend an existing reference before creating a duplicate skill. Keep ongoing business work moving.
+
+Match context to the item. Simple extraction needs the supplied material. Implementation needs the relevant callers and selected skill content. Complex work needs the affected cross-system evidence. Mechanical supervision needs bounded status and cursors. Use [task routes](model-routing.md) and approved escalation when the evidence warrants it. Installation, distribution, reading, and application are distinct claims. Reuse valid reading and successful checks for unchanged inputs.
+
+Observe first, then verify a concrete hypothesis with proportional evidence. Mark a change `adopted` after relevant checks support its intended scope. Keep limited runtime evidence under `trial`. Record the scope and remaining uncertainty. If new waiting, duplicate effects, or quality loss appears, retire the trial or roll back to a known useful method. Save current state and evidence first. A rollback must preserve newer sent and acknowledged events.
+
+Use measured elapsed time, waits, rework, defects, tool calls, or usage only when available. Missing values remain unknown. Elapsed time is not server computation. Active chat count, prompt length, and author benchmarks do not establish actual costs or savings. Small samples do not establish a general model or skill ranking. With no new evidence, retain the last decision instead of repeating the evaluation.
+
 Useful references: [Build skills](https://learn.chatgpt.com/docs/build-skills) and [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).

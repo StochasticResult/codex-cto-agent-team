@@ -41,3 +41,31 @@ For shared supervision, retain the supervisor route, requested model and thinkin
 Preserve earlier open tasks when a new request arrives. Append changes to their original task and advance its revision; create a different ID for independent work. The CTO owns cross-task resource ordering and the notification index. A saved task is durable context, not evidence of a live scheduler or simultaneous computation.
 
 Keep recovery state in these private records too. Record the recovery owner, task revision, failed turn's verified requested model and effort, failure cause, failed turn ID, recovery-chain attempt count, provider retry-after, next eligible time, pending-send key, tool outcome, and observed resumed turn. Never substitute a new route default for that failed-turn request. Use the chat ID and failed turn ID to identify a retry record. Preserve the chain's backoff across related failed turns. An uncertain send remains pending until the owner reconciles actual chat state. See [recovery.md](recovery.md). The helper does not execute retries or run a scheduler.
+
+## Shared supervisor state
+
+For a separate monitoring integration, preserve unknown fields, unselected tasks, cursors, completed groups, and notification evidence during updates. Apply bounded changes to current state instead of replacing it with an initialization snapshot. Use task/result revisions for completion events and failed-turn identities for retries. Keep group keys tied to member revisions. Record pending before an effect, sent after tool acceptance, and acknowledgment separately. Substantive acceptance stays with the business owner. It does not prevent a supervisor from delivering an accepted result within explicit message authorization.
+
+Use supported concurrency controls for a separately supplied state writer. Check the expected state digest before saving. Cooperative writers should use the same exclusive lock, a temporary file, and atomic replacement. Preserve a backup under the original data's access and retention rules. A stale digest requires rereading and reconciliation. Atomic replacement does not stop a writer that ignores the lock. Remove a stale lock only after confirming that no writer remains active.
+
+Before recovery, save current state. Inspect the backup and preserve newer sent, acknowledged, and notified evidence. Do not blindly restore an older snapshot. These are integration requirements. The public `team_state.py` helper does not implement a supervisor-state patch tool, optimistic concurrency control, or a cross-process lock. Its role registry still requires one serialized writer.
+
+## Decision and resume checkpoints
+
+At an actual turning point in a long task, append a short checkpoint to existing private task evidence. Record the time, input version, decision and reason, evidence pointer, and next unfinished action. Use another append-only entry for a correction so the earlier decision remains traceable. On resume, read the latest applicable checkpoint and confirm its pointers and input versions before continuing. Reuse valid acceptance. Do not create heartbeat logs, require full-transcript reads, add agents, or install a logging service for this method. See the [method source and boundaries](coding.md#consumer-contract-evidence).
+
+## Portable setup and resume
+
+1. Choose explicit paths for the target project, skill directory, and private state directory.
+2. Read the target project's applicable instructions.
+3. Discover current tools and account capabilities.
+4. Before protected operations, establish any missing required credentials or device authorization.
+5. Install the CTO skill with its complete supporting folders.
+6. Select only the task dependencies that are needed.
+7. Validate private role records before dispatch.
+
+For each dependency, retain its repository, skill path, reviewed commit or version, license, file hashes, and compatibility differences privately. Find `skill-installer` through the current skill catalog. Read its actual instructions and use its supported repository/path/ref options within authorization. Preserve licenses and required supporting references, including sibling modules when referenced. Do not run unknown bootstrap scripts or assume a host plugin exists. The linked sources in [coding.md](coding.md) and [ui-design.md](ui-design.md) identify reviewed dependencies. Their installation is separate from this skill.
+
+Preserve existing valid authorization in the project and environment. A local public-repository or temporary-folder check needs no unrelated device credentials. Do not infer credentials, device permission, active processes, or monitor availability from copied state. Confirm only the capabilities and permissions needed for the operation. Copy private records only through an authorized private channel. Keep them outside both the public repository and installed skill. Retain historical requests. Then inspect real chats, task revisions, resources, and notification state before resuming. Reconcile old identifiers against the new host instead of recreating chats or resending effects blindly.
+
+For an isolated local check, install the complete folder into a temporary skill root. Discover its `SKILL.md` and resolve its references. Use a different private path for `init` and `validate`. Synthetic chat IDs can test registration locally, but they are not evidence of real chats. A successful temporary-directory check does not verify another physical device, Codex catalog refresh, credentials, or remote execution. No background scheduler is installed by these steps.
