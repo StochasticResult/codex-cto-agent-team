@@ -1,0 +1,35 @@
+{
+  "id": "compatibility-6.1",
+  "routes": {
+    "coordination_research": {
+      "model": "gpt-6.1-sol",
+      "native_settings": {
+        "thinking": "high"
+      }
+    },
+    "scoped_engineering": {
+      "model": "gpt-6.1-terra",
+      "native_settings": {
+        "thinking": "high"
+      }
+    },
+    "extraction": {
+      "model": "gpt-6.1-terra",
+      "native_settings": {
+        "thinking": "medium"
+      }
+    },
+    "complex_engineering": {
+      "model": "gpt-6.1-sol",
+      "native_settings": {
+        "thinking": "xhigh"
+      }
+    },
+    "mechanical_supervision": {
+      "model": "gpt-6-luna",
+      "native_settings": {
+        "thinking": "low"
+      }
+    }
+  }
+}

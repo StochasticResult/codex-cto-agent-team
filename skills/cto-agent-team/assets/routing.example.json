@@ -1,0 +1,110 @@
+{
+  "workflow": {
+    "task_kind": "extraction",
+    "required_tools": [
+      "files"
+    ],
+    "context_min": 1000,
+    "quality_gate": "observable artifact and scoped evidence",
+    "requires_parallel": false,
+    "complexity": "simple",
+    "risk": "normal",
+    "quality_requirements": []
+  },
+  "host": {
+    "id": "fixture-desktop-consumer",
+    "version": "fixture-v1",
+    "skills": "manual",
+    "subagents": false,
+    "independent_chats": false,
+    "explicit_model": true,
+    "completion_notice": false,
+    "state_files": true,
+    "tools": [
+      "files"
+    ],
+    "parameter_schema_source": "fixture only"
+  },
+  "catalog": {
+    "source": "fixture.json",
+    "observed_at": "2030-01-01T00:00:00Z",
+    "expires_at": "2030-01-03T00:00:00Z",
+    "evidence_kind": "fixture",
+    "models": [
+      {
+        "id": "fixture-compact",
+        "provider": "fixture-provider",
+        "docs_listed": null,
+        "account_available": true,
+        "availability_evidence": "fixture only",
+        "tools": [
+          "files"
+        ],
+        "context": 10000,
+        "cost": null,
+        "native_settings": [
+          {
+            "effort": "medium"
+          }
+        ],
+        "host_supported": true,
+        "resource_scope": "existing",
+        "capability_evidence": "fixture only",
+        "quality_capabilities": [
+          "scoped"
+        ],
+        "route_support": [
+          {
+            "route": "extraction",
+            "native_settings": {
+              "effort": "medium"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "id": "explicit-compatibility-example",
+    "revision": 1,
+    "source": "fixture user approval",
+    "allowed": [],
+    "max_cost": null,
+    "allow_unknown_cost": true,
+    "automatic_substitution": true,
+    "candidate_authority": "verified_existing_resources",
+    "profile": "fixture-example",
+    "task_routes": {
+      "extraction": "extraction"
+    },
+    "max_quality_attempts": 2,
+    "quality_steps": {
+      "extraction": "scoped_engineering",
+      "scoped_engineering": "complex_engineering"
+    }
+  },
+  "mapping": {
+    "host": "fixture-desktop-consumer",
+    "model_key": "model",
+    "settings_keys": [
+      "effort"
+    ],
+    "verified_by": "fixture only"
+  },
+  "request": {
+    "pinned_model": "fixture-compact",
+    "native_settings": {
+      "effort": "medium"
+    },
+    "retry": null,
+    "quality_escalation": null
+  },
+  "execution": {
+    "status": "not_executed",
+    "request_accepted": false,
+    "tool_receipt": null,
+    "actual_model": null,
+    "actual_native_settings": null,
+    "execution_evidence": null
+  }
+}

@@ -2,7 +2,7 @@
 
 The CTO owns recovery for PM chats and may designate one authorized supervisor as the sole PM retry executor. Each PM owns recovery for its own engineers. Record one recovery owner and one retry executor per chat. An observer must not send a competing retry. The executor's own model does not change the failed worker's configuration. Reuse the user's authorization for internal task messages within its scope.
 
-Keep the failed turn's verified requested model and reasoning level. Read its dispatch record and tool evidence. Do not infer that configuration from a role default or the latest [task routing policy](model-routing.md). A policy update does not alter an earlier turn's request. If the request is unknown, reconcile the evidence before retrying. Do not change the model or effort to get capacity. A change outside the user's approved scope requires explicit approval. Do not reset an existing override to a default.
+Keep the failed turn's verified model, complete native settings, and quality history. Read its dispatch record and tool evidence. Do not infer that configuration from a role default or the latest [task routing policy](model-routing.md). A policy update does not alter an earlier turn's request. If the request is unknown, reconcile the evidence before retrying. Do not change the model or effort to get capacity. A change outside the user's approved scope requires explicit approval. Do not reset an existing override to a default.
 
 ## Identify the failure
 
@@ -12,7 +12,7 @@ Do not send a retry while a turn is active. Do not retry completed or cancelled 
 
 ## Resume with evidence
 
-Before each send, inspect current task and turn state again. Read saved outputs, accepted work, running processes, release ownership, and any external-operation evidence relevant to the unfinished step. Continue in the same chat with the failed turn's recorded configuration. Pass its `model` and `thinking` explicitly where supported. Use the current supported message tool and its schema. Do not create replacement engineers or duplicate chats to get around capacity.
+Before each send, inspect current task and turn state again. Read saved outputs, accepted work, running processes, release ownership, and any external-operation evidence relevant to the unfinished step. Continue in the same chat with the failed turn's recorded configuration. Pass its exact native request through the verified host mapping. Do not discard a speed, effort, or other supported parameter. Use the current supported message tool and its schema. Do not create replacement engineers or duplicate chats to get around capacity.
 
 Record a pending attempt before sending. Identify the failed-turn record with the chat ID and failed turn ID. Keep a chain attempt count across related capacity failures so a new failed turn does not reset the delay. The same observed failure must not generate multiple pending attempts.
 
@@ -31,3 +31,11 @@ Stop retrying when work completes, is cancelled, is already active, or the obser
 ## Review limits
 
 Keep actual chat IDs, failed turns, paths, errors, attempts, and notification state in the private state directory. Public guidance uses role names and generic task references only. A recorded attempt does not prove success. Inspect the resumed turn and its work. Tests or walkthroughs of this procedure do not establish provider availability or guarantee recovery within a fixed time.
+
+## Exact request selection
+
+Use the routing helper's `--retry-from` mode with the verified retry envelope described in [model-routing.md](model-routing.md#capacity-retry).
+It bypasses normal candidate freshness and cost ranking. An expired or absent ordinary catalog is not evidence of revocation.
+A source-backed revocation or new user hard stop blocks recovery. It does not authorize a substitute model.
+If quality history is missing, the original request can still be recovered. Later automatic quality escalation requires reconciled history.
+The helper returns parameters only. The recovery owner still checks actual turn state, unfinished work, authorization, and duplicate effects before sending.

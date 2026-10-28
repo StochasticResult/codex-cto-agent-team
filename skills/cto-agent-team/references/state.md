@@ -5,10 +5,10 @@ Use a user-controlled state directory outside the public repository and outside 
 `scripts/team_state.py` requires Python 3.11 or later and the standard library. It operates locally; it does not connect to a service or create chats. Run it from the skill directory, substituting a private directory and actual tool-returned values:
 
 - `python scripts/team_state.py init --state-dir DIR` initializes `org.json` and `registry.json` from `assets/roster.json`, with 55 PM and CS roles marked `planned` and `unregistered`. The CTO continues in the current chat and is not one of these 55 entries. Optional `--pm-model`, `--engineer-model`, and `--effort` override defaults.
-- `python scripts/team_state.py register --state-dir DIR --role ROLE --thread-id ID --host-id HOST --status created|ready` records a verified chat and its status. Use a valid UUID thread ID and host ID returned by the tool as evidence; mark `ready` only after a readiness acknowledgment.
+- `python scripts/team_state.py register --state-dir DIR --role ROLE --thread-id ID --host-id HOST --status created|ready` records a verified chat and its status. This version supports UUID thread IDs. Use actual thread and host IDs as evidence; mark `ready` only after a readiness acknowledgment.
 - `python scripts/team_state.py validate --state-dir DIR [--require-ready]` checks role hierarchy, duplicates, models, and readiness counts. Ordinary validation permits roles that are not yet created; `--require-ready` requires all 55 subordinate roles to be `ready`. Inspect the command result for details.
 
-The placeholders above describe arguments, not real identifiers or paths. `created` and `ready` are recorded evidence; active execution is a current tool-observed state, not a registry status. The registry's `model` fields and `model_status: requested` are role-registration snapshots. New state defaults to PM Sol / `high` and engineer Terra / `high`. These fields do not track per-task dispatch or prove a current chat configuration. Validation checks snapshot consistency; it cannot prove the backend model, activity, or availability. Use [model-routing.md](model-routing.md) for task configuration.
+The placeholders above describe arguments, not real identifiers or paths. `created` and `ready` are recorded evidence; active execution is a current tool-observed state, not a registry status. The registry's `model` fields and `model_status: requested` are role-registration snapshots. For the explicit compatibility profile, new state defaults to PM Sol / `high` and engineer Terra / `high`. These fields do not track per-task dispatch or prove a current chat configuration. Validation checks snapshot consistency; it cannot prove the backend model, activity, or availability. Use [model-routing.md](model-routing.md) for task configuration.
 
 Existing private snapshots remain valid when defaults change. Do not rewrite historical requests to match new defaults. `validate` reads them without migration. Repeated `init` retains a compatible organization and rejects a different requested configuration. For an older snapshot, keep using `validate`; if repeating `init`, supply its original overrides, such as `--effort xhigh` for an earlier all-xhigh snapshot. This does not change any chat.
 
@@ -26,7 +26,7 @@ Each independent request needs a unique ID. A useful record contains:
 | `owner_pm`, `status`, `depends_on` | Responsible PM, progress, and dependencies on other task IDs. |
 | `target`, `write_resources`, `lease_owner` | Authorized host and paths, shared resources, and current exclusive owner. |
 | `authorization`, `handoff` | Existing user authorization and limits, context, input files, and final delivery responsibility. |
-| `dispatches` | Per-item route, reason, policy revision, model, thinking, tool outcome, and turn reference where available. Retain earlier requests. |
+| `dispatches` | Per-item route, reason, policy revision, model, complete native settings, tool outcome, and turn reference where available. Retain earlier requests. |
 | `changes`, `evidence`, `result`, `blocker` | Linked clarifications or cancellations, validation evidence, useful result links, and unresolved decisions. |
 | `notification` | Requested follow-up, its owner and monitor, cursors, result revision, delivery state, and notification evidence. |
 
@@ -69,3 +69,11 @@ For each dependency, retain its repository, skill path, reviewed commit or versi
 Preserve existing valid authorization in the project and environment. A local public-repository or temporary-folder check needs no unrelated device credentials. Do not infer credentials, device permission, active processes, or monitor availability from copied state. Confirm only the capabilities and permissions needed for the operation. Copy private records only through an authorized private channel. Keep them outside both the public repository and installed skill. Retain historical requests. Then inspect real chats, task revisions, resources, and notification state before resuming. Reconcile old identifiers against the new host instead of recreating chats or resending effects blindly.
 
 For an isolated local check, install the complete folder into a temporary skill root. Discover its `SKILL.md` and resolve its references. Use a different private path for `init` and `validate`. Synthetic chat IDs can test registration locally, but they are not evidence of real chats. A successful temporary-directory check does not verify another physical device, Codex catalog refresh, credentials, or remote execution. No background scheduler is installed by these steps.
+
+## Separate routing input
+
+The [routing helper](model-routing.md#local-selector) reads a separate seven-part document. It does not modify `org.json` or `registry.json`.
+Keep model catalogs, user policy, exact requests, quality history, and actual receipts private. A declared model does not establish account availability.
+The v1 role helper retains its existing overrides and validation behavior. It is not a universal host identity registry.
+For a host with non-UUID worker IDs, use separate private task records. Do not invent a UUID or claim the helper registered that worker.
+Keep optional research-extension records separate from the 55 core entries.

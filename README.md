@@ -4,7 +4,7 @@
 
 # codex-cto-agent-team
 
-A reusable Codex skill for a chief technology officer (CTO), five product managers, and fifty engineers.
+A reusable CTO team skill with Codex integration, host capability guidance, five product managers, and fifty engineers.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
 Use it across projects with private task records, explicit permissions, and one writer for each shared resource.
 
@@ -33,7 +33,9 @@ Use only roles that help the current task. Engineer specialties guide assignment
 
 ## Install
 
-Use a Codex environment that supports local skills. The state helper requires Python 3.11 or later and uses only the standard library.
+Use a host that can load the skill or accept its instructions manually. The local helpers require Python 3.11 or later and only the standard library.
+The installation commands below are for Codex. See the [host matrix](skills/cto-agent-team/references/host-adapters.md) for Claude Code, Cursor, and generic/cloud boundaries.
+Those integrations have documented guidance, not live client validation or universal native adapters.
 Chat creation, task messages, and monitoring require supported tools and account capacity. This skill does not add those capabilities.
 
 1. Get this repository.
@@ -72,20 +74,22 @@ For a full organization of independent chats, use:
 
 Replace the placeholders before use. Skill selection alone does not authorize chat creation or task messages.
 For a general request to use agents, follow existing authorization and tool support, or prepare a plan.
-For independent chats, discover the current tool schema and make sure that the project is correct with `list_projects` before creation.
+For independent chats, discover the current host tools and verify the target project before authorized creation.
+[Host adapters](skills/cto-agent-team/references/host-adapters.md#execution-operations) contain specific tool names and parameter boundaries.
 Examine unknown creation results before another attempt. Reuse real chat identifiers from supported tools.
 
 Each task must identify its target, permissions, outputs, acceptance criteria, and writable resources.
 Organizational delegation does not grant permission for every device, publication, external message, or purchase.
 Read the target project's `AGENTS.md`. Make sure that the device identity, connection, and task permission are correct.
 
-PMs collect engineer results with `wait_threads`. The CTO collects PM results the same way.
+PMs collect engineer results through the host's supported result operation. The CTO collects PM results the same way.
 A task message does not by itself authorize a reply to another chat.
 See [workflow.md](skills/cto-agent-team/references/workflow.md) for complete handoffs and result collection.
 
 ## Model routes
 
-Choose settings by task within the user's approved scope:
+Separate task requirements, host capabilities, model evidence, user policy, native parameters, and actual execution.
+The following table is the explicit `compatibility-6.1` profile. It is not a default for every host or an availability claim:
 
 | Route | Work | Model | Reasoning |
 | --- | --- | --- | --- |
@@ -97,13 +101,30 @@ Choose settings by task within the user's approved scope:
 
 Within approved escalation scope, conflicting constraints, critical decisions, complex state, and substantive acceptance failures can require Sol/xhigh.
 For ambiguity in extraction, first use Terra/high. Complex analysis can require Sol/high or Sol/xhigh.
-Other configurations require user approval. Do not silently change settings when capacity is unavailable.
+User policy can authorize automatic routing and evidenced new candidates within existing resources. Respect explicit pins and hard budgets.
+A new name alone does not require repeated approval within that authority. Capacity failure never authorizes silent substitution.
 
 Role-registration defaults are Sol/high for PMs and Terra/high for engineers. They do not establish any chat's actual settings.
-For each authorized creation or continuation, pass `model` and `thinking` where supported. Record the request and tool outcome privately.
+For each authorized dispatch, pass the exact supported native parameters. Record the request and tool outcome privately.
 Tool acceptance does not independently verify the backend model. Apply new routes on the next authorized dispatch.
 Do not interrupt active work or wake idle engineers merely to change settings.
 Keep the CTO's current settings, speed, subscription, and budget intact. See [model-routing.md](skills/cto-agent-team/references/model-routing.md).
+
+The standard-library [selector](skills/cto-agent-team/scripts/model_route.py) evaluates configurable evidence and returns a payload without sending it.
+Try the credential-free fixture from the installed skill directory:
+
+```sh
+python scripts/model_route.py assets/routing.example.json --now 2030-01-02T00:00:00Z
+```
+
+The result is explicitly a fixture, with `dispatch_ready: false`. For actual work, replace synthetic evidence and use the current time.
+Use the [seven-part schema](skills/cto-agent-team/assets/routing.schema.json), private policy/catalog inputs, and an explicit profile.
+`--escalate-from` requires substantive failure and prior outcome evidence, and permits at most two quality upgrades.
+`--retry-from` preserves the verified original native request and quality history, even when the normal catalog is stale.
+A pin, unknown capability, unsupported parameter, or unsatisfied budget blocks selection. Unknown costs do not establish savings.
+Different vendor effort/speed parameters are not synonyms. See the [selector guide](skills/cto-agent-team/references/model-routing.md#local-selector).
+Documentation, account availability, permission, fixture/configuration, request acceptance, and actual execution are separate evidence levels.
+
 
 ## Delivery and supervision
 
@@ -114,7 +135,7 @@ After an item completes, examine its evidence. Then give the next ready item to 
 Record the reason for a necessary serial step.
 Keep one writer for each shared file, device, desktop, or live operation.
 
-Use a suitable agent for routine supervision with the approved Luna/low route.
+Use a suitable agent for routine supervision through its authorized route. The compatibility profile retains Luna/low.
 Read back supported monitor settings or documented model inheritance. Keep that evidence.
 A model name in a prompt does not set the monitor model. Report unsupported settings accurately.
 Reuse existing supervision and saved cursors. Keep unchanged checks and ordinary retries quiet.
@@ -159,11 +180,20 @@ Help people complete primary tasks on first use. Give defaults that work, clear 
 Use the [usability baseline](skills/cto-agent-team/references/ui-design.md#usability-baseline) from handoff through actual artifact acceptance.
 Keep details progressive and accessibility appropriate. Record observations without calling an agent walkthrough real user research or claiming universal usability.
 
+## Optional research
+
+A shared researcher is an optional extension. The core five teams and 55 subordinate registrations stay unchanged.
+Start with project capabilities and prior results, then first-party documentation and relevant open-source code.
+Keep at most three candidates and one recommendation, with source/version/license, uncertainty, tradeoffs, and a minimal reuse path.
+The owning PM records adoption and implementation acceptance. Stop at the agreed boundary or when evidence answers the question.
+Use a suitable existing role when worker creation is unavailable. Urgent recovery, small changes, and ready releases have no research gate.
+See the [bounded report template](skills/cto-agent-team/references/research.md#bounded-report).
+
 ## Capacity recovery
 
 Retry only a confirmed failed or stopped turn caused by temporary model capacity, with unfinished authorized work remaining.
 The CTO owns PM recovery and may name one authorized supervisor as its sole retry executor. PMs own engineer recovery.
-Use the failed turn's verified model and thinking. New defaults and the supervisor's model do not replace those settings.
+Use the failed turn's verified model, complete native settings, and quality history. New defaults and the supervisor's model do not replace those settings.
 Do not retry active, completed, or cancelled work. Preserve accepted outputs and completed external actions.
 For an unknown send or external result, examine actual state before another attempt.
 
@@ -177,7 +207,9 @@ See [recovery.md](skills/cto-agent-team/references/recovery.md).
 Keep chat IDs, host IDs, local paths, task records, runtime evidence, and notification state outside the public repository and installed skill.
 Never store credentials in these records. Use references to secure credential storage when necessary.
 Each PM owns its logical team records. The helper uses a shared `registry.json`, so the CTO must serialize writes.
-The helper has no cross-process lock. It records roles, not per-task routes, live execution, or backend model verification.
+The registration helper has no cross-process lock. It records roles, not per-task routes, live execution, or backend model verification.
+It supports UUID worker identities. Other hosts can keep their real identities in separate private task records.
+The routing selector is separate and does not rewrite old registration snapshots.
 
 After installation, choose a private directory:
 
@@ -242,6 +274,9 @@ The standard and its dictionary are not bundled. See [handoffs.md](skills/cto-ag
 | [SKILL.md](skills/cto-agent-team/SKILL.md) | Entry point and workflow selection |
 | [workflow.md](skills/cto-agent-team/references/workflow.md) | Handoffs, scheduling, acceptance, and notifications |
 | [model-routing.md](skills/cto-agent-team/references/model-routing.md) | Task settings, escalation scope, and supervision |
+| [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) | Host matrix, installation, native parameters, and evidence levels |
+| [research.md](skills/cto-agent-team/references/research.md) | Optional research and adoption |
+| [model_route.py](skills/cto-agent-team/scripts/model_route.py) | Local configurable selector, quality escalation, and exact retry payload |
 | [coding.md](skills/cto-agent-team/references/coding.md) | Ponytail and workflow boundaries |
 | [ui-design.md](skills/cto-agent-team/references/ui-design.md) | UI skill selection and evidence |
 | [recovery.md](skills/cto-agent-team/references/recovery.md) | Capacity failures, retries, and deduplication |

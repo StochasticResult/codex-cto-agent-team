@@ -1,0 +1,628 @@
+{
+  "type": "object",
+  "required": [
+    "workflow",
+    "host",
+    "catalog",
+    "policy",
+    "mapping",
+    "request",
+    "execution"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "workflow": {
+      "type": "object",
+      "required": [
+        "task_kind",
+        "required_tools",
+        "context_min",
+        "quality_gate",
+        "requires_parallel"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "task_kind": {
+          "type": "string"
+        },
+        "required_tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "context_min": {
+          "type": "integer"
+        },
+        "quality_gate": {
+          "type": "string"
+        },
+        "requires_parallel": {
+          "type": "boolean"
+        },
+        "complexity": {
+          "enum": [
+            "simple",
+            "scoped",
+            "complex"
+          ]
+        },
+        "risk": {
+          "enum": [
+            "normal",
+            "critical"
+          ]
+        },
+        "quality_requirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "required": [
+        "id",
+        "version",
+        "skills",
+        "subagents",
+        "independent_chats",
+        "explicit_model",
+        "completion_notice",
+        "state_files",
+        "tools",
+        "parameter_schema_source"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "skills": {
+          "type": "string"
+        },
+        "subagents": {
+          "type": "boolean"
+        },
+        "independent_chats": {
+          "type": "boolean"
+        },
+        "explicit_model": {
+          "type": "boolean"
+        },
+        "completion_notice": {
+          "type": "boolean"
+        },
+        "state_files": {
+          "type": "boolean"
+        },
+        "tools": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "parameter_schema_source": {
+          "type": "string"
+        }
+      }
+    },
+    "catalog": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "required": [
+        "source",
+        "observed_at",
+        "expires_at",
+        "evidence_kind",
+        "models"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "observed_at": {
+          "type": "string"
+        },
+        "expires_at": {
+          "type": "string"
+        },
+        "evidence_kind": {
+          "enum": [
+            "fixture",
+            "docs",
+            "host_readonly",
+            "visible_configuration"
+          ]
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "provider",
+              "docs_listed",
+              "account_available",
+              "availability_evidence",
+              "tools",
+              "context",
+              "cost",
+              "native_settings",
+              "host_supported",
+              "resource_scope",
+              "capability_evidence",
+              "quality_capabilities",
+              "route_support"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "docs_listed": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "boolean",
+                  "null"
+                ]
+              },
+              "account_available": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "availability_evidence": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "tools": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "context": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "cost": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "boolean",
+                  "null"
+                ]
+              },
+              "native_settings": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "host_supported": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "resource_scope": {
+                "enum": [
+                  "existing",
+                  "unknown"
+                ]
+              },
+              "capability_evidence": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "quality_capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "route_support": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "route": {
+                      "type": "string"
+                    },
+                    "native_settings": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "number",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "route",
+                    "native_settings"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "id",
+        "revision",
+        "source",
+        "allowed",
+        "max_cost",
+        "allow_unknown_cost",
+        "automatic_substitution",
+        "candidate_authority",
+        "profile",
+        "task_routes",
+        "max_quality_attempts",
+        "quality_steps"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "integer"
+        },
+        "source": {
+          "type": "string"
+        },
+        "allowed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "native_settings"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "native_settings": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "max_cost": {
+          "type": [
+            "string",
+            "number",
+            "object",
+            "boolean",
+            "null"
+          ]
+        },
+        "allow_unknown_cost": {
+          "type": "boolean"
+        },
+        "automatic_substitution": {
+          "type": "boolean"
+        },
+        "candidate_authority": {
+          "enum": [
+            "explicit_allowlist",
+            "verified_existing_resources"
+          ]
+        },
+        "profile": {
+          "type": "string"
+        },
+        "task_routes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "max_quality_attempts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "quality_steps": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "mapping": {
+      "type": "object",
+      "required": [
+        "host",
+        "model_key",
+        "settings_keys",
+        "verified_by"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "host": {
+          "type": "string"
+        },
+        "model_key": {
+          "type": "string"
+        },
+        "settings_keys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "verified_by": {
+          "type": "string"
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "required": [
+        "pinned_model",
+        "native_settings",
+        "retry",
+        "quality_escalation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "pinned_model": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "native_settings": {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          }
+        },
+        "retry": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "failed_turn_id",
+            "verified_request",
+            "authorization_evidence",
+            "request",
+            "host"
+          ],
+          "properties": {
+            "failed_turn_id": {
+              "type": "string"
+            },
+            "verified_request": {
+              "const": true
+            },
+            "authorization_evidence": {
+              "type": "string"
+            },
+            "request": {
+              "type": "object",
+              "required": [
+                "model",
+                "native_settings"
+              ],
+              "properties": {
+                "model": {
+                  "type": "string"
+                },
+                "native_settings": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": [
+                      "string",
+                      "number",
+                      "boolean",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "host": {
+              "type": "string",
+              "minLength": 1
+            },
+            "previous_selection": {
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "quality_escalation": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "reason_kind",
+            "reason",
+            "evidence",
+            "previous_selection",
+            "previous_outcome"
+          ],
+          "properties": {
+            "reason_kind": {
+              "enum": [
+                "acceptance_failure",
+                "repeated_no_progress",
+                "constraint_conflict",
+                "cross_module_complexity"
+              ]
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1
+            },
+            "previous_selection": {
+              "type": "object"
+            },
+            "previous_outcome": {
+              "type": "object",
+              "properties": {
+                "request_accepted": {
+                  "const": true
+                },
+                "execution_evidence": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "request_accepted",
+                "execution_evidence"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "stop": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "required": [
+            "reason",
+            "evidence"
+          ],
+          "properties": {
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            },
+            "evidence": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": [
+        "status",
+        "request_accepted",
+        "tool_receipt",
+        "actual_model",
+        "actual_native_settings",
+        "execution_evidence"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "request_accepted": {
+          "type": "boolean"
+        },
+        "tool_receipt": {
+          "type": [
+            "string",
+            "number",
+            "object",
+            "boolean",
+            "null"
+          ]
+        },
+        "actual_model": {
+          "type": [
+            "string",
+            "number",
+            "object",
+            "boolean",
+            "null"
+          ]
+        },
+        "actual_native_settings": {
+          "type": [
+            "string",
+            "number",
+            "object",
+            "boolean",
+            "null"
+          ]
+        },
+        "execution_evidence": {
+          "type": [
+            "string",
+            "number",
+            "object",
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portable routing input: revision 2 with exact retry evidence"
+}

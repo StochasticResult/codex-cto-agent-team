@@ -4,7 +4,7 @@
 
 # codex-cto-agent-team
 
-把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 Codex skill。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex 集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
 
 ```mermaid
 flowchart TD
@@ -23,7 +23,9 @@ flowchart TD
 
 完整编制为 56 个角色，包含现有 CTO。岗位定义、实际聊天、READY 和正在计算的实例分别核实；会话数量不代表并发额度，也不保证永久在线。具体工单只启用需要的岗位。
 
-| 岗位登记 | 默认模型 | 默认推理 |
+以下是显式 `compatibility-6.1` 的岗位快照，不是所有宿主的通用默认，也不证明账号可用。
+
+| 岗位登记 | 兼容模型 | 兼容推理 |
 | --- | --- | --- |
 | PM01–PM05 | `gpt-6.1-sol` | `high` |
 | CS 工程师 | `gpt-6.1-terra` | `high` |
@@ -31,6 +33,8 @@ flowchart TD
 实际派单按任务选择配置，用户可覆盖。岗位登记默认不代表所有现有聊天已经切换；请求被工具接受也不等于独立核实了后端模型。请求的配置不可用时报告限制，不静默更换。
 
 ## 任务模型路由
+
+组织、宿主能力、候选目录、用户策略、原生参数及实际执行证据分开。下表是显式兼容 profile。
 
 | 路由 | 适用任务 | 模型 | 推理 |
 | --- | --- | --- | --- |
@@ -40,13 +44,23 @@ flowchart TD
 | `complex_engineering` | 复杂编码、架构、事务、权限、关键审阅、跨系统发布 | `gpt-6.1-sol` | `xhigh` |
 | `mechanical_supervision` | 机械状态检查、确定规则重试记账、去重、完成候选事件路由 | `gpt-6-luna` | `low` |
 
-在用户批准的路由范围内升级：约束冲突、关键决策或高影响验收使用 Sol/xhigh；跨模块复杂状态或实质验收失败使用 Sol/xhigh。简单提取出现关键歧义时先使用 Terra/high，复杂分析使用 Sol/high 或 Sol/xhigh。范围外配置仍需用户同意。
+在用户批准的路由范围内升级：约束冲突、关键决策或高影响验收使用 Sol/xhigh；跨模块复杂状态或实质验收失败使用 Sol/xhigh。简单提取出现关键歧义时先使用 Terra/high，复杂分析使用 Sol/high 或 Sol/xhigh。用户策略可授权现有资源内自动路由及有证据的新候选，不因名字新增逐次询问；显式固定和硬预算优先。
 
-新建或继续聊天时，按当前工具支持的参数显式传入 `model` 和 `thinking`，私下记录路由、原因、请求与工具结果。新策略从下一次授权派单生效；不为改设置中断在途工作、唤醒待命工程师或覆盖历史请求。已有关键发布沿用其记录的配置。CTO 当前设置、速度、订阅和预算不变，也不增加模型试验或付费基准作为上线门槛。完整说明见[模型路由](skills/cto-agent-team/references/model-routing.md)。
+新建或继续聊天时，按当前宿主工具支持的字段显式传入完整原生参数，私下记录路由、原因、请求与工具结果。新策略从下一次授权派单生效；不为改设置中断在途工作、唤醒待命工程师或覆盖历史请求。已有关键发布沿用其记录的配置。CTO 当前设置、速度、订阅和预算不变，也不增加模型试验或付费基准作为上线门槛。完整说明见[模型路由](skills/cto-agent-team/references/model-routing.md)。
+
+标准库[路由工具](skills/cto-agent-team/scripts/model_route.py)读取可配置证据并输出参数，不发送请求。在安装的 skill 目录运行无需凭据的夹具：
+
+```sh
+python scripts/model_route.py assets/routing.example.json --now 2030-01-02T00:00:00Z
+```
+
+结果明确标记 `fixture`、`dispatch_ready: false`。真实工作须替换模拟证据并使用当前时间。按[七层 schema](skills/cto-agent-team/assets/routing.schema.json)配置私有目录、策略、宿主和显式 profile。`--escalate-from` 需要实质失败及前次执行证据，最多两次质量升级；`--retry-from` 不走普通选优，保留已核实原请求及质量历史，普通目录过期不等于撤销。pin、未知能力、不支持参数或无法满足预算时阻断，未知费用不宣称节省，不把各厂商推理/速度字段当同义。详见[selector说明](skills/cto-agent-team/references/model-routing.md#local-selector)。
+
+文档列出、账号可用、用户许可、配置或夹具、工具接受及实际执行分别记录。离线 helper 只检查输入引用及规则，不能鉴证账号证据。原角色快照和登记 helper 不因此迁移。
 
 ## 安装
 
-需要支持本地 skills 的 Codex 环境；登记脚本需要 Python 3.11 或更新版本，仅使用标准库。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
+可在支持技能加载的宿主使用，也可手动提供指令。两个本地 helper 需要 Python 3.11 或更新版本，仅使用标准库。以下安装示例针对 Codex；Claude Code、Cursor 与 generic/cloud 的入口及能力边界见[宿主矩阵](skills/cto-agent-team/references/host-adapters.md)。这些宿主仅有已查证文档和本地配置夹具，不代表真实客户端全面运行或已安装原生适配器。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
 
 1. 获取本仓库，将 `skills/cto-agent-team` 整个文件夹复制到个人 skill 目录 `~/.agents/skills/cto-agent-team`，以便跨项目使用。项目内安装可放到目标仓库的 `.agents/skills/cto-agent-team`。
 2. 保留文件夹内的 `scripts/`、`references/`、`assets/` 和 `agents/`。如果已经安装同名 skill，先检查现有内容再更新。
@@ -74,9 +88,9 @@ Skill 自动匹配不等于允许创建 55 个独立聊天。仅需方案时可�
 
 > 使用 $cto-agent-team，为 <业务目标> 规划团队分工和验收条件，本轮只输出规划。
 
-仅泛化要求“使用 agents”时，按已获授权和现有能力使用 collaboration 子agent或先规划。用户明确选择独立聊天时采用独立聊天模式；先发现工具并读取当前 schema，创建前用 `list_projects` 核实目标项目。工具缺失就报告受限，不将岗位配置当成已创建会话。执行细节见 [工作流](skills/cto-agent-team/references/workflow.md)。
+仅泛化要求“使用 agents”时，按已获授权和现有能力使用 collaboration 子agent或先规划。用户明确选择独立聊天时采用独立聊天模式；先发现工具并读取当前 schema，创建前通过当前宿主工具核实目标项目。具体工具名与字段见[宿主操作](skills/cto-agent-team/references/host-adapters.md#execution-operations)。工具缺失就报告受限，不将岗位配置当成已创建会话。执行细节见 [工作流](skills/cto-agent-team/references/workflow.md)。
 
-用户明确给出的组织级授权可覆盖其范围内的后续内部派单；具体工作仍受工单的目标项目、设备、可写资源及动作范围约束。同一文件、桌面或应用会话同一时刻只有一名写入负责人。PM 通过 `wait_threads` 读取工程师结果，CTO 同样读取 PM 结果；不要求下级主动向上级聊天发信。无工单时结束当前回合，后续复用已有会话。
+用户明确给出的组织级授权可覆盖其范围内的后续内部派单；具体工作仍受工单的目标项目、设备、可写资源及动作范围约束。同一文件、桌面或应用会话同一时刻只有一名写入负责人。PM 通过宿主支持的结果收集操作读取工程师结果，CTO 同样读取 PM 结果；不要求下级主动向上级聊天发信。无工单时结束当前回合，后续复用已有会话。
 
 ## 快速接单、多需求推进与完成通知
 
@@ -90,9 +104,9 @@ CTO 聊天是持续接单入口。每条独立需求先建立唯一任务编号�
 
 用户要求完成通知时，使用当前可用且获授权的线程 heartbeat 或 automation 跟进，优先由合适的监督者承担机械检查，复用已有监测、保存 cursor，无变化保持安静。验收通过后，通知附结果链接或产物及必要局限，记录 `notified` 和证据。共享监测只移除已完成职责，所有职责结束后才停用一次性监测。监测能力不可用时如实说明；结束聊天本轮不会自动保证以后唤醒。聊天数量也不代表同时计算能力。
 
-机械监督使用已批准的 Luna/low 路由；CTO 专注接单、派单、跨团队决定和最终交付，实际执行由合适工程师承担。须通过支持的工具设置或已核实的继承机制，并保留配置读回证据，才能声称监测采用该模型；在提示词中写“使用 Luna”不等于设置生效。工具不支持时记录具体限制，不擅自绕到独立定时任务或更贵模型，也不建立高成本 CTO 循环去盯监督者。
+机械监督使用已授权路由，兼容 profile 保留 Luna/low；CTO 专注接单、派单、跨团队决定和最终交付，实际执行由合适工程师承担。须通过支持的工具设置或已核实的继承机制，并保留配置读回证据，才能声称监测采用该模型；在提示词中写“使用 Luna”不等于设置生效。工具不支持时记录具体限制，不擅自绕到独立定时任务或更贵模型，也不建立高成本 CTO 循环去盯监督者。
 
-监督者只收集简短状态及带 cursor 的快照，同一 PM 每轮只检查一次。完成候选须匹配工单和结果修订，并提供产物及验收证据，再交负责人员作最终判断；有意义的故障保持可处理。向 CTO 等聊天发事件仍需明确的收件人与范围授权；普通等待、恢复及无变化不发信。记录独立的发送和事件去重证据，未知结果先核对。唯一 PM 重试执行者可由 CTO 授权给监督者，PM 继续负责本队工程师；恢复请求始终沿用失败回合的模型和推理档位。
+监督者只收集简短状态及带 cursor 的快照，同一 PM 每轮只检查一次。完成候选须匹配工单和结果修订，并提供产物及验收证据，再交负责人员作最终判断；有意义的故障保持可处理。向 CTO 等聊天发事件仍需明确的收件人与范围授权；普通等待、恢复及无变化不发信。记录独立的发送和事件去重证据，未知结果先核对。唯一 PM 重试执行者可由 CTO 授权给监督者，PM 继续负责本队工程师；恢复请求逐值保留失败回合的模型、完整原生参数和质量历史。
 
 任务、授权、资源归属和通知状态只保存到私有 `state-dir`。本仓库的 helper **只处理角色登记**，任务记录由 CTO/PM 按[状态约定](skills/cto-agent-team/references/state.md)维护，跟进依靠环境提供的监测工具；未实现自有后台调度服务。完整流程见[工作流](skills/cto-agent-team/references/workflow.md)。
 
@@ -144,6 +158,10 @@ Ponytail 控制实现复杂度，UI 指导按任务选择。独立核心技能�
 
 快速接单、多需求跟踪、并行推进和完成通知流程继续适用，语言检查不扩大创建会话、转发消息或发布的授权。
 
+## 可选研究扩展
+
+核心 5 名 PM × 每队 10 名工程师及 55 个下级登记保持不变，共享研究员是可配置扩展，不强制额外常驻。先查项目已有能力和历史，再查第一方文档及相关开源实现；最多 3 个候选、1 项推荐，记录来源、版本、许可、未知、取舍与最小复用路径。PM 记录采纳决定，工程及产品验收另行完成；证据已回答问题、达到约定边界或无新增价值时停止。没有新建能力时由合适已有角色承担，紧急恢复、小改及已就绪发布不增研究门槛。详见[有界研究模板](skills/cto-agent-team/references/research.md#bounded-report)。
+
 ## 临时模型容量故障恢复
 
 CTO 负责 PM 的恢复，各 PM 负责本队工程师的恢复。确认属于临时模型容量故障后，读取工单、最近轮次和已保存证据，在原聊天继续未完成部分，不让用户逐次点击重试。保留失败回合已核实的模型和推理强度，显式传回其请求参数；新路由或岗位默认不覆盖旧回合。配置未知时先核对证据，不因容量故障换模型、降档或机械恢复旧默认。
@@ -164,7 +182,7 @@ python "$skillTarget/scripts/team_state.py" init --state-dir "$teamStateDir"
 python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 ```
 
-初始化可通过 `--pm-model`、`--engineer-model` 和 `--effort` 覆盖岗位登记快照；`--effort` 同时作用于两类岗位。初始登记为 55 个 PM 和 CS 的 `planned` 岗位，CTO 沿用当前聊天；普通 `validate` 允许岗位尚未创建。脚本只生成与检查本地登记，不联网、不创建聊天、不执行任务路由，也不改变会话中的实际模型。每次任务派单配置另存私有任务记录。
+初始化可通过 `--pm-model`、`--engineer-model` 和 `--effort` 覆盖岗位登记快照；`--effort` 同时作用于两类岗位。初始登记为 55 个 PM 和 CS 的 `planned` 岗位，CTO 沿用当前聊天；普通 `validate` 允许岗位尚未创建。登记脚本只生成与检查本地登记，不联网、不创建聊天、不执行任务路由，也不改变会话中的实际模型。它要求 UUID 标识；其他宿主的真实标识可保存在独立私有任务记录，不能编造 UUID。独立的 selector 不改旧登记快照。每次任务派单配置另存私有任务记录。
 
 旧私有登记保持原值，`validate` 不迁移历史配置。重复 `init` 遇到不同配置会拒绝覆盖；旧登记可继续直接验证。如需重复初始化，传入当时的覆盖值，例如旧版全员 xhigh 登记使用 `--effort xhigh`。
 
@@ -189,6 +207,9 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
 - [ui-design.md](skills/cto-agent-team/references/ui-design.md)：UI 技能选择、可移植依赖发现和具体设计证据。
 - [coding.md](skills/cto-agent-team/references/coding.md)：Ponytail 核心指导、完整实现及平台能力边界。
+- [host-adapters.md](skills/cto-agent-team/references/host-adapters.md)：宿主安装/能力矩阵、原生参数及证据等级。
+- [research.md](skills/cto-agent-team/references/research.md)：可选研究与采纳。
+- [model_route.py](skills/cto-agent-team/scripts/model_route.py)：标准库选择、有限质量升级与精确重试参数。
 - [model-routing.md](skills/cto-agent-team/references/model-routing.md)：任务模型路由、批准范围、升级及派单记录。
 - [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。

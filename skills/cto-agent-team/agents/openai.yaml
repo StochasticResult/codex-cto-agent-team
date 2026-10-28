@@ -1,4 +1,4 @@
 interface:
   display_name: "CTO Agent Team"
   short_description: "Coordinate a CTO, five PMs, and fifty engineers"
-  default_prompt: "Use $cto-agent-team to set up and coordinate a CTO, five PMs, and fifty engineers across independent chats."
+  default_prompt: "Use $cto-agent-team to set up and coordinate a CTO, five PMs, and fifty engineers with the authorized execution capabilities available in this host."

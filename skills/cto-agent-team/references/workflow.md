@@ -24,7 +24,7 @@ Before assigning overlapping files, devices, desktops, applications, or deployme
 
 ## Completion follow-up and notification
 
-When the user requests completion notification, arrange follow-up before ending the CTO turn if an available, authorized monitoring capability can provide it. Discover the current automation tool and schema first. Prefer a thread heartbeat on a suitable supervisor chat for routine checks, unless the user requested a standalone job. Apply the `mechanical_supervision` route and verify supported settings as described in [model-routing.md](model-routing.md). A prompt label does not configure the model. Check for existing supervision and reuse or update it instead of creating duplicates. Persist its identifier, target chats, and latest wait cursors in private task state. Use supported scheduling tools rather than inventing a background service.
+When the user requests completion notification, arrange follow-up before ending the CTO turn if an available, authorized monitoring capability can provide it. Discover the current automation tool and schema first. Use the supported follow-up operation on a suitable supervisor. Read [host-adapters.md](host-adapters.md) for host-specific operations. Apply the `mechanical_supervision` route and verify supported settings as described in [model-routing.md](model-routing.md). A prompt label does not configure the model. Check for existing supervision and reuse or update it instead of creating duplicates. Persist its identifier, target chats, and latest wait cursors in private task state. Use supported scheduling tools rather than inventing a background service.
 
 Give the monitor the task ID, owning PM chat, acceptance criteria, private record location, retry executor, and notification owner. Its instructions should read bounded task status or wait snapshots with saved cursors, advance the private record, and stay quiet while nothing actionable changes. Check each shared PM only once per cycle. Leave actual implementation with suitable agents. Do not use a recurring high-cost CTO loop to supervise this monitor. If the PM can resolve a blocker within its authority, leave the repair with the PM.
 
@@ -36,21 +36,30 @@ Use one notification owner and one logical monitoring assignment per task. One s
 
 If the required monitoring capability or authorization is missing, say so briefly and record follow-up as unavailable or pending. Offer a concrete supported way to check the task later. Ending a turn does not by itself schedule another turn, and an existing chat is not a permanently running worker. Task and notification records are described in [state.md](state.md); the role helper does not perform this monitoring.
 
-For a confirmed temporary model-capacity failure, use [the recovery workflow](recovery.md). The CTO owns PM recovery and may designate one authorized supervisor as its sole retry executor. The owning PM resumes engineers. The supervisor's Luna / `low` route never replaces the failed turn's model and thinking. A failed shell command or a quiet chat alone does not establish model-capacity failure. Reuse the task's existing authorized monitor when delayed follow-up is necessary. Do not create competing recovery monitors or notify the user about each ordinary retry.
+For a confirmed temporary model-capacity failure, use [the recovery workflow](recovery.md). The CTO owns PM recovery and may designate one authorized supervisor as its sole retry executor. The owning PM resumes engineers. The supervisor's route never replaces the failed turn's model, native settings, or quality history. A failed shell command or a quiet chat alone does not establish model-capacity failure. Reuse the task's existing authorized monitor when delayed follow-up is necessary. Do not create competing recovery monitors or notify the user about each ordinary retry.
 
 ## Choose and authorize the mode
 
 Determine the user's goal, applicable project instructions, execution environment, existing authorization, and available tools before dispatching. A request to use this skill does not itself authorize creating independent chats or forwarding tasks between them. Reuse prior explicit authorization for CTO-to-PM and PM-to-CS task forwarding; obtain missing authorization before those messages. Only create independent chats when the user requests them. Reuse verified existing chats where suitable.
 
-If the user asks generally for agents, use collaboration only where it is authorized and supported; otherwise produce a plan. When collaboration is selected, discover its current tools and schemas. Where supported, pass the requested `model`, `reasoning_effort`, and `fork_turns="none"` with full task context. Respect applicable platform limits; do not treat a particular child-agent limit as a global independent-chat limit.
+If the user asks generally for agents, use authorized host delegation when supported. Otherwise, prepare a plan or proceed serially within scope.
+Read [host-adapters.md](host-adapters.md) for actual tool names, parameters, and capability limits.
 
-## Independent chats
+## Execution through host tools
 
-Discover the available thread tools and their actual schemas before calling them; do not assume a tool namespace. Before creating a chat, list projects and use the actual appropriate project identifier. Choose each work item's configuration from [model-routing.md](model-routing.md) and the user's approved policy. For creation or continuation, specify `model` and `thinking` explicitly where supported. Record the requested configuration, reason, and tool outcome privately. Role registration defaults do not prove an existing chat's settings. Apply routes on the next authorized dispatch without interrupting active work or waking idle roles merely to change settings. A user may override the routes. If the requested configuration is unavailable, report the failure and preserve the task; do not silently replace it.
+Discover the current host and its actual schemas before dispatch. Find existing workers and verify the target project before authorized creation.
+Choose task settings from [model-routing.md](model-routing.md), current capability evidence, and user policy.
+Pass supported native parameters explicitly. Preserve pins, active turns, and earlier requests.
+If a requested configuration is unavailable, preserve the task and report the actual limit. Do not silently replace it.
 
-Each creation prompt should include role, reporting relationship, task goal, permissions, assigned resources, relevant context, and acceptance criteria. For role initialization, request only a reply containing READY, role number, reporting manager, and understood responsibility; do not have the 55 initializing chats write shared state. Record only real identifiers returned by the tool. If a creation outcome is unknown, inspect actual chats and private registration before retrying to avoid duplicates. A configured role or attempted creation is not proof of successful registration. If the independent-chat tools are unavailable, report the limitation; do not use private shell APIs as a workaround.
+Include the role, reporting relationship, goal, permissions, resources, context, selected skills, and acceptance criteria in each handoff.
+For initialization, request only a readiness acknowledgment with the role and understood responsibility.
+Do not have initializing workers write shared state. Record only actual tool-returned identifiers.
+Reconcile an unknown creation result before retrying. A role definition is not evidence of a real worker.
 
-After authorized task forwarding, when wait_threads is available, each PM reads its engineers' results and the CTO reads PM results through that tool. A dispatch message alone does not authorize a subordinate to send a message back to another chat. Group waits within the current schema's target limit, continue with returned cursors, and keep each wait to at most 60 seconds under this team's convention. Report actual status and evidence rather than assuming a chat is running.
+The PM collects engineer results, and the CTO collects PM results through the host's supported result operation.
+Use saved cursors where available. Keep waits bounded. A dispatch does not authorize a subordinate to send another chat a reply.
+Keep independent chats, subagents, readiness, and actual computation distinct. Missing tools do not authorize private API workarounds.
 
 ## Coordinate work
 
@@ -80,4 +89,5 @@ Observe first, then verify a concrete hypothesis with proportional evidence. Mar
 
 Use measured elapsed time, waits, rework, defects, tool calls, or usage only when available. Missing values remain unknown. Elapsed time is not server computation. Active chat count, prompt length, and author benchmarks do not establish actual costs or savings. Small samples do not establish a general model or skill ranking. With no new evidence, retain the last decision instead of repeating the evaluation.
 
-Useful references: [Build skills](https://learn.chatgpt.com/docs/build-skills) and [Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents).
+For a material open question, use [bounded research](research.md). Its optional role does not change core registration or add a release gate.
+Host-specific sources and operations are in [host-adapters.md](host-adapters.md).
