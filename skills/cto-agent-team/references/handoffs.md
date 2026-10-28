@@ -6,7 +6,7 @@ This file gives application guidance. It does not replace the standard. Short se
 
 ## Draft
 
-Keep task identity, authorization, target, input files, write resources, acceptance criteria, evidence, and delivery ownership in labeled fields. Keep exact values as data. Put actions in numbered work steps. Use a separate item for each question. This team's one-question-per-item convention is not a quoted STE rule.
+Keep task identity, authorization, and target in labeled fields. Include explicit product direction and constraints, input files, writable resources, observable acceptance, evidence, and delivery ownership. Keep exact values as data. Put actions in numbered work steps. Use a separate item for each question. This team's one-question-per-item convention is not a quoted STE rule.
 
 For a task that needs a skill, include its selected name, source/version when known, reading requirement, and relevant compatibility limits. Reuse valid reading evidence in the same context. UI selection follows [ui-design.md](ui-design.md), and coding or workflow modules follow [coding.md](coding.md). A skill name alone is not evidence of use or new action authorization.
 

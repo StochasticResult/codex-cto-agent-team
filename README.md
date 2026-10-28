@@ -129,6 +129,10 @@ An ended turn does not schedule its own return. This repository contains no back
 
 ## Task skills
 
+Before relevant planning, implementation, or review, find suitable skills in the available catalog.
+Select user- or project-specific guidance before generic preferences. Read actual selected content and relevant references.
+Keep explicit style, constraints, and observable acceptance in handoffs. Record the few decisions that changed the output.
+
 - **Coding and review:** read and apply the actual [Ponytail core](https://github.com/DietrichGebert/ponytail), with `full` guidance by default.
   This applies to any role doing relevant work. Include it in applicable new or resumed agent handoffs.
   Reuse existing helpers and deliver the smallest complete change. Preserve required validation, security, accessibility, error handling, and data integrity.
@@ -146,6 +150,10 @@ Mechanical monitoring does not require loading every skill on each tick.
 Do not restart accepted UI or repeat passed checks merely because a skill preference changed.
 Third-party benchmarks do not establish this team's measured token, time, or cost savings.
 See [coding.md](skills/cto-agent-team/references/coding.md) and [ui-design.md](skills/cto-agent-team/references/ui-design.md).
+
+Responsible owners compare the actual artifact with acceptance criteria. Skill names, reading evidence, and passing code tests alone do not establish visual or business acceptance.
+Visual claims need relevant observed views tied to the artifact revision. Claims about published appearance need evidence from that served version.
+Record missing observations. Use proportional checks, without a blanket browser gate, repeated full-site review, or new user approval flow.
 
 ## Capacity recovery
 

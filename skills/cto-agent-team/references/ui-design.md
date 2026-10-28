@@ -1,6 +1,6 @@
 # UI skill selection
 
-Consider Anthropic Frontend Design for applicable frontend work. Select Frontend Design, `emil-design-eng`, or both according to the task and actual skill content. There is no fixed Emil priority. Honor user overrides and preserve product requirements, the existing design system, accessibility, and task speed. Pure backend, invisible build configuration, or unrelated research work does not require loading complete UI design skills.
+Start with explicit user or project design direction and find matching skills in the available catalog. Consider Anthropic Frontend Design for applicable frontend work. Select Frontend Design, `emil-design-eng`, or both as useful alongside that specific guidance. There is no fixed Emil priority. Preserve product requirements, the existing design system, accessibility, and task speed. Pure backend, invisible build configuration, or unrelated research work does not require loading complete UI design skills.
 
 | Task | Useful selection |
 | --- | --- |
@@ -15,11 +15,13 @@ Sources: [Anthropic Frontend Design](https://github.com/anthropics/skills/tree/d
 
 Find each selected skill in the current environment's skill catalog. Read its actual `SKILL.md` and only the references relevant to the task. Resolve references through that skill's own provider or directory. Do not assume a machine-specific path or embed third-party skill text here. If a dependency is absent, reuse its installation owner or the available authorized skill-installer workflow. State an access or installation failure and its effect accurately. Do not claim a skill was read when it was unavailable.
 
-Give the assigned engineer the UI goal, target component or view, product constraints, existing design system, expected interaction, and acceptance criteria. Require actual application of the skill, rather than a name in the handoff. Keep evidence in private task records: the source/version read where available, applicable sections, concrete choices, reasons, and validation limits.
+Give the assigned engineer the UI goal, explicit product style, and target component or view. Include constraints, the existing design system, expected interaction, and observable acceptance. Keep this direction in the handoff. Record the few skill-informed decisions that changed the output, their reasons, the artifact pointer, and validation limits privately. Installation, catalog presence, a skill label, and reading evidence do not establish application or acceptance.
 
 Useful decisions include whether motion serves a real interaction, how feedback preserves task speed, and how keyboard, focus, reduced-motion, touch, and narrow-screen behavior remain usable. Preserve the current design system and user requirements. Add motion only for a useful purpose. Do not automatically apply every animation technique or load every skill from the upstream collection. Other skills retain their own applicability and explicit-invocation rules.
 
 For a UI code review, follow the selected skill's applicable review format. When using Emil, use its required Before/After/Why table. Tie findings to observed interface behavior and scoped source. Do not invent issues to fill the table. A real accessibility or behavior failure justifies a targeted correction and affected checks. A preference alone does not justify repeating completed work, unchanged tests, or release review.
+
+The responsible PM compares the actual artifact with the explicit style, constraints, and acceptance. Visual claims need relevant observed views tied to the artifact revision, such as screenshots or inspected rendered states. Passing code tests alone does not establish appearance or business acceptance. A claim about published appearance needs evidence from the served version. Record unavailable observations and remaining limits. Keep checks proportional to changed views and unresolved concerns, without a blanket browser gate or full-site review. Owners address observed failures within scope instead of leaving obvious checks to the user.
 
 Apply this selection rule to unfinished UI work. Keep accepted candidates moving through the existing release path. Record any concrete design issue that changes readiness, rather than adding a general design approval gate. Model settings, resource ownership, action permissions, ASD-STE100 handoffs, and completion-notification rules remain unchanged.
 
