@@ -26,6 +26,8 @@ Use one notification owner and one monitor per task. Record a result revision an
 
 If the required monitoring capability or authorization is missing, say so briefly and record follow-up as unavailable or pending. Offer a concrete supported way to check the task later. Ending a turn does not by itself schedule another turn, and an existing chat is not a permanently running worker. Task and notification records are described in [state.md](state.md); the role helper does not perform this monitoring.
 
+For a confirmed temporary model-capacity failure, use [the recovery workflow](recovery.md). The CTO resumes PMs, and the owning PM resumes engineers. A failed shell command or a quiet chat alone does not establish model-capacity failure. Reuse the task's existing authorized monitor when delayed follow-up is necessary. Do not create competing recovery monitors or notify the user about each ordinary retry.
+
 ## Choose and authorize the mode
 
 Determine the user's goal, applicable project instructions, execution environment, existing authorization, and available tools before dispatching. A request to use this skill does not itself authorize creating independent chats or forwarding tasks between them. Reuse prior explicit authorization for CTO-to-PM and PM-to-CS task forwarding; obtain missing authorization before those messages. Only create independent chats when the user requests them. Reuse verified existing chats where suitable.

@@ -82,6 +82,14 @@ CTO 聊天是持续接单入口。每条独立需求先建立唯一任务编号�
 
 快速接单、多需求跟踪、并行推进和完成通知流程继续适用，语言检查不扩大创建会话、转发消息或发布的授权。
 
+## 临时模型容量故障恢复
+
+CTO 负责 PM 的恢复，各 PM 负责本队工程师的恢复。确认属于临时模型容量故障后，读取工单、最近轮次和已保存证据，在原聊天继续未完成部分，不让用户逐次点击重试。保留原模型和推理强度；未经用户明确同意，不更换模型或降低推理档位。
+
+恢复前核实当前状态，不重启运行中的轮次，不重复已完成工作。按记录的 0、2、5、10、15 分钟间隔退避，后续采用 15 分钟间隔；服务方要求更久时遵守其 retry-after。记录失败轮次及每次尝试，发送结果不明时先查实际状态，不盲目重发。构建、发布、数据写入和对外消息也须按已有证据避免重复。
+
+普通容量恢复保持安静。认证失败、账号额度耗尽、审批、取消和永久错误分别处理。延迟恢复依靠当前可用且获授权的监测能力，优先复用现有跟进；技能本身不提供后台进程。真实 ID、错误和重试状态只写私有目录。详见[恢复工作流](skills/cto-agent-team/references/recovery.md)。快速接单、多需求跟踪、完成通知及 ASD-STE100 要求继续适用。
+
 ## 私有状态与命令
 
 公开仓库只包含通用规则和去身份化编制。把实际运行状态、聊天 ID、host ID、证据和本机路径放在公开仓库及 skill 安装目录之外的私有 `state-dir`；凭据通过安全存储引用，不写入登记。各 PM 负责本队登记，CTO 负责聚合索引。脚本使用共用的 `registry.json`；写入时由 CTO 协调串行执行。详见 [状态约定](skills/cto-agent-team/references/state.md)。
@@ -115,6 +123,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [SKILL.md](skills/cto-agent-team/SKILL.md)：发现条件、模式选择和执行入口。
 - [workflow.md](skills/cto-agent-team/references/workflow.md)：派单、工具使用、回报与验收。
 - [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
+- [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
 - [team_state.py](skills/cto-agent-team/scripts/team_state.py)：离线状态助手。
