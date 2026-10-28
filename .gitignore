@@ -1,0 +1,18 @@
+# Runtime organization data belongs outside this public repository.
+.cto-agent-team/
+state/
+private-state/
+runtime/
+team/chats/
+team/tasks/
+*.local.json
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.DS_Store
+Thumbs.db
