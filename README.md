@@ -242,6 +242,15 @@ Ordinary validation permits uncreated roles. Existing private snapshots retain t
 If repeating initialization of an older all-xhigh snapshot, supply its original overrides, including `--effort xhigh`.
 See [state.md](skills/cto-agent-team/references/state.md).
 
+## Work records
+
+For requested records, use [work-recording.md](skills/cto-agent-team/references/work-recording.md).
+Configure included and excluded projects privately. Formal team, skill, or game-business work can be included when the user's scope permits it.
+Use durable source/project/task identity and revision evidence. Keep stages, reopened work, partial scope, and unknown time accurate.
+Preserve manual changes and deletion tombstones. Use bounded incremental batches through the actual authorized target contract.
+Record a successful cursor change only after commit and readback validation. Failed or unavailable coverage stays pending without losing history.
+This guidance adds no collector, scheduler, personal timeline backend, or automatic synchronization.
+
 ## Portable use and improvement
 
 For another project or machine, follow [portable setup and resume](skills/cto-agent-team/references/state.md#portable-setup-and-resume).

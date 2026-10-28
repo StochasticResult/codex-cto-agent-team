@@ -91,3 +91,8 @@ Use measured elapsed time, waits, rework, defects, tool calls, or usage only whe
 
 For a material open question, use [bounded research](research.md). Its optional role does not change core registration or add a release gate.
 Host-specific sources and operations are in [host-adapters.md](host-adapters.md).
+
+## Requested work records
+
+Use [work-recording.md](work-recording.md) for configured scope, revision-based identity, truthful stages, manual overrides, and incremental synchronization.
+A record update does not replace task acceptance or delivery. Keep failed source coverage pending and preserve the last successful cursor.
