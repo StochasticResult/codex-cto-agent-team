@@ -80,6 +80,12 @@ CTO 聊天是持续接单入口。每条独立需求先建立唯一任务编号�
 
 同一共享文件或操作保持一名写入负责人，实际线上切换保持唯一负责人；候选准备、发布政策和技能更新等独立工作可同时推进。剩余工作若只能串行，记录具体原因。没有新价值就不凑足人数、不重复审查、不重跑输入未变且已通过的检查；聊天数量与 active 状态均不能证明实际并行计算能力。详见[调度工作流](skills/cto-agent-team/references/workflow.md)。
 
+## 默认编码与审阅技能
+
+编码、修复、重构、依赖选择和代码审阅使用 [Ponytail 核心技能](https://github.com/DietrichGebert/ponytail)。读取实际内容，默认采用 `full` 指导；它要求先追踪行为及调用方，复用现有能力，完成最小且完整的实现。必要验证、错误处理、安全、可访问性、数据完整性及测试继续保留。`lite/full/ultra` 是技能行为档位，不是模型或推理档位。
+
+Ponytail 控制实现复杂度，Emil 继续负责 UI 设计偏好。独立核心技能不依赖 Claude 专用插件、仪表板或 hooks；只报告本环境实际安装并验证的能力。上游节省 token、时间或费用的数字是作者特定条件下的基准，不是本团队实测结果。详见[编码指南](skills/cto-agent-team/references/coding.md)。
+
 ## 默认 UI 设计技能
 
 UI 设计、组件实现、交互、视觉细节和 UI 审阅默认使用 [emilkowalski/skills](https://github.com/emilkowalski/skills) 的 `emil-design-eng`，后续用户指定优先。通过当前技能目录查找并读取实际内容及相关参考，交接时要求工程师应用到具体界面，并把设计选择、理由和验证局限写入私有任务证据，不能只列技能名称。
@@ -136,6 +142,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [workflow.md](skills/cto-agent-team/references/workflow.md)：派单、工具使用、回报与验收。
 - [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
 - [ui-design.md](skills/cto-agent-team/references/ui-design.md)：默认 UI 技能、可移植依赖发现和具体设计证据。
+- [coding.md](skills/cto-agent-team/references/coding.md)：Ponytail 核心指导、完整实现及平台能力边界。
 - [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
