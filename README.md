@@ -74,6 +74,14 @@ CTO 聊天是持续接单入口。每条独立需求先建立唯一任务编号�
 
 任务、授权、资源归属和通知状态只保存到私有 `state-dir`。本仓库的 helper **只处理角色登记**，任务记录由 CTO/PM 按[状态约定](skills/cto-agent-team/references/state.md)维护，跟进依靠环境提供的监测工具；未实现自有后台调度服务。完整流程见[工作流](skills/cto-agent-team/references/workflow.md)。
 
+## ASD-STE100 交接文字
+
+英文 PM 工单、工程师交接和向他人提出的问题，使用官方 ASD-STE100 的写作规则与词典。当前参考为 [Issue 9](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf)，并链接[官方 FAQ](https://www.asd-ste100.org/STE_faq.html)。逐项核对词义、词性、词形、技术术语和适用写作规则，不能用“句子短”替代标准。文件名、代码标识和命令保留原值；缩写、单位与技术术语结合项目规范检查。
+
+详细方法及短例子见[交接指南](skills/cto-agent-team/references/handoffs.md)。指南区分起草、已检查和经核验证据支持的合规结论。例句已按可获取的官方规则和词典进行来源核对，但不等于对所有文字或后续交接作正式认证。中文用户摘要保持清楚，不宣称符合英文标准。标准全文与词典不随本仓库发布。
+
+快速接单、多需求跟踪、并行推进和完成通知流程继续适用，语言检查不扩大创建会话、转发消息或发布的授权。
+
 ## 私有状态与命令
 
 公开仓库只包含通用规则和去身份化编制。把实际运行状态、聊天 ID、host ID、证据和本机路径放在公开仓库及 skill 安装目录之外的私有 `state-dir`；凭据通过安全存储引用，不写入登记。各 PM 负责本队登记，CTO 负责聚合索引。脚本使用共用的 `registry.json`；写入时由 CTO 协调串行执行。详见 [状态约定](skills/cto-agent-team/references/state.md)。
@@ -106,6 +114,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 
 - [SKILL.md](skills/cto-agent-team/SKILL.md)：发现条件、模式选择和执行入口。
 - [workflow.md](skills/cto-agent-team/references/workflow.md)：派单、工具使用、回报与验收。
+- [handoffs.md](skills/cto-agent-team/references/handoffs.md)：ASD-STE100 交接、术语核对、例句与检查局限。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
 - [team_state.py](skills/cto-agent-team/scripts/team_state.py)：离线状态助手。

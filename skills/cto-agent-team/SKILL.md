@@ -9,6 +9,8 @@ Coordinate a CTO, five product managers (PMs), and ten engineers (CS) per PM. Th
 
 Honor the user's task, permissions, and any applicable `AGENTS.md` in the target project. Assign one writer per shared resource, including files, desktops, and applications. The CTO coordinates conflicts across teams. Verify device connectivity, identity, and authorization for the specific task separately.
 
+Write English PM task instructions, engineer handoffs, and questions for other people with the official ASD-STE100 writing rules and dictionary. Read [handoffs.md](references/handoffs.md) before drafting or checking this text. Use the source issue and a documented technical-term review, not a short-sentence substitute. Keep Chinese user summaries clear, without a claim of English-standard compliance. Distinguish a draft, a checked text, and verified compliance. State missing checks and review limits.
+
 Default PMs to `gpt-6.1-sol` with `xhigh` reasoning and engineers to `gpt-6.1-terra` with `xhigh`; accept user overrides. If a requested model is unavailable, report the limitation rather than silently substituting another model.
 
 User authorization for internal delegation and message forwarding is required; reuse prior explicit authorization. Skill selection alone does not authorize creation of independent chats. Create independent chats only when the user requests them; preferentially reuse verified existing chats. For a general request for agents, use collaboration only when authorized and available, or plan the work first. Read [workflow.md](references/workflow.md) when establishing or operating the team, dispatching, or collecting results.
