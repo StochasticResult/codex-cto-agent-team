@@ -8,6 +8,8 @@ This file gives application guidance. It does not replace the standard. Short se
 
 Keep task identity, authorization, target, input files, write resources, acceptance criteria, evidence, and delivery ownership in labeled fields. Keep exact values as data. Put actions in numbered work steps. Use a separate item for each question. This team's one-question-per-item convention is not a quoted STE rule.
 
+For a task that needs a skill, include its selected name, source/version when known, reading requirement, and relevant compatibility limits. Reuse valid reading evidence in the same context. UI selection follows [ui-design.md](ui-design.md), and coding or workflow modules follow [coding.md](coding.md). A skill name alone is not evidence of use or new action authorization.
+
 Use the applicable rules in the source, including vocabulary, grammar, sentence construction, and consistency. For procedures, apply section 5's 20-word sentence limit, command form, and separation of instructions. Rule 5.2 permits simultaneous actions in one sentence. Separate other instructions into sentences. Page 1-5-3 also permits multiple sentences in a work step for simultaneous actions or an immediate result after an action. Preserve these relationships when you divide work steps. Put a necessary condition before its action. For descriptions, apply section 6. Apply section 8's counting method, rather than a whitespace counter. Preserve necessary context when you divide a sentence.
 
 ## Check words and terms
