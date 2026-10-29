@@ -29,7 +29,8 @@ Use query-result evidence, not a merged timestamp, to establish coverage. Record
 For missing targets, change supported query grouping or use bounded individual queries within current tool limits.
 One logical pass does not require one call per target on every host. Keep the remaining coverage gap explicit.
 Do this required observation before the [user-report sending gate](workflow.md#completion-follow-up-and-notification).
-Report silence does not stop authorized internal recovery.
+Reporting hours do not stop authorized unfinished tasks, necessary internal handoffs, background work, or automatic recovery and retries.
+Apply the sending gate only to proactive user reports. Keep cancellation, explicit stops, meeting protection, dependencies, ownership, and capacity/backoff constraints.
 
 ## Resume with evidence
 

@@ -28,8 +28,12 @@ When the user requests completion notification, arrange follow-up before ending 
 
 Give the monitor the task ID, owning PM chat, acceptance criteria, private record location, retry executor, and notification owner. Its instructions should read bounded task status or wait snapshots with saved cursors, advance the private record, and stay quiet while nothing actionable changes. Use one logical observation pass per cycle with [current target coverage](recovery.md#current-observation-coverage). Missing results can need bounded follow-up queries. Leave actual implementation with suitable agents. Do not use a recurring high-cost CTO loop to supervise this monitor. If the PM can resolve a blocker within its authority, leave the repair with the PM.
 
-Do required authorized recovery observation before applying the user's report-hours sending gate to user-facing messages.
-Report silence does not stop authorized internal recovery. Keep notices pending outside the allowed sending hours under the user's notification policy.
+Reporting hours and execution constraints are separate.
+Continue authorized unfinished tasks, necessary internal handoffs, background work, and required recovery observation before the proactive user-report sending gate.
+Outside reporting hours, continue that authorized work. Keep proactive user reports pending under the user's notification policy.
+Do not stop the execution pass at its reporting gate while authorized work or required recovery handling remains.
+Keep real execution constraints: cancellation, explicit stops, meeting protection, dependencies, single-writer ownership, capacity, and backoff.
+No unfinished work means no new work, busy polling, extra paid monitoring, or repeated effects.
 Preserve event/result revisions and delivery evidence. Reconcile uncertain delivery before sending again.
 Do not infer a new notification exception from a recovery event.
 
