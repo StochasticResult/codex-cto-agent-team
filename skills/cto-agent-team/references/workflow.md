@@ -37,6 +37,40 @@ No unfinished work means no new work, busy polling, extra paid monitoring, or re
 Preserve event/result revisions and delivery evidence. Reconcile uncertain delivery before sending again.
 Do not infer a new notification exception from a recovery event.
 
+### Asynchronous progress events
+
+Within explicit reporting authority, use the existing configured clerk/supervisor and its `mechanical_supervision` route.
+Keep its model and schedule settings. Do not create another role, automation, or poll.
+Give updates for meaningful starts when needed, verified milestones, material blockers/scope changes, and completion with evidence.
+Short tasks can use a final result alone when sufficient. Do not create unchanged check-ins or per-tool-call reports.
+
+Record each event in existing task evidence. Engineers give concise events to their own PM.
+Keep task/revision/event identity, stage or result revision, source role, actual change, verified scope/limits, and next owner/action.
+Keep an artifact reference with a hash, or an actual message/turn reference.
+A source file alone does not establish accepted completion.
+
+PMs examine the exact task/revision and evidence. They give the clerk a concise report.
+The clerk reads bounded reports and exact evidence pointers, not full chat histories.
+It prepares a concise report ready for plain-language delivery. It makes no implementation, acceptance, or release decision.
+
+For prompt CTO updates, it gives only verified completions and blockers that require user action.
+Ordinary milestones use the existing 30-minute digest.
+The CTO promptly gives verified completion and user-action blocker notices to the user within configured reporting hours.
+Continue authorized work without waiting for reporting acknowledgments or the whole batch. Existing execution holds still apply.
+
+Keep separate engineer-to-PM, PM-to-clerk, clerk-to-CTO, and CTO-to-user receipts.
+For each hop, keep pending state, available tool acceptance, and actual receiver evidence.
+Internal acceptance or a CTO receipt does not prove user-visible delivery. The CTO records that delivery only with actual user-visible message/reply evidence.
+
+Keep unobserved hops pending. Keep event identity and earlier receipts separately for each hop.
+Use those records for deduplication and uncertain-send reconciliation.
+Do not duplicate a final result on a hop where existing waits already collected it.
+
+Keep configured report hours and the existing digest schedule unchanged.
+Outside that window, keep results for one current consolidated catch-up. Internal authorized work and reporting continue.
+Use the next real event for delivery evidence. Do not add a test send or synthetic completion.
+Do not wake workers for check-ins or tests. Authorized real-event delivery remains permitted.
+
 Route a meaningful failure or completed-result candidate to the responsible decision maker. A completion candidate must match the task and result revision and include artifact and acceptance evidence. The mechanical supervisor does not grant final acceptance or take over a release owner. Sending an event to the CTO or another chat requires explicit authorization for that recipient and scope. Preserve that authorization in the handoff. Without it, retain the event privately for authorized collection. Do not send pending, unchanged, or ordinary retry updates.
 
 Before announcing completion, inspect the PM's final result and relevant evidence: acceptance outcome, artifact or repository link, revision or commit where applicable, tests, and material limitations. A completed tool call or an idle chat alone does not establish acceptance. The notification should be concise and include the useful result link or artifact and any necessary limitation.
@@ -66,7 +100,8 @@ For initialization, request only a readiness acknowledgment with the role and un
 Do not have initializing workers write shared state. Record only actual tool-returned identifiers.
 Reconcile an unknown creation result before retrying. A role definition is not evidence of a real worker.
 
-The PM collects engineer results, and the CTO collects PM results through the host's supported result operation.
+PMs collect engineer results through the host's supported result operation.
+Use the [authorized reporting path](#asynchronous-progress-events) for PM updates to the CTO.
 Use saved cursors where available. Keep waits bounded. A dispatch does not authorize a subordinate to send another chat a reply.
 Keep independent chats, subagents, readiness, and actual computation distinct. Missing tools do not authorize private API workarounds.
 
