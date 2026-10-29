@@ -2,7 +2,13 @@
 
 ## Responsive intake and independent delivery
 
-Use the CTO chat as the user's continuing intake point. Accept a new request without discarding existing tasks. For each independent request, create a unique task ID in the private state directory, record the goal and observable acceptance criteria, choose an owning PM, and identify dependencies and resources. A practical ID combines the intake date with a short unique suffix. Acknowledge with a short user summary, for example: “任务 TASK-ID 已派给 PM04。” Chinese summaries do not carry a claim of English-standard compliance.
+Use the CTO chat as the user's continuing intake point. Accept a new request without discarding existing tasks.
+Before or at dispatch, find the canonical task record in the private state directory.
+If it does not exist, make one.
+Keep a stable task ID and the source request reference, when available.
+Record the goal, observable acceptance criteria, owning PM, dependencies, and resources.
+
+A practical ID combines the intake date with a short unique suffix. Acknowledge with a short user summary, for example: “任务 TASK-ID 已派给 PM04。” Chinese summaries do not carry a claim of English-standard compliance.
 
 Dispatch a complete handoff to the owning PM, then end the CTO turn without waiting for implementation. Include the task ID, user request, clarifications, goal, scope, explicit product direction, constraints, and observable acceptance. Include prior results, authorization limits, target host and absolute paths, input files, dependencies, exclusive writable resources, and expected evidence. Name the owners of validation, installation or publication, and result delivery. The PM must have enough context and authority to close the task independently. Missing optional details can be resolved by the PM; ask the user a short question only for a necessary decision.
 
@@ -18,7 +24,18 @@ Select a Superpowers module only when it adds useful guidance to the task. Check
 
 PMs scope work for their own engineers, collect and review evidence, repair failures, and complete authorized delivery in their own chats. Keep implementation details and routine progress there. The CTO's user-facing messages stay brief: start acknowledgment, completion with a usable result, or a failure that requires user action. Delegating delivery does not grant new permission for external messages, publication, devices, or purchases.
 
-Multiple independent requests can proceed through their owning PMs in parallel within actual tool and account capacity. Track each task's status, dependencies, write resources, and current owner; a new user message does not replace an earlier task. For a clarification, scope change, or cancellation concerning an existing request, update that task and forward the change to its PM with a revision. An unrelated request gets a new task. If the relationship is unclear, preserve existing work and clarify only what affects execution.
+Multiple independent requests can proceed through their owning PMs in parallel within actual tool and account capacity. Track each task's status, dependencies, write resources, and current owner; a new user message does not replace an earlier task.
+
+For follow-up instructions about the same deliverable, change the same task record. Increase its revision.
+Give its PM the change with that revision. This includes clarifications, scope changes, and cancellation.
+Give a separate deliverable a new task ID and an applicable parent link.
+If the relationship is unclear, preserve existing work and clarify only what affects execution.
+
+Use the existing configured clerk for one private task index. Keep one entry per task ID, with concise task/evidence pointers.
+The task owner's canonical file is authoritative for scope, owner, status, acceptance, and evidence.
+PMs give material status changes, exact task/revision, and evidence pointers through the [existing reporting path](#asynchronous-progress-events).
+Record completion only with the designated owner's acceptance and exact result evidence.
+Keep actual user-visible delivery as a separate receipt under that path.
 
 Before assigning overlapping files, devices, desktops, applications, or deployment environments, the CTO coordinates order or isolation with the owners. Record which task holds the resource and which is waiting. On cancellation, stop further dependent work through the available task controls, release ownership after checking actual execution, and retain evidence of completed or irreversible actions. Do not report a task cancelled while its worker is still performing it.
 
