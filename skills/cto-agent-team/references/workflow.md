@@ -69,6 +69,7 @@ Do not duplicate a final result on a hop where existing waits already collected 
 Keep configured report hours and the existing digest schedule unchanged.
 Outside that window, keep results for one current consolidated catch-up. Internal authorized work and reporting continue.
 Use the next real event for delivery evidence. Do not add a test send or synthetic completion.
+
 Do not wake workers for check-ins or tests. Authorized real-event delivery remains permitted.
 
 Route a meaningful failure or completed-result candidate to the responsible decision maker. A completion candidate must match the task and result revision and include artifact and acceptance evidence. The mechanical supervisor does not grant final acceptance or take over a release owner. Sending an event to the CTO or another chat requires explicit authorization for that recipient and scope. Preserve that authorization in the handoff. Without it, retain the event privately for authorized collection. Do not send pending, unchanged, or ordinary retry updates.
