@@ -37,6 +37,11 @@ PMs give material status changes, exact task/revision, and evidence pointers thr
 Record completion only with the designated owner's acceptance and exact result evidence.
 Keep actual user-visible delivery as a separate receipt under that path.
 
+Use a local team status dashboard as part of task intake and PM updates.
+Show projects, user tasks, and the current work of subordinate agents from canonical task records.
+Before or at dispatch, the owning PM records meaningful assignments under the [work-item and age rules](state.md#task-and-notification-records).
+Keep the dashboard's status, source time, and age labels consistent with those records.
+
 Before assigning overlapping files, devices, desktops, applications, or deployment environments, the CTO coordinates order or isolation with the owners. Record which task holds the resource and which is waiting. On cancellation, stop further dependent work through the available task controls, release ownership after checking actual execution, and retain evidence of completed or irreversible actions. Do not report a task cancelled while its worker is still performing it.
 
 ## Completion follow-up and notification

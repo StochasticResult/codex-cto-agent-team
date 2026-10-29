@@ -23,6 +23,7 @@ Each independent request needs a unique ID. A useful record contains:
 | Field | Purpose |
 | --- | --- |
 | `id`, `revision`, `objective`, `acceptance` | Stable identity, changes, goal, and observable completion conditions. |
+| `project` | Private project reference for task grouping. |
 | `owner_pm`, `status`, `depends_on` | Responsible PM, progress, and dependencies on other task IDs. |
 | `target`, `write_resources`, `lease_owner` | Authorized host and paths, shared resources, and current exclusive owner. |
 | `authorization`, `handoff` | Existing user authorization and limits, context, input files, and final delivery responsibility. |
@@ -32,7 +33,23 @@ Each independent request needs a unique ID. A useful record contains:
 
 Use task statuses such as `queued`, `ready`, `running`, `review`, `done`, `blocked`, and `cancelled`. Keep the reason for a blocked task and the dependency it is waiting on. Mark `done` only after the designated owner verifies acceptance and authorized delivery. Role registration's `planned/created/ready` statuses describe chats, not business-task progress.
 
-For tasks with independent outputs, keep a small `work_items` list. Record each item's owner, output, dependencies, acceptance, write resources, evidence, and actual state. Distinguish ready but unassigned work from a dependency wait or a capacity failure. Record why a serial item must wait and which event permits it to start. These task records do not change the helper's role-registration schema.
+For every meaningful PM/engineer assignment, the owning PM keeps a `work_items` entry in the canonical task record.
+Before or at dispatch, record a stable item ID, agent role, work summary, owner, output, and actual status.
+Include current activity, next action, blockers/dependencies, last meaningful update time, and evidence pointers.
+Keep acceptance criteria and write resources with the item.
+Change the entry at dispatch, actual state changes, and meaningful milestones.
+Do not record each tool call or unchanged polls.
+
+Distinguish ready but unassigned work from a dependency wait or a capacity failure. Record why a serial item must wait and which event permits it to start. These task records do not change the helper's role-registration schema.
+
+Show each task or assignment's last meaningful update time as its source timestamp, with record age.
+For missing status or source time, show the affected value as `unknown`.
+If source time is missing, keep record age and freshness `unknown`.
+If record age is greater than its declared limit, show freshness as `stale`.
+Without a declared age limit, keep freshness `unknown`.
+Do not change an unchanged source timestamp during a read.
+
+Saved records do not give continuous live agent telemetry. The role helper does not implement a dashboard or telemetry.
 
 For notification bookkeeping, keep `requested`, `owner`, `monitor_id`, `wait_cursors`, `result_revision`, `key`, `status`, `notified_at`, and `message_ref` where relevant. Suggested notification states are `pending`, `monitoring`, `sending`, `notified`, `unavailable`, and `cancelled`. Store actual tool identifiers only in this private record. When monitoring is unavailable, record the reason instead of recording an imaginary scheduled check. After a notification is verified delivered, retain the result evidence and mark `notified`. Remove that duty; disable a one-time monitor only when no duties remain. Reconcile unknown delivery before retrying.
 
