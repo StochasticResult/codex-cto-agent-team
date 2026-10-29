@@ -10,6 +10,27 @@ Read the latest task record, actual chat state, latest turn, and available error
 
 Do not send a retry while a turn is active. Do not retry completed or cancelled work. Distinguish temporary capacity from invalid credentials, account or quota exhaustion, approval requests, permanent errors, and an intentional stop. Resolve those conditions through the applicable task workflow. Ask the user only when a specific decision or action is necessary. Do not ask the user to click retry for an ordinary temporary capacity error.
 
+The child's own manager owns engineer/helper recovery. Route that failure to the manager through an authorized channel.
+A child capacity error does not justify retrying a manager whose own turn is healthy.
+
+## Current observation coverage
+
+Before each required recovery pass, find current manager/helper identities, registered extensions, and actual unfinished assignments within authorization.
+Role configuration and a saved roster do not establish current coverage.
+Record one logical observation pass with its target identities, returned identities, missing targets, and observation evidence.
+Record each observed target's query time and available cursor.
+Compare each returned identity with its target for this pass.
+If assignments change, compare the new assignments with the pass targets before recording complete coverage.
+Treat missing or partial batch results as incomplete. Mark missing or mismatched identities as unknown.
+A batch's first returned target does not establish complete coverage.
+A cached timestamp from merged state is historical evidence, not a current observation for this pass.
+Use query-result evidence, not a merged timestamp, to establish coverage. Record a healthy result only with current evidence.
+
+For missing targets, change supported query grouping or use bounded individual queries within current tool limits.
+One logical pass does not require one call per target on every host. Keep the remaining coverage gap explicit.
+Do this required observation before the [user-report sending gate](workflow.md#completion-follow-up-and-notification).
+Report silence does not stop authorized internal recovery.
+
 ## Resume with evidence
 
 Before each send, inspect current task and turn state again. Read saved outputs, accepted work, running processes, release ownership, and any external-operation evidence relevant to the unfinished step. Continue in the same chat with the failed turn's recorded configuration. Pass its exact native request through the verified host mapping. Do not discard a speed, effort, or other supported parameter. Use the current supported message tool and its schema. Do not create replacement engineers or duplicate chats to get around capacity.
@@ -19,6 +40,12 @@ Record a pending attempt before sending. Identify the failed-turn record with th
 Resume only unfinished work. In the message, retain the task ID, exact scope, current authorization, saved evidence, remaining acceptance, resource ownership, and recovery limits. Apply [handoffs.md](handoffs.md) to English recovery instructions. Do not repeat completed publication, builds, releases, data writes, or external messages. If an earlier external action has an unknown result, inspect that external state before another action.
 
 After the send, save its returned outcome and the observed new turn ID when available. If the result is uncertain, inspect the chat before another send. An active turn, a completed result, or an accepted continuation must not receive a duplicate retry. Do not infer failure from a missing immediate reply.
+
+Keep `requested`, `accepted`, `executing`, and `observed_recovered` as separate recovery evidence states in private task records.
+A request or accepted dispatch does not prove that work is executing.
+Record the `executing` state only with current turn/work evidence.
+Use observations of resumed work as evidence for `observed_recovered`.
+Recovery evidence does not establish feature acceptance.
 
 ## Delay and follow-up
 
@@ -31,6 +58,11 @@ Stop retrying when work completes, is cancelled, is already active, or the obser
 ## Review limits
 
 Keep actual chat IDs, failed turns, paths, errors, attempts, and notification state in the private state directory. Public guidance uses role names and generic task references only. A recorded attempt does not prove success. Inspect the resumed turn and its work. Tests or walkthroughs of this procedure do not establish provider availability or guarantee recovery within a fixed time.
+
+For a changed supervision workflow, examine deterministic offline cases for missed targets, partial batches, child failures, and uncertain sends.
+If runtime validation is needed, use a safe bounded observation pass through supported tools within authorization.
+Do not manufacture capacity failures or add a monitor to watch the supervisor.
+Record the checks actually performed and their limits. A bounded pass does not establish uninterrupted reliability or feature completion.
 
 ## Exact request selection
 
