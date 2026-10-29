@@ -94,6 +94,12 @@ Use an existing task-completion or recurring-failure event. Do not add a periodi
 
 Match context to the item. Simple extraction needs the supplied material. Implementation needs the relevant callers and selected skill content. Complex work needs the affected cross-system evidence. Mechanical supervision needs bounded status and cursors. Use [task routes](model-routing.md) and approved escalation when the evidence warrants it. Installation, distribution, reading, and application are distinct claims. Reuse valid reading and successful checks for unchanged inputs.
 
+Keep complete logs and large tool payloads in existing private task evidence.
+Give a bounded result with exact input/revision references, actual checks, limits, and next action.
+Read relevant artifact sections before printing full logs or inventories.
+Keep critical facts, unresolved failures, and required acceptance/recovery evidence even when a longer result is necessary.
+Use [bounded continuation context](state.md#bounded-continuation-context) when continuing work.
+
 Observe first, then verify a concrete hypothesis with proportional evidence. Mark a change `adopted` after relevant checks support its intended scope. Keep limited runtime evidence under `trial`. Record the scope and remaining uncertainty. If new waiting, duplicate effects, or quality loss appears, retire the trial or roll back to a known useful method. Save current state and evidence first. A rollback must preserve newer sent and acknowledged events.
 
 Use measured elapsed time, waits, rework, defects, tool calls, or usage only when available. Missing values remain unknown. Elapsed time is not server computation. Active chat count, prompt length, and author benchmarks do not establish actual costs or savings. Small samples do not establish a general model or skill ranking. With no new evidence, retain the last decision instead of repeating the evaluation.

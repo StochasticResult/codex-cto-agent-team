@@ -54,6 +54,23 @@ Before recovery, save current state. Inspect the backup and preserve newer sent,
 
 At an actual turning point in a long task, append a short checkpoint to existing private task evidence. Record the time, input version, decision and reason, evidence pointer, and next unfinished action. Use another append-only entry for a correction so the earlier decision remains traceable. On resume, read the latest applicable checkpoint and confirm its pointers and input versions before continuing. Reuse valid acceptance. Do not create heartbeat logs, require full-transcript reads, add agents, or install a logging service for this method. See the [method source and boundaries](coding.md#consumer-contract-evidence).
 
+### Bounded continuation context
+
+Keep the latest goal, authority limits, active task identities/states, exact input/revision references, and current owners.
+Keep unresolved failures, pending effects, acceptance conditions, and next unfinished actions.
+Include exact facts required for the next action in the continuation itself.
+Keep required target identities and critical native request values explicit.
+Keep full logs and tool payloads in existing private evidence. Read relevant referenced sections first.
+On a missing fact or conflict, examine the original evidence and current user instructions before the affected action.
+Keep that action pending while required facts are missing or conflicting. A summary is not proof of acceptance.
+Use the host's supported continuing chat/session state. Do not add unchanged history already supplied by that state.
+Do not add a summarizer call at every turn.
+Do not omit required observations or acceptance evidence to shorten context.
+
+This original method draws on [session memory](https://developers.openai.com/cookbook/examples/agents_sdk/session_memory)
+and [agent continuation](https://developers.openai.com/api/docs/guides/agents/running-agents).
+It adds no SDK/runtime integration. Token, time, credit, and cost savings for this team remain unmeasured.
+
 ## Portable setup and resume
 
 1. Choose explicit paths for the target project, skill directory, and private state directory.
