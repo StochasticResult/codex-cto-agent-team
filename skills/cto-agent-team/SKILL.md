@@ -42,3 +42,5 @@ Keep actual chat and host identifiers, task and notification records, runtime ev
 Use completed-task or recurring-failure events to record bounded improvements. Read [workflow.md](references/workflow.md#evidence-based-improvement) for observation, validation, adoption, trial, and rollback. Keep unknown costs unknown. For another project or machine, follow [portable setup and resume](references/state.md#portable-setup-and-resume). Check needed capabilities and any required credentials or device permissions. Reuse valid authorization. Copied state cannot grant it.
 
 For requested work records, use [work-recording.md](references/work-recording.md). Keep project scope configurable, source identity durable, stages accurate, and manual changes intact. Synchronization depends on the authorized target and actual host capabilities.
+
+For browser tasks, honor the user's channel preference and [browser-channel rules](references/host-adapters.md#browser-channels). Discover actual tools before native control. Carry the preference, narrow exception limits, and required evidence through every handoff and model route.

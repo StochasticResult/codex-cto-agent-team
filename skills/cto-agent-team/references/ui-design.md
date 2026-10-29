@@ -48,3 +48,8 @@ Keep these outcomes distinct:
 Give a short actionable recovery path and appropriate undo or restoration. Preserve useful input where possible. Repeated confirmations do not repair unclear design. Keep approved automation and its permission boundaries. For AI results, make the basis, relevant sources, and uncertainty understandable. While an AI action is unfinished, keep its pending state accurate. Missing information must not appear as a certain answer or a completed action.
 
 Include a representative primary-task scenario in the handoff and acceptance. It should work without navigation hints from its author. Examine the actual path from entry to understood result. Record the artifact revision, starting conditions, actions, observed result, and limits. Label the method as a design assumption, an agent or fixture walkthrough, or research with real first-time users. Do not claim universal usability or measured efficiency from these assumptions. Keep validation proportional to the changed task and states.
+
+For a specified signed-in browser, acceptance needs the correct target/profile and actual page state, action, and observed result.
+Use supported structured browser evidence or necessary screenshots under the [browser-channel policy](host-adapters.md#browser-evidence).
+An independent browser, HTTP response, source marker, build, or simulated page does not replace that UI observation.
+Native screen control is not a prerequisite for actual UI evidence. Keep shared-resource and user-activity holds in force.

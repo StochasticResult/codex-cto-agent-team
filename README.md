@@ -242,6 +242,17 @@ Ordinary validation permits uncreated roles. Existing private snapshots retain t
 If repeating initialization of an older all-xhigh snapshot, supply its original overrides, including `--effort xhigh`.
 See [state.md](skills/cto-agent-team/references/state.md).
 
+## Browser tool policy
+
+Honor the user's browser/channel choice and discover actual tools, connections, tabs, locators, target URL, and profile identity.
+Prefer extension browser APIs for browser work. A unified `cua` or Computer Use entry can expose those APIs.
+The [configurable Chrome example](skills/cto-agent-team/references/host-adapters.md#browser-channels) does not require every user to install Chrome.
+Use native control only for a verified necessary tool gap, keep the action minimal, and use the supported browser channel selected for the task again.
+Existing authorization governs exceptions. Preserve shared ownership, user activity, and meeting holds.
+Carry policy and evidence requirements through every handoff and model route, including Terra. Keep browser policy outside model-native parameters.
+A specified signed-in UI needs actual target/profile and page/action/result evidence. HTTP, builds, markers, or synthetic pages cannot replace it.
+These are guidance and task-context examples, not a deployed browser adapter or a report of real browser execution.
+
 ## Work records
 
 For requested records, use [work-recording.md](skills/cto-agent-team/references/work-recording.md).

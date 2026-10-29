@@ -96,3 +96,11 @@ Host-specific sources and operations are in [host-adapters.md](host-adapters.md)
 
 Use [work-recording.md](work-recording.md) for configured scope, revision-based identity, truthful stages, manual overrides, and incremental synchronization.
 A record update does not replace task acceptance or delivery. Keep failed source coverage pending and preserve the last successful cursor.
+
+## Browser task handoffs
+
+Carry the user's browser/channel preference, target and identity, exception limits, and observable evidence through CTO-to-PM and PM-to-engineer handoffs.
+Keep this context during reassignment, continuation, and automatic model routing, including Terra routes. Read the [browser-channel rules](host-adapters.md#browser-channels).
+Browser policy is task context. Do not put it in the selector's model/native-setting parameters or change model settings to enforce it.
+Apply the policy to active work at a safe step boundary. Do not interrupt an action or wake idle workers for acknowledgment.
+Retain single-writer ownership and user-activity or meeting holds. Record actual use separately from configuration or dispatch coverage.
