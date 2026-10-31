@@ -53,3 +53,7 @@ For a specified signed-in browser, acceptance needs the correct target/profile a
 Use supported structured browser evidence or necessary screenshots under the [browser-channel policy](host-adapters.md#browser-evidence).
 An independent browser, HTTP response, source marker, build, or simulated page does not replace that UI observation.
 Native screen control is not a prerequisite for actual UI evidence. Keep shared-resource and user-activity holds in force.
+
+## Named motion references
+
+When a task benefits from a named effect or a user-selected motion example, read [named motion references](motion-selection.md). This optional source does not change skill selection, product direction or action permissions.
