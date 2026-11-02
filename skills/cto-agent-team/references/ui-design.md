@@ -31,7 +31,7 @@ For UI implementation and code review, also use [the core Ponytail coding guidan
 
 Use first-time scenarios for people with no product background and limited attention or patience. Give useful defaults. The primary task should not depend on reading long instructions or organizing the product first. When essential setup is required, make the next action clear. Use relevant parts for operator-facing tools and outputs as well as visual interfaces.
 
-Make primary tasks, important objects, and results easy to find from normal entry points. Use clear names and consistent controls. Keep text short and the visual hierarchy clear. Show secondary details when needed. Neither a flat layout nor hiding everything is a universal solution. Do a check of affected narrow-screen and keyboard flows, visible focus, contrast, and appropriate accessibility needs.
+Make primary tasks, important objects, and results easy to find from normal entry points. Use clear names and consistent controls. Keep the visual hierarchy clear. Avoid unnecessary secondary labels and descriptions. Let the layout do the explaining. Keep essential labels, instructions, and accessible names clear. Show secondary details when needed. Neither a flat layout nor hiding everything is a universal solution. Do a check of affected narrow-screen and keyboard flows, visible focus, contrast, and appropriate accessibility needs.
 
 Keep these outcomes distinct:
 
