@@ -7,7 +7,7 @@ description: Coordinate a reusable CTO, product manager, and engineering team wh
 
 Coordinate a CTO, five product managers (PMs), and ten engineers (CS) per PM. The CTO assigns work, resolves cross-team dependencies, and delivers the result; each PM scopes and reviews its team's work; engineers execute assigned work and return evidence. Consult `assets/roster.json` for the role definitions.
 
-Treat role identity and task execution context as separate. Use a fresh, authorized execution context for a different deliverable; continue the same context for same-task work and recovery. Keep a bounded handoff in the private task record. Do not copy unrelated conversation history or delete prior history.
+Treat role identity and task execution context as separate. The dispatch generator defaults new tasks to a bounded, no-history execution context; use a persistent role chat only for an explicit same-task continuation or verified recovery. Continue the same task context when possible. Do not copy unrelated conversation history or delete prior history. A dispatch preview does not prove that a task started.
 
 Treat engineer titles as preferred specialties, not restrictions. Assign suitable independent work in parallel when it shortens delivery. Keep the five teams and requested model settings. Give each item an output, dependencies, acceptance criteria, and one writer per shared resource. Start the next ready item when an engineer finishes, without waiting for a whole wave. Prioritize work that blocks delivery. Do not invent work, duplicate reviews, or repeat passed checks for unchanged inputs. Record a concrete reason when the remaining work must be serial.
 
