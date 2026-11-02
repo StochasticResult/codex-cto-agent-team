@@ -51,6 +51,28 @@ PMs give material status changes, exact task/revision, and evidence pointers thr
 Record completion only with the designated owner's acceptance and exact result evidence.
 Keep actual user-visible delivery as a separate receipt under that path.
 
+### Keep unfinished work traceable
+
+The task file is the source record. The task index gives references to source records.
+A completed chat turn does not establish task completion.
+
+1. Before dispatch, record the request reference and the task ID.
+2. For the same deliverable, keep the same task ID.
+3. In the existing task record, record each assigned work item and its owner.
+4. For unfinished work, record the next action and the responsible role.
+5. For a dependency or deliberate delay, record the condition that permits the next action.
+6. At intake, restart, or an actual task change, compare the source record with the existing index.
+7. During the existing bounded task rotation, include source records absent from the index.
+8. Keep the index entry when its source file is missing or unreadable.
+9. Record the gap and the responsible role in that entry.
+10. Keep completed, canceled, and replaced task references under the existing retention policy.
+11. For replaced work, record the replacement reference and the remaining obligations.
+12. For duplicate work, use the owner's explicit source and alias references.
+
+The clerk uses the existing index and schedule. The clerk does not accept product results.
+An invalid record remains a visible gap. It is not proof that the task does not exist.
+If the source identity remains uncertain, keep the gap pending for its owner.
+
 Use a local team status dashboard as part of task intake and PM updates.
 Show projects, user tasks, and the current work of subordinate agents from canonical task records.
 Before or at dispatch, the owning PM records meaningful assignments under the [work-item and age rules](state.md#task-and-notification-records).
@@ -151,6 +173,21 @@ Engineer specialties guide assignment but do not prevent suitable work outside a
 Divide authorized work by useful outputs and dependencies. For each item, name its owner, required inputs, deliverable, acceptance criteria, and writable resources. Dispatch independent ready items in parallel, especially those that hold up integration or delivery. For example, release-policy work, candidate preparation, and a skill update can proceed independently when they have different writers and resources. Only the live release switch needs its one activation owner. Public skill source still has one writer.
 
 When any item completes, review its evidence and assign the next ready item to a suitable free engineer. Do not wait for the rest of a wave. Reuse passed checks for unchanged inputs. Add work or repeat a review only when a changed input, a failure, or an unresolved concern justifies it. Do not occupy every role merely to increase the active-chat count.
+
+1. After a work item ends, compare its result with the remaining task acceptance criteria.
+2. Keep the parent task open while required work remains.
+3. Before continuation, read the current instructions, task revision, and applicable checkpoint.
+4. Compare the recorded dependency with its current evidence.
+5. If a new result requires owner action, record that action through the existing authorized path.
+6. If the owner has an active turn, keep the action pending.
+7. When the owner is idle, combine ready actions into one substantive continuation.
+8. Use the existing chat and the exact task and result references.
+9. Before another send, resolve any uncertain outcome through the existing receipt procedure.
+10. Keep completed effects and valid acceptance evidence.
+
+Normal continuation and model-capacity recovery are different actions.
+Task age alone does not authorize a retry, a new assignment, or a status message.
+The existing owner, authority, resource, model, and reporting rules apply.
 
 Record active items, ready unassigned items, dependency waits, capacity failures, and completed outputs in private task state. If work must be serial, name the actual shared operation or dependency and the next eligible action. Measure delivery and waiting time only from observed evidence. Chat status does not measure simultaneous model computation. Apply [recovery.md](recovery.md) to capacity failures without changing model settings.
 

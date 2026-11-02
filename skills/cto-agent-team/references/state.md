@@ -31,7 +31,18 @@ Each independent request needs a unique ID. A useful record contains:
 | `changes`, `evidence`, `result`, `blocker` | Linked clarifications or cancellations, validation evidence, useful result links, and unresolved decisions. |
 | `notification` | Requested follow-up, its owner and monitor, cursors, result revision, delivery state, and notification evidence. |
 
-Use task statuses such as `queued`, `ready`, `running`, `review`, `done`, `blocked`, and `cancelled`. Keep the reason for a blocked task and the dependency it is waiting on. Mark `done` only after the designated owner verifies acceptance and authorized delivery. Role registration's `planned/created/ready` statuses describe chats, not business-task progress.
+Use the existing record fields for the next action, responsible role, and condition for continuation.
+Keep the task revision separate from the artifact revision or commit.
+Use the supported acceptance format of the actual consumer.
+If the consumer cannot read the format, keep the acceptance gap pending for the record owner.
+Do not infer acceptance from a status label or a successful tool call.
+Keep the old result evidence when a later instruction changes the required work.
+
+Use task statuses such as `queued`, `ready`, `running`, `review`, `done`, `blocked`, and `cancelled`. Keep the reason for a blocked task and the dependency it is waiting on.
+Record `done` only after the designated owner accepts all required task work against exact result evidence.
+Keep required product delivery in the acceptance criteria.
+Record the user report separately with its actual message reference.
+Role registration's `planned/created/ready` statuses describe chats, not business-task progress.
 
 For every meaningful PM/engineer assignment, the owning PM keeps a `work_items` entry in the canonical task record.
 Before or at dispatch, record a stable item ID, agent role, work summary, owner, output, and actual status.
