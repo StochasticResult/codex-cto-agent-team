@@ -82,8 +82,10 @@ Each task must identify its target, permissions, outputs, acceptance criteria, a
 Organizational delegation does not grant permission for every device, publication, external message, or purchase.
 Read the target project's `AGENTS.md`. Make sure that the device identity, connection, and task permission are correct.
 
-PMs collect engineer results through the host's supported result operation. The CTO collects PM results the same way.
-A task message does not by itself authorize a reply to another chat.
+PMs read engineer results in shared private events. One designated clerk writes the shared summary.
+The CTO reads that summary and necessary exact source references. Canonical tasks remain authoritative.
+Use messages only for necessary authorized dispatch, continuation, or recovery, with task and document pointers.
+Active recipients read at safe boundaries. Do not send routine progress or result relay messages.
 See [workflow.md](skills/cto-agent-team/references/workflow.md) for complete handoffs and result collection.
 
 ## Model routes
@@ -129,7 +131,7 @@ Documentation, account availability, permission, fixture/configuration, request 
 ## Delivery and supervision
 
 Give each independent request a unique task ID and an owning PM. Send a complete handoff and end the CTO turn promptly.
-PMs continue implementation, review, and authorized delivery in their own chats. New requests preserve earlier open tasks.
+PMs continue implementation, review, and authorized delivery. Shared events retain results and next actions. New requests preserve earlier open tasks.
 Link changes and cancellations to the original task. Assign useful independent work in parallel within actual capacity.
 After an item completes, examine its evidence. Then give the next ready item to a suitable engineer.
 Record the reason for a necessary serial step.
@@ -143,7 +145,12 @@ Do not add a high-cost CTO loop to watch the supervisor.
 
 A completion candidate must match the task and result revision. It must include output and acceptance evidence.
 The responsible PM retains substantive acceptance. The CTO handles final delivery and cross-team decisions.
-Messages to another chat require explicit recipient and scope authorization.
+Follow the [shared document contract](skills/cto-agent-team/references/shared-handoffs.md).
+Publish complete events atomically. Keep published events immutable and link corrections.
+Persist consumed event identities and source revisions. Keep publication, acceptance, dispatch, and actual user delivery receipts separate.
+A preview, active PM, or copied file does not establish actual engineering execution or delivery.
+Host schedules are configurable capabilities. Reuse existing supervisors and summary readers without adding permanent-agent or scheduling promises.
+Necessary wakeups still require explicit recipient and scope authorization.
 Keep separate retry and notification keys. Reconcile uncertain sends before repeating them.
 Remove completed duties from shared monitoring. Retire a one-time monitor only when no duties remain.
 An ended turn does not schedule its own return. This repository contains no background scheduler.

@@ -1,12 +1,12 @@
 # ASD-STE100 for handoffs
 
-Apply this guidance to English PM task instructions, engineer handoffs, and questions for other people. Use the official [ASD-STE100 standard, Issue 9, 2025-01-15](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf): Part 1 for writing rules and Part 2 for the dictionary. The [official FAQ](https://www.asd-ste100.org/STE_faq.html) gives supporting information. Get a reference through the [official download page](https://www.asd-ste100.org/STE_downloads.html) if necessary. Keep a local reference outside the public repository. Do not publish the standard, an extracted dictionary, or a substitute word list.
+Apply this guidance to English PM task instructions, shared events, engineer handoffs, and questions for other people. Use the official [ASD-STE100 standard, Issue 9, 2025-01-15](https://www.asd-ste100.org/assets/files/ASD-STE100_ISSUE9.pdf): Part 1 for writing rules and Part 2 for the dictionary. The [official FAQ](https://www.asd-ste100.org/STE_faq.html) gives supporting information. Get a reference through the [official download page](https://www.asd-ste100.org/STE_downloads.html) if necessary. Keep a local reference outside the public repository. Do not publish the standard, an extracted dictionary, or a substitute word list.
 
 This file gives application guidance. It does not replace the standard. Short sentences alone do not establish compliance. Keep Chinese user summaries clear. Do not identify Chinese text as formally compliant with this English standard.
 
 ## Draft
 
-Keep task identity, authorization, and target in labeled fields. Include explicit product direction and constraints, input files, writable resources, observable acceptance, evidence, and delivery ownership. Keep exact values as data. Put actions in numbered work steps. Use a separate item for each question. This team's one-question-per-item convention is not a quoted STE rule.
+Use the [shared document contract](shared-handoffs.md) for routine transport and receipt boundaries. Keep task identity, authorization, and target in labeled fields. Include explicit product direction and constraints, input files, writable resources, observable acceptance, evidence, and delivery ownership. Keep exact values as data. Put actions in numbered work steps. Use a separate item for each question. This team's one-question-per-item convention is not a quoted STE rule.
 
 For a task that needs a skill, include its selected name, source/version when known, reading requirement, and relevant compatibility limits. Reuse valid reading evidence in the same context. UI selection follows [ui-design.md](ui-design.md), and coding or workflow modules follow [coding.md](coding.md). A skill name alone is not evidence of use or new action authorization.
 

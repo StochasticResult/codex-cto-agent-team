@@ -1,7 +1,7 @@
 # Host capabilities and installation
 
 Keep organization, task acceptance, and resource ownership in the [workflow](workflow.md).
-Use a host adapter for installation, execution, model parameters, result collection, and follow-up.
+Use a host adapter for installation, execution, model parameters, shared documents, and follow-up.
 The adapter must use the current tool schema and the user's authorization.
 
 ## Support boundary
@@ -35,7 +35,9 @@ If creation is unavailable, give the work to a suitable existing role or proceed
 A task that requires parallel execution remains blocked when only serial execution is possible.
 
 In a reviewed Codex desktop consumer, `list_projects` establishes the project before authorized `create_thread` calls.
-`send_message_to_thread` forwards authorized work. `wait_threads` collects results with saved cursors.
+`send_message_to_thread` can start necessary authorized work with task identity and shared document pointers.
+Read routine results through [shared documents](shared-handoffs.md).
+`wait_threads` can supply bounded runtime state for execution or recovery. It is not the routine handoff channel.
 Discover their current schemas. A namespace, field name, or target limit can differ between environments.
 Keep waits bounded to 60 seconds under this team's convention.
 Do not use private shell APIs to replace missing thread tools.
@@ -44,7 +46,9 @@ For supported collaboration tools, creation can use `model`, `reasoning_effort`,
 Fixed role settings can override a request. Inspect the applicable precedence before claiming a setting changed.
 Independent chats and subagents are different capabilities. A subagent-tree limit does not establish a global chat limit.
 
-For completion follow-up, discover the supported scheduler or notification tool.
+For completion follow-up, discover the existing authorized scheduler or notification tool.
+Map incremental event reading and summary reading to those capabilities. Keep one designated summary writer.
+Persist consumed identities and exact source revisions through the existing protected state writer.
 In Codex desktop, prefer an authorized thread heartbeat unless the user requests a standalone job.
 Read back supported model settings or documented inheritance before claiming the supervisor route is configured.
 If follow-up is unavailable, save a continuation checkpoint and state the limit. Do not promise automatic wakeup.

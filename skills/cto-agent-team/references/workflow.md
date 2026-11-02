@@ -22,7 +22,7 @@ For coding or code review by any team role, require the assigned role to read an
 
 Select a Superpowers module only when it adds useful guidance to the task. Check its actual source and availability using [coding.md](coding.md). Carry applicable source and compatibility decisions into the handoff. The module does not add permission for an action, a new agent tree, a worktree, or a separate approval process. Preserve existing release ownership and proportional checks.
 
-PMs scope work for their own engineers, collect and review evidence, repair failures, and complete authorized delivery in their own chats. Keep implementation details and routine progress there. The CTO's user-facing messages stay brief: start acknowledgment, completion with a usable result, or a failure that requires user action. Delegating delivery does not grant new permission for external messages, publication, devices, or purchases.
+PMs scope work for their own engineers, read and review shared evidence, repair failures, and complete authorized delivery. Keep implementation details in task evidence and source events. The CTO's user-facing messages stay brief: start acknowledgment, completion with a usable result, or a failure that requires user action. Delegating delivery does not grant new permission for external messages, publication, devices, or purchases.
 
 Multiple independent requests can proceed through their owning PMs in parallel within actual tool and account capacity. Track each task's status, dependencies, write resources, and current owner; a new user message does not replace an earlier task.
 
@@ -47,7 +47,7 @@ If the tool, authorization, or account limit does not allow a fresh context, use
 
 Use the existing configured clerk for one private task index. Keep one entry per task ID, with concise task/evidence pointers.
 The task owner's canonical file is authoritative for scope, owner, status, acceptance, and evidence.
-PMs give material status changes, exact task/revision, and evidence pointers through the [existing reporting path](#asynchronous-progress-events).
+PMs publish material changes, exact task/revision, and evidence pointers through the [shared event path](#asynchronous-progress-events).
 Record completion only with the designated owner's acceptance and exact result evidence.
 Keep actual user-visible delivery as a separate receipt under that path.
 
@@ -84,7 +84,7 @@ Before assigning overlapping files, devices, desktops, applications, or deployme
 
 When the user requests completion notification, arrange follow-up before ending the CTO turn if an available, authorized monitoring capability can provide it. Discover the current automation tool and schema first. Use the supported follow-up operation on a suitable supervisor. Read [host-adapters.md](host-adapters.md) for host-specific operations. Apply the `mechanical_supervision` route and verify supported settings as described in [model-routing.md](model-routing.md). A prompt label does not configure the model. Check for existing supervision and reuse or update it instead of creating duplicates. Persist its identifier, target chats, and latest wait cursors in private task state. Use supported scheduling tools rather than inventing a background service.
 
-Give the monitor the task ID, owning PM chat, acceptance criteria, private record location, retry executor, and notification owner. Its instructions should read bounded task status or wait snapshots with saved cursors, advance the private record, and stay quiet while nothing actionable changes. Use one logical observation pass per cycle with [current target coverage](recovery.md#current-observation-coverage). Missing results can need bounded follow-up queries. Leave actual implementation with suitable agents. Do not use a recurring high-cost CTO loop to supervise this monitor. If the PM can resolve a blocker within its authority, leave the repair with the PM.
+Give the monitor the task ID, owning PM chat, acceptance criteria, private record location, retry executor, and notification owner. Its instructions should read bounded incremental shared events and changed task sources, retain consumed identities, and stay quiet while nothing actionable changes. Required recovery can use minimal runtime-state observations. Use one logical observation pass per cycle with [current target coverage](recovery.md#current-observation-coverage). Missing results can need bounded follow-up queries. Leave actual implementation with suitable agents. Do not use a recurring high-cost CTO loop to supervise this monitor. If the PM can resolve a blocker within its authority, leave the repair with the PM.
 
 Reporting hours and execution constraints are separate.
 Continue authorized unfinished tasks, necessary internal handoffs, background work, and required recovery observation before the proactive user-report sending gate.
@@ -97,48 +97,29 @@ Do not infer a new notification exception from a recovery event.
 
 ### Asynchronous progress events
 
-Within explicit reporting authority, use the existing configured clerk/supervisor and its `mechanical_supervision` route.
-Keep its model and schedule settings. Do not create another role, automation, or poll.
-Give updates for meaningful starts when needed, verified milestones, material blockers/scope changes, and completion with evidence.
-Short tasks can use a final result alone when sufficient. Do not create unchanged check-ins or per-tool-call reports.
+Use the [shared document contract](shared-handoffs.md) for routine handoffs.
+Each source role writes complete immutable events in its own private directory.
+The designated clerk alone writes the shared summary. The canonical task remains authoritative.
+The PM reads exact evidence and records acceptance. The CTO reads the summary and necessary exact references.
+Do not relay routine progress or completed results through chats.
 
-Record each event in existing task evidence. Engineers give concise events to their own PM.
-Keep task/revision/event identity, stage or result revision, source role, actual change, verified scope/limits, and next owner/action.
-Keep an artifact reference with a hash, or an actual message/turn reference.
-A source file alone does not establish accepted completion.
+Keep publication, consumption, acceptance, dispatch, and actual user delivery receipts separate.
+Persist event identities and exact source revisions. Reconcile uncertain effects before another attempt.
+Continue independently ready authorized work without waiting for report acknowledgments or the whole batch.
+Keep genuine serial dependencies and their next eligible action explicit.
 
-PMs examine the exact task/revision and evidence. They give the clerk a concise report.
-The clerk reads bounded reports and exact evidence pointers, not full chat histories.
-It prepares a concise report ready for plain-language delivery. It makes no implementation, acceptance, or release decision.
+Use existing authorized supervision and summary-reading capabilities. Their intervals are host configuration, not a skill guarantee.
+Keep unchanged checks quiet. Do not create another monitor or scan full chat histories for routine handoffs.
+Necessary dispatch, continuation, and recovery wakeups contain task identity and exact document pointers.
+Active recipients read at safe boundaries. Do not interrupt atomic work or wake idle roles for acknowledgments.
 
-For prompt CTO updates, it gives only verified completions and blockers that require user action.
-Ordinary milestones use the existing 30-minute digest.
-The CTO promptly gives verified completion and user-action blocker notices to the user within configured reporting hours.
-Continue authorized work without waiting for reporting acknowledgments or the whole batch. Existing execution holds still apply.
-
-Keep separate engineer-to-PM, PM-to-clerk, clerk-to-CTO, and CTO-to-user receipts.
-For each hop, keep pending state, available tool acceptance, and actual receiver evidence.
-Internal acceptance or a CTO receipt does not prove user-visible delivery. The CTO records that delivery only with actual user-visible message/reply evidence.
-
-Keep unobserved hops pending. Keep event identity and earlier receipts separately for each hop.
-Use those records for deduplication and uncertain-send reconciliation.
-Do not duplicate a final result on a hop where existing waits already collected it.
-
-Keep configured report hours and the existing digest schedule unchanged.
-Outside that window, keep results for one current consolidated catch-up. Internal authorized work and reporting continue.
-Use the next real event for delivery evidence. Do not add a test send or synthetic completion.
-
-Do not wake workers for check-ins or tests. Authorized real-event delivery remains permitted.
-
-Route a meaningful failure or completed-result candidate to the responsible decision maker. A completion candidate must match the task and result revision and include artifact and acceptance evidence. The mechanical supervisor does not grant final acceptance or take over a release owner. Sending an event to the CTO or another chat requires explicit authorization for that recipient and scope. Preserve that authorization in the handoff. Without it, retain the event privately for authorized collection. Do not send pending, unchanged, or ordinary retry updates.
-
-Before announcing completion, inspect the PM's final result and relevant evidence: acceptance outcome, artifact or repository link, revision or commit where applicable, tests, and material limitations. A completed tool call or an idle chat alone does not establish acceptance. The notification should be concise and include the useful result link or artifact and any necessary limitation.
-
-Use one notification owner and one logical monitoring assignment per task. One shared monitor may serve several tasks. Record a result revision and a notification key so repeated checks of the same result can be skipped. Track retry sends and CTO events separately with pending, sent, and acknowledged evidence where available. After successful delivery to the intended chat, mark the private record `notified` with the result evidence and message reference where available. Remove that completed duty; disable or delete a one-time monitor only when no duties remain. If delivery or the state write has an uncertain outcome, inspect the destination and saved record before retrying; do not blindly resend. If a crash leaves `sending` or an unknown outcome, reconcile it first. Persisted state and serialized ownership reduce duplicates; do not claim transactional exactly-once delivery across tools.
-
-If the required monitoring capability or authorization is missing, say so briefly and record follow-up as unavailable or pending. Offer a concrete supported way to check the task later. Ending a turn does not by itself schedule another turn, and an existing chat is not a permanently running worker. Task and notification records are described in [state.md](state.md); the role helper does not perform this monitoring.
-
-For a confirmed temporary model-capacity failure, use [the recovery workflow](recovery.md). The CTO owns PM recovery and may designate one authorized supervisor as its sole retry executor. The owning PM resumes engineers. The supervisor's route never replaces the failed turn's model, native settings, or quality history. A failed shell command or a quiet chat alone does not establish model-capacity failure. Reuse the task's existing authorized monitor when delayed follow-up is necessary. Do not create competing recovery monitors or notify the user about each ordinary retry.
+Before a proactive user report, read the accepted result and material limitations from exact task evidence.
+Apply the user's reporting hours and retain pending delivery outside that window.
+Record user-visible delivery only with actual receipt evidence. A published file or internal acceptance does not prove delivery.
+Keep one notification owner and one logical monitoring assignment per task.
+Remove only completed duties from shared monitoring. Retire a one-time monitor only when no duties remain.
+Preserve recovery ownership, backoff, historical settings, and uncertain-send reconciliation from [recovery.md](recovery.md).
+If required follow-up is unavailable, record the limit. An ended turn does not schedule another turn.
 
 ## Choose and authorize the mode
 
@@ -155,13 +136,13 @@ Pass supported native parameters explicitly. Preserve pins, active turns, and ea
 If a requested configuration is unavailable, preserve the task and report the actual limit. Do not silently replace it.
 
 Include the role, reporting relationship, goal, permissions, resources, context, selected skills, and acceptance criteria in each handoff.
-For initialization, request only a readiness acknowledgment with the role and understood responsibility.
+For initialization, record actual creation and readiness evidence through the shared event path. Do not wake idle roles only for acknowledgments.
 Do not have initializing workers write shared state. Record only actual tool-returned identifiers.
 Reconcile an unknown creation result before retrying. A role definition is not evidence of a real worker.
 
-PMs collect engineer results through the host's supported result operation.
-Use the [authorized reporting path](#asynchronous-progress-events) for PM updates to the CTO.
-Use saved cursors where available. Keep waits bounded. A dispatch does not authorize a subordinate to send another chat a reply.
+PMs read engineer shared events and exact evidence. The CTO reads the clerk's summary and necessary source references.
+Use the [shared event path](#asynchronous-progress-events). Retain durable consumed identities.
+Use supported bounded runtime observations only when execution or recovery needs them.
 Keep independent chats, subagents, readiness, and actual computation distinct. Missing tools do not authorize private API workarounds.
 
 ## Coordinate work
@@ -180,7 +161,7 @@ When any item completes, review its evidence and assign the next ready item to a
 4. Compare the recorded dependency with its current evidence.
 5. If a new result requires owner action, record that action through the existing authorized path.
 6. If the owner has an active turn, keep the action pending.
-7. When the owner is idle, combine ready actions into one substantive continuation.
+7. When the owner is idle, combine ready authorized actions into one substantive continuation with exact document pointers.
 8. Use the existing chat and the exact task and result references.
 9. Before another send, resolve any uncertain outcome through the existing receipt procedure.
 10. Keep completed effects and valid acceptance evidence.
@@ -193,7 +174,7 @@ Record active items, ready unassigned items, dependency waits, capacity failures
 
 The CTO owns cross-team coordination and the aggregate index; each PM manages only its ten engineers and is responsible for its team's logical registration. Coordinate shared registry writes as described in [state.md](state.md). Engineers do not spawn or dispatch subordinates. Give each task one writer for every shared file, desktop, or application; coordinate dependencies and avoid overwriting others' changes. Read the target project's applicable `AGENTS.md`. For a device, separately establish connection, identity, and task authorization; an organization-wide delegation grant does not authorize all devices.
 
-For each business task, the CTO specifies the goal, target host and absolute path, authorization boundary, completion criteria, and cross-team dependencies. The PM assigns each independent work item to a clear owner with explicit writable resources and acceptance criteria. Engineers return deliverables, the few decisions that changed the output, actual validation results, and unfinished work. The PM compares the actual artifact with the task. The PM accepts it or requests scoped rework before authorized delivery. Skill reading or tests alone do not replace applicable visual or business evidence. Use [UI acceptance guidance](ui-design.md) for visual claims. The CTO reviews the accepted result for final delivery when the supervisor routes its evidence, without keeping the intake turn open. Mechanical event routing does not replace substantive acceptance.
+For each business task, the CTO specifies the goal, target host and absolute path, authorization boundary, completion criteria, and cross-team dependencies. The PM assigns each independent work item to a clear owner with explicit writable resources and acceptance criteria. Engineers return deliverables, the few decisions that changed the output, actual validation results, and unfinished work. The PM compares the actual artifact with the task. The PM accepts it or requests scoped rework before authorized delivery. Skill reading or tests alone do not replace applicable visual or business evidence. Use [UI acceptance guidance](ui-design.md) for visual claims. The CTO reads the shared summary and accepted result for final delivery without keeping the intake turn open. Mechanical event routing does not replace substantive acceptance.
 
 Distinguish role definitions, verified real chats, ready acknowledgments, and currently active computation. Readiness and saved chat existence do not imply permanent availability. Parallel execution depends on platform and account capacity; do not promise simultaneous execution for all roles. When there is no business task, end the turn and do not install background monitoring unless the user requests it.
 

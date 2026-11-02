@@ -38,7 +38,7 @@ Before each send, inspect current task and turn state again. Read saved outputs,
 
 Record a pending attempt before sending. Identify the failed-turn record with the chat ID and failed turn ID. Keep a chain attempt count across related capacity failures so a new failed turn does not reset the delay. The same observed failure must not generate multiple pending attempts.
 
-Resume only unfinished work. In the message, retain the task ID, exact scope, current authorization, saved evidence, remaining acceptance, resource ownership, and recovery limits. Apply [handoffs.md](handoffs.md) to English recovery instructions. Do not repeat completed publication, builds, releases, data writes, or external messages. If an earlier external action has an unknown result, inspect that external state before another action.
+Resume only unfinished work. Keep the complete recovery context in the shared checkpoint. Include its exact pointer and task identity in the necessary host wakeup. Retain scope, authorization, evidence, remaining acceptance, resource ownership, and recovery limits in that checkpoint. Apply [handoffs.md](handoffs.md) to English recovery instructions. Do not repeat completed publication, builds, releases, data writes, or external messages. If an earlier external action has an unknown result, inspect that external state before another action.
 
 After the send, save its returned outcome and the observed new turn ID when available. If the result is uncertain, inspect the chat before another send. An active turn, a completed result, or an accepted continuation must not receive a duplicate retry. Do not infer failure from a missing immediate reply.
 
