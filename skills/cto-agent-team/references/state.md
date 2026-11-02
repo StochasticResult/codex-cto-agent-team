@@ -27,7 +27,7 @@ Each independent request needs a unique ID. A useful record contains:
 | `owner_pm`, `status`, `depends_on` | Responsible PM, progress, and dependencies on other task IDs. |
 | `target`, `write_resources`, `lease_owner` | Authorized host and paths, shared resources, and current exclusive owner. |
 | `authorization`, `handoff` | Existing user authorization and limits, context, input files, and final delivery responsibility. |
-| `dispatches` | Per-item route, reason, policy revision, model, complete native settings, tool outcome, and turn reference where available. Retain earlier requests. |
+| `dispatches` | Per-item route, reason, policy revision, model, complete native settings, context mode (`fresh`, `continue`, or `recovery`), execution-context reference, tool outcome, and turn reference where available. Retain earlier requests. |
 | `changes`, `evidence`, `result`, `blocker` | Linked clarifications or cancellations, validation evidence, useful result links, and unresolved decisions. |
 | `notification` | Requested follow-up, its owner and monitor, cursors, result revision, delivery state, and notification evidence. |
 

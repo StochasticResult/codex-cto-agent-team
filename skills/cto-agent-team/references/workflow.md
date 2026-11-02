@@ -31,6 +31,18 @@ Give its PM the change with that revision. This includes clarifications, scope c
 Give a separate deliverable a new task ID and an applicable parent link.
 If the relationship is unclear, preserve existing work and clarify only what affects execution.
 
+## Task-scoped execution context
+
+Keep role identity in the roster, role instructions, and registry. Treat a conversation or agent run as an execution context, not as the role itself. A long-lived PM chat can coordinate work while separate task-scoped contexts handle execution.
+
+For a new independent deliverable, use a fresh execution context by default when the user or organization has authorized it and the host supports it. Do not reuse an old task's execution context only because the same role is assigned. Start without unrelated prior turns where the supported tool permits. Never treat a full-history fork as a fresh context.
+
+For a clarification, correction, recovery, or remaining work under the same task ID, continue the same task and reuse valid evidence. Do not create duplicate workers or repeat side effects. If a long task needs a new context, first save a checkpoint with exact input versions, decisions, active effects, evidence, and next actions.
+
+Keep the handoff in the private canonical task record. Record `context_mode` (`fresh`, `continue`, or `recovery`), execution-context reference, and continuation source where applicable. Include only the role and task identities, goal, scope, permissions, target paths and input versions, owners and resource locks, accepted facts, evidence pointers, open work, acceptance, recovery steps, and explicit model settings needed for the next action. Read referenced evidence only when needed. Do not copy the old transcript or assume that “ignore old context” removes it.
+
+If the tool, authorization, or account limit does not allow a fresh context, use the authorized assigned role chat with a clear task boundary and record the isolation limit. Preserve historical conversations and task evidence. Record usage only from supported measurements. If task-level input, cache, output, or cost data is unavailable, state that savings are unmeasured; a fresh context can also repeat setup or recovery work.
+
 Use the existing configured clerk for one private task index. Keep one entry per task ID, with concise task/evidence pointers.
 The task owner's canonical file is authoritative for scope, owner, status, acceptance, and evidence.
 PMs give material status changes, exact task/revision, and evidence pointers through the [existing reporting path](#asynchronous-progress-events).
