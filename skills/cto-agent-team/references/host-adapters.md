@@ -10,7 +10,8 @@ The following documentation was reviewed on 2026-10-28. Documentation is not an 
 
 | Host | Documented entry and execution | Boundary of this package |
 | --- | --- | --- |
-| Codex | Local skills and custom subagents. Role configuration can affect model-setting precedence. | Existing local state helper and a configurable payload selector. Desktop thread tools depend on the environment. |
+| Codex | Local skills and custom subagents. Role configuration can affect model-setting precedence. | Existing local state helper, advisory resource guard, and a configurable payload selector. Desktop thread tools depend on the environment. |
+| Google Antigravity | Shared local skills via `~/.gemini/config/skills.json` or `.agents/skills`, global/workspace rules, `invoke_subagent` (`self`, `research`, `browser`, `image-generator`), `send_message`, `manage_subagents`, `swarm`, `run_command`/`manage_task`, and reactive `schedule` timers/daemons. | Operational adapter guidance in [antigravity-workflow.md](antigravity-workflow.md) plus `scripts/agent_guard.py` for private advisory leases and bounded process/SSH watchdogs. |
 | Claude Code | Local `.claude/skills`, subagent model selection, foreground/background execution, and resume. Effort overrides depend on client version and configuration. | Documented integration guidance and offline native-key fixtures. No live Claude Code validation or installed native adapter. |
 | Cursor | `.cursor/skills` or `.agents/skills`, subagents, and model-dependent settings, including bracket syntax in some model IDs. | Documented integration guidance. No live Cursor validation or bracket-syntax generator. |
 | Generic or cloud | The caller must establish skill loading, tools, identity, model controls, persistence, and follow-up. | Manual context loading, serial work, or planning when required capabilities are absent. No native plugin claim. |
@@ -110,6 +111,7 @@ A tool preference does not authorize another navigation, account change, message
 
 For required signed-in Chrome acceptance, record the correct target/profile, actual page state, action, and observed result.
 Structured tab, URL, DOM, or accessibility evidence and necessary screenshots can support that observation.
+In Google Antigravity, when delegating live UI checks to the built-in `browser` subagent, corroborate the subagent's claimed visited origins, blocked origins, and screenshot path against the host's `BROWSER_HOST_FACTS` system receipt before presenting them as verified, and stage upload or reference files under `<ArtifactDir>/browser_sandbox/{uploads,references}`.
 Native screen control is not required to establish actual UI evidence.
 An independent in-app browser, HTTP success, source/resource marker, build, or synthetic page cannot replace the specified signed-in UI observation.
 Keep these narrower checks useful within their actual scope, without calling them the requested browser acceptance.

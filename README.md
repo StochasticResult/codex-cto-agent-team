@@ -4,9 +4,9 @@
 
 # codex-cto-agent-team
 
-A reusable CTO team skill with Codex integration, host capability guidance, five product managers, and fifty engineers.
+A reusable CTO team skill with Codex and Google Antigravity integration, host capability guidance, five product managers, and fifty engineers.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
-Use it across projects with private task records, explicit permissions, and one writer for each shared resource.
+Use it across projects with private task records, explicit permissions, advisory resource leases, and one writer for each shared resource.
 
 [Install](#install) · [Use](#use) · [Model routes](#model-routes) · [Private state](#private-state)
 
@@ -56,6 +56,7 @@ Copy-Item -LiteralPath $skillSource -Destination $skillTarget -Recurse
 ```
 
 For a project installation, use `.agents/skills/cto-agent-team` in that project.
+To share a single skill installation across both Codex and Google Antigravity, register your personal skill directory (`~/.codex/skills` or `~/.agents/skills`) in `~/.gemini/config/skills.json` under `entries`; see [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md).
 See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 Third-party skills are separate dependencies. Installing this repository does not install them or prove that any chat has read them.
 
@@ -164,10 +165,10 @@ Keep explicit style, constraints, and observable acceptance in handoffs. Record 
 - **Coding and review:** read and apply the actual [Ponytail core](https://github.com/DietrichGebert/ponytail), with `full` guidance by default.
   This applies to any role doing relevant work. Include it in applicable new or resumed agent handoffs.
   Reuse existing helpers and deliver the smallest complete change. Preserve required validation, security, accessibility, error handling, and data integrity.
-- **Frontend work:** consider [Anthropic Frontend Design](https://github.com/anthropics/skills/tree/main/skills/frontend-design).
-  Select it, [Emil](https://github.com/emilkowalski/skills), or both by task. There is no fixed Emil priority.
-  User requirements and the existing design system govern. Read the selected content and relevant references. Record the choice privately.
-  For new pages, both skills can help. Frontend Design emphasizes overall direction. Emil gives detailed component and interaction guidance.
+- **Frontend work:** consider [Anthropic Frontend Design](https://github.com/anthropics/skills/tree/main/skills/frontend-design), [Emil](https://github.com/emilkowalski/skills), and [Unslop](https://github.com/heydamir/unslop) (by Damir Sokolovsky `@heydamir`, CC BY 4.0).
+  Select one or a combination by task rather than using a fixed single-skill priority: Frontend Design emphasizes greenfield direction, Emil governs component and interaction polish, and `unslop` audits and removes vibecoded/AI-generated tells through nine ordered redline passes.
+  User requirements, multi-language layout geometry, and the existing design system govern. Read the selected content and relevant references, and record the choice privately.
+- **Google Antigravity and multi-agent guardrails:** follow [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) for `invoke_subagent` / `schedule` mapping, `BROWSER_HOST_FACTS` UI verification, concise milestone reporting, fast stop-loss, subagent model floors, `scripts/agent_guard.py` advisory resource leases and process/SSH watchdogs, multi-CTO peer queues, and production freeze windows.
 - **Task workflows:** use applicable [Superpowers](https://github.com/obra/superpowers) modules, such as `systematic-debugging` and `verification-before-completion`.
   Read the actual module and relevant references. Verify its availability and compatibility in your environment.
   Existing authorization, project rules, model routes, and single-writer ownership govern its use.
@@ -302,8 +303,10 @@ The standard and its dictionary are not bundled. See [handoffs.md](skills/cto-ag
 | [workflow.md](skills/cto-agent-team/references/workflow.md) | Handoffs, scheduling, acceptance, and notifications |
 | [model-routing.md](skills/cto-agent-team/references/model-routing.md) | Task settings, escalation scope, and supervision |
 | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) | Host matrix, installation, native parameters, and evidence levels |
+| [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) | Google Antigravity dual-runtime setup, subagent mapping, cadence, leases, peer queues, and freeze windows |
 | [research.md](skills/cto-agent-team/references/research.md) | Optional research and adoption |
 | [model_route.py](skills/cto-agent-team/scripts/model_route.py) | Local configurable selector, quality escalation, and exact retry payload |
+| [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py) | Private advisory resource leases and bounded process/SSH watchdog |
 | [coding.md](skills/cto-agent-team/references/coding.md) | Ponytail and workflow boundaries |
 | [ui-design.md](skills/cto-agent-team/references/ui-design.md) | UI skill selection and evidence |
 | [recovery.md](skills/cto-agent-team/references/recovery.md) | Capacity failures, retries, and deduplication |

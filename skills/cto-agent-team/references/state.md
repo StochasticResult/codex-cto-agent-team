@@ -12,7 +12,7 @@ The placeholders above describe arguments, not real identifiers or paths. `creat
 
 Existing private snapshots remain valid when defaults change. Do not rewrite historical requests to match new defaults. `validate` reads them without migration. Repeated `init` retains a compatible organization and rejects a different requested configuration. For an older snapshot, keep using `validate`; if repeating `init`, supply its original overrides, such as `--effort xhigh` for an earlier all-xhigh snapshot. This does not change any chat.
 
-Each PM is responsible for its own team's logical records and any team-specific files. The helper uses the shared `registry.json`, so the CTO must coordinate one writer and serialize all helper operations that modify it; the helper does not provide a cross-process lock. Verify an unknown creation outcome before registering or retrying.
+Each PM is responsible for its own team's logical records and any team-specific files. The helper uses the shared `registry.json`, so the CTO must coordinate one writer and serialize all helper operations that modify it; `team_state.py` itself does not provide a cross-process lock. For concurrent multi-agent file or deployment coordination, use `scripts/agent_guard.py --lock-dir "<PRIVATE_STATE_DIR>/locks" acquire|release|locks` (see [antigravity-workflow.md](antigravity-workflow.md)). Verify an unknown creation outcome before registering or retrying.
 
 ## Task and notification records
 

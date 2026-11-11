@@ -4,7 +4,7 @@
 
 # codex-cto-agent-team
 
-把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex 集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex 与 Google Antigravity 双端集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
 
 ```mermaid
 flowchart TD
@@ -64,7 +64,7 @@ python scripts/model_route.py assets/routing.example.json --now 2030-01-02T00:00
 
 1. 获取本仓库，将 `skills/cto-agent-team` 整个文件夹复制到个人 skill 目录 `~/.agents/skills/cto-agent-team`，以便跨项目使用。项目内安装可放到目标仓库的 `.agents/skills/cto-agent-team`。
 2. 保留文件夹内的 `scripts/`、`references/`、`assets/` 和 `agents/`。如果已经安装同名 skill，先检查现有内容再更新。
-3. 在 Codex 的 skill 选择器中确认 `cto-agent-team` 可用；若尚未出现，重启 Codex。安装目录遵循 [官方 skill 文档](https://learn.chatgpt.com/docs/build-skills)。
+3. 在 Codex 的 skill 选择器中确认 `cto-agent-team` 可用；若尚未出现，重启 Codex。安装目录遵循 [官方 skill 文档](https://learn.chatgpt.com/docs/build-skills)。如需在 Codex 与 Google Antigravity 之间共享同一套本机技能目录，可在 `~/.gemini/config/skills.json` 的 `entries` 中注册该技能根目录，详见 [Antigravity 工作流](skills/cto-agent-team/references/antigravity-workflow.md)。
 
 PowerShell 安装示例：
 
@@ -132,9 +132,11 @@ Ponytail 控制实现复杂度，UI 指导按任务选择。独立核心技能�
 
 在相关规划、实现或审阅前，主动从可用目录查找适用技能，优先匹配用户和项目的明确方向，再考虑通用偏好。读取选定内容及必要引用，复用同上下文有效证据。交接保留明确风格、约束和可观察的验收条件，工程师简要记录真正改变产物的选择。
 
-适用前端任务考虑 Anthropic Frontend Design，按任务选择它、`emil-design-eng` 或两者，不再固定 Emil 优先。通过当前技能目录查找并读取选定技能的实际内容及相关参考，交接时说明选择理由并要求应用到具体界面，把设计选择和验证局限写入私有任务证据，不能只列技能名称。
+适用前端任务综合考虑 Anthropic Frontend Design、`emil-design-eng` 与 [Unslop](https://github.com/heydamir/unslop)（作者 Damir Sokolovsky `@heydamir`，CC BY 4.0），按任务选择其一或组合，不再固定单一技能优先：新建视觉方向侧重 Frontend Design，组件细节与交互反馈侧重 Emil，消除 AI 生成痕迹与九步红线精修（间距、色彩、图标、文案、排版、布局、细节、视觉、动效）侧重 `unslop`。通过当前技能目录查找并读取选定技能的实际内容及相关参考，交接时说明选择理由、产品方向并要求应用到具体界面，把设计选择和验证局限写入私有任务证据，不能只列技能名称。
 
-保留产品要求、现有设计系统、可用性、可访问性和任务速度；动画须有实际用途。其他上游技能仍按各自适用条件与显式调用规则使用。选择规则适用于未完成的 UI 工作，不因此重启已验收工作或重复发布检查；纯后端、不可见构建配置等无关工作不强制加载完整设计技能。安装与依赖发现方法见[UI 指南](skills/cto-agent-team/references/ui-design.md)，本仓库不复制第三方技能全文或本机安装路径。
+保留产品要求、现有设计系统、多语言零跳动/防碰撞布局几何、可用性、可访问性和任务速度；动画须有实际用途。其他上游技能仍按各自适用条件与显式调用规则使用。选择规则适用于未完成的 UI 工作，不因此重启已验收工作或重复发布检查；纯后端、不可见构建配置等无关工作不强制加载完整设计技能。安装与依赖发现方法见[UI 指南](skills/cto-agent-team/references/ui-design.md)，本仓库不复制第三方技能全文或本机安装路径。
+
+在 Google Antigravity 宿主或双 CTO 协同场景下，遵循 [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md)：映射 `invoke_subagent` / `schedule` 与 `BROWSER_HOST_FACTS` 浏览器验收凭据，保持关键节点简短播报与快速止损，执行子代理高阶模型底线，使用标准库 [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py) 管理私有文件租约锁（`acquire`/`release`）与进程树/SSH 超时看门狗，并遵守多 CTO 队列协同及生产发布冻结窗口。
 
 新页面或信息结构通常可结合两份指导，整体视觉侧重 Frontend Design，组件和交互侧重 Emil；局部文案或静态层次可只选适用的一份。这是内容与适用性选择，不是实测性能排名。设计示例不能推翻既有产品体系，也不构成卡片、标签或箭头的通用禁令。
 
@@ -232,8 +234,10 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [ui-design.md](skills/cto-agent-team/references/ui-design.md)：UI 技能选择、可移植依赖发现和具体设计证据。
 - [coding.md](skills/cto-agent-team/references/coding.md)：Ponytail 核心指导、完整实现及平台能力边界。
 - [host-adapters.md](skills/cto-agent-team/references/host-adapters.md)：宿主安装/能力矩阵、原生参数及证据等级。
+- [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md)：Google Antigravity 双端共享、子代理映射、反馈节奏、租约锁、多 CTO 队列与发布冻结窗口。
 - [research.md](skills/cto-agent-team/references/research.md)：可选研究与采纳。
 - [model_route.py](skills/cto-agent-team/scripts/model_route.py)：标准库选择、有限质量升级与精确重试参数。
+- [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py)：私有文件租约锁与受限进程树/SSH 超时看门狗。
 - [model-routing.md](skills/cto-agent-team/references/model-routing.md)：任务模型路由、批准范围、升级及派单记录。
 - [recovery.md](skills/cto-agent-team/references/recovery.md)：容量故障识别、原会话恢复、退避与去重。
 - [state.md](skills/cto-agent-team/references/state.md)：私有登记、状态和脚本用法。
