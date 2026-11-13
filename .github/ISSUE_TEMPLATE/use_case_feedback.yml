@@ -1,0 +1,24 @@
+name: Use case / compatibility feedback
+description: Share real-world adoption notes, host compatibility observations, or friction points
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Community field notes help keep compatibility guidance honest and grounded in real usage.
+        **Privacy reminder:** Share only anonymized workflow summaries—no private company secrets, credentials, or real session IDs.
+  - type: input
+    id: environment
+    attributes:
+      label: Host & Environment
+      placeholder: "e.g., Codex CLI on macOS, Antigravity on Windows"
+    validations:
+      required: true
+  - type: textarea
+    id: workflow_summary
+    attributes:
+      label: Workflow Summary & Outcome
+      description: What kind of project/task did you coordinate, which parts of cto-agent-team worked well, and where did host limits or friction show up?
+    validations:
+      required: true

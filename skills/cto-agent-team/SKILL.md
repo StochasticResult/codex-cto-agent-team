@@ -1,6 +1,7 @@
 ---
 name: cto-agent-team
 description: Coordinate a reusable CTO, product manager, and engineering team when a user requests this organizational workflow or its ongoing operation.
+license: MIT
 ---
 
 # CTO agent team

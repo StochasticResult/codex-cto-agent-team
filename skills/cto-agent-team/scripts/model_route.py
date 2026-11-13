@@ -12,9 +12,13 @@ import math
 from pathlib import Path
 import sys
 
+from typing import Any
+
 ASSETS = Path(__file__).resolve().parent.parent / 'assets'
-TYPES = {'object': dict, 'array': list, 'string': str, 'boolean': bool,
-         'null': type(None), 'integer': int, 'number': (int, float)}
+TYPES: dict[str, Any] = {
+    'object': dict, 'array': list, 'string': str, 'boolean': bool,
+    'null': type(None), 'integer': int, 'number': (int, float),
+}
 
 
 def validate(value, schema, path='$'):
@@ -211,7 +215,8 @@ def decide(doc, now, profile):
         route = 'complex_engineering'
     if not present(route):
         return stop('route_not_configured', fallback='plan_only')
-    attempt, history = 0, []
+    attempt = 0
+    history: list[Any] = []
     if quality is not None:
         previous = quality['previous_selection']
         if pin is not None or previous.get('user_pin') is True:
@@ -296,6 +301,7 @@ def decide(doc, now, profile):
     if pin is None and not policy['automatic_substitution'] and not preferred_choice:
         return stop('substitution_disabled')
     comparable = all(c['cost'] is not None for c in choices) and len({c['cost'][1] for c in choices}) == 1
+    choice: dict[str, Any] | None
     if comparable and policy['automatic_substitution']:
         choice = min(choices, key=lambda c: (c['cost'][0], c is not preferred_choice))
         basis = 'comparable_recorded_cost'

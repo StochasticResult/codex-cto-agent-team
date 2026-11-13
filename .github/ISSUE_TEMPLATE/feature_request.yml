@@ -1,0 +1,29 @@
+name: Feature request
+description: Propose a workflow enhancement, host adapter improvement, or helper capability
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Workflow Problem or Gap
+      description: Describe the multi-agent coordination, routing, acceptance, or host compatibility problem you want to solve.
+    validations:
+      required: true
+  - type: input
+    id: hosts
+    attributes:
+      label: Target Host(s)
+      placeholder: "e.g., Codex CLI, Google Antigravity, Claude Code, Cursor"
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed Solution
+      description: Outline the minimal design, expected helper/doc changes, and how evidence boundaries should be preserved.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives or Workarounds Considered
+      description: Any current workarounds or tradeoffs.

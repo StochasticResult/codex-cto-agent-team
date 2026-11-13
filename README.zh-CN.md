@@ -4,7 +4,14 @@
 
 # codex-cto-agent-team
 
+[![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
+[![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
+
 把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex 与 Google Antigravity 双端集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+
+[安装](#安装) · [可复现端到端演示](#可复现端到端演示) · [使用](#使用) · [宿主兼容性与能力限制](#宿主兼容性与能力限制) · [采用场景与维护证据](#采用场景与维护证据) · [开源许可](#开源许可)
 
 ```mermaid
 flowchart TD
@@ -77,6 +84,22 @@ if (Test-Path -LiteralPath $skillTarget) { throw '目标已存在，请先检查
 New-Item -ItemType Directory -Path (Split-Path -Parent $skillTarget) -Force | Out-Null
 Copy-Item -LiteralPath $skillSource -Destination $skillTarget -Recurse
 ```
+
+## 可复现端到端演示
+
+无需 API Key、联网或真实多线程会话，即可在 Python 3.11+ 标准库环境下完整运行 [examples/end_to_end_demo/run_demo.py](examples/end_to_end_demo/run_demo.py)：
+
+```sh
+python examples/end_to_end_demo/run_demo.py --verify
+```
+
+该演示在仓库外部的临时私有目录中执行完整 5 阶段闭环（`CTO 接单 -> PM02 派单 -> CS0201 加锁修复与测试 -> PM02 SHA-256 验收 -> CTO 交付`），并严格区分三层能力边界：
+
+- **本地脚本实际执行：** `team_state.py`（初始化、角色登记与校验）、`model_route.py`（读取 `demo_routing_input.json`）、`agent_guard.py`（`acquire` 获取写锁、`CS0202` 竞争写入被退出码 `2` 拦截、`run` 进程看门狗运行 `unittest`、`release` 释放租约）、原子 JSON 事件写入、SHA-256 产物校验及 `shared/STATUS.md` 生成。
+- **离线回放模拟内容：** CTO / PM02 / CS0201 的角色分析文本、确定性合成的 `uuid5` 占位线程 ID，以及测试夹具模型目录（`dispatch_ready: false`）。
+- **依赖宿主运行时提供的能力：** 真实创建子会话或子代理（`create_thread`、`invoke_subagent`）、真实大模型推理、账号额度管控、已登录浏览器页面验收及定时唤醒。
+
+完整流程图、JSON 输出模式及示例说明见 [examples/end_to_end_demo/README.md](examples/end_to_end_demo/README.md)。
 
 ## 使用
 
@@ -244,5 +267,38 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [roster.json](skills/cto-agent-team/assets/roster.json)：5 队 × 10 岗位及默认模型。
 - [team_state.py](skills/cto-agent-team/scripts/team_state.py)：离线状态助手。
 - [openai.yaml](skills/cto-agent-team/agents/openai.yaml)：skill 界面元数据。
+- [run_demo.py](examples/end_to_end_demo/run_demo.py)：五阶段可复现离线端到端演示。
+- [validate_repo.py](scripts/validate_repo.py)：仓库结构、链接、发行包与变更日志自动检查脚本。
+- [CHANGELOG.md](CHANGELOG.md)：版本发布说明与兼容性范围。
+- [CONTRIBUTING.md](CONTRIBUTING.md)：贡献流程、本地测试命令与 PR 规范。
+- [SECURITY.md](SECURITY.md)：支持版本与安全漏洞私密报告指引。
+- [LICENSE](LICENSE)：MIT 开源许可证。
+
+## 宿主兼容性与能力限制
+
+本仓库明确区分“已在实操环境验证的宿主流程”与“仅提供兼容指南的宿主”，详见 [host-adapters.md](skills/cto-agent-team/references/host-adapters.md)：
+
+| 宿主环境 | 支持层级 | 前提条件与限制说明 |
+| --- | --- | --- |
+| **OpenAI Codex (CLI / Desktop)** | 维护者实操使用 + 本地 CLI 脚本已纳入 CI 测试 | Desktop 多线程创建（`create_thread` 等）依赖宿主当前版本、权限与账号额度；组织/角色固定配置会覆盖单次派单参数。 |
+| **Google Antigravity** | 双端共享工作流（[antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) + `agent_guard.py`） | 需将同一技能目录注册至 `~/.gemini/config/skills.json`；多写入并行须配合隔离工作区、`agent_guard.py` 租约锁与 `BROWSER_HOST_FACTS` 证据核验。 |
+| **Claude Code / Cursor / 通用宿主** | 仅兼容性文档指南（未接入对应客户端实机 CI） | 不同厂商参数键名与嵌套语法不被 `model_route.py` 自动翻译；缺少并行子代理能力时自动退化为串行执行或纯规划模式。 |
+
+通用前置条件：脚本直接继承宿主沙盒与用户授权，不绕过安全边界；初始化 `roster.json` 不会自动创建聊天，真正并发需要宿主会话创建能力、并发额度与单写入隔离同时满足。
+
+## 采用场景与维护证据
+
+本项目自 `2026-10-28` 创立并持续服务于多模块工程协作与双端（`Codex` + `Google Antigravity`）智能体交付流程。本仓库不虚构外部企业案例、Star 数量或未实测省费指标，仅基于真实提交历史与单元测试记录已解决的工程痛点：
+
+- **消除聊天接力刷屏与半成品交付（`beb89b5`）：** 改用原子化 `shared/events/` 不可变事件文件与单一书记员汇总 `shared/STATUS.md`。
+- **防止跨任务上下文污染（`6194560`、`ff3b1cb`）：** 新建任务默认独立无历史上下文，仅在同任务续跑或恢复时延续会话，并凭 SHA-256 锚定证据。
+- **阻断并行改文件互踩与命令死等（`1ce9ccf`）：** 引入 `agent_guard.py` 私有文件租约锁（冲突返回退出码 `2`）与进程树/SSH 超时看门狗，并配全套回归单元测试。
+- **杜绝虚假完工断言：** 要求把单元测试、产物 SHA-256 哈希与宿主核验的浏览器实观证据严格分层。
+
+欢迎通过 [Bug 报告](.github/ISSUE_TEMPLATE/bug_report.yml)、[使用场景与兼容反馈](.github/ISSUE_TEMPLATE/use_case_feedback.yml) 或 PR 分享真实项目经验与宿主差异，版本演进记录见 [CHANGELOG.md](CHANGELOG.md)。
+
+## 开源许可
+
+本仓库代码与文档遵循 [MIT License](LICENSE) 开源。文档中所引用的外部上游项目（如 `Ponytail`、`Superpowers`、`Anthropic Frontend Design`、`emil-design-eng`、`unslop` 及 `ASD-STE100` 标准）各自保留其原始许可，不随本仓库捆绑分发。
 
 官方参考：[Build skills](https://learn.chatgpt.com/docs/build-skills)、[Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents)。

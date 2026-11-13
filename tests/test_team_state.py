@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / 'skills' / 'cto-agent-team' / 'scripts' / 'team_state.py'
 sys.dont_write_bytecode = True
 spec = importlib.util.spec_from_file_location('team_state', SCRIPT)
+assert spec is not None and spec.loader is not None
 team_state = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(team_state)
 
@@ -129,12 +130,26 @@ class TeamStateTests(unittest.TestCase):
         org = self.load('org.json')
         registry = self.load('registry.json')
         cases = []
-        bad = json.loads(json.dumps(registry)); bad['roles']['CS0101']['parent'] = 'PM02'; cases.append(('registry.json', bad))
-        bad = json.loads(json.dumps(registry)); bad['roles']['CS0101']['model']['reasoning_effort'] = 'low'; cases.append(('registry.json', bad))
-        bad = json.loads(json.dumps(registry)); bad['roles']['PM01']['status'] = 'ready'; cases.append(('registry.json', bad))
-        bad = json.loads(json.dumps(registry)); del bad['roles']['CS0101']; cases.append(('registry.json', bad))
-        bad = json.loads(json.dumps(org)); bad['teams'][0]['engineers'][0], bad['teams'][1]['engineers'][0] = bad['teams'][1]['engineers'][0], bad['teams'][0]['engineers'][0]; cases.append(('org.json', bad))
-        bad = json.loads(json.dumps(org)); bad['teams'][0]['engineers'][1][0] = bad['teams'][0]['engineers'][0][0]; cases.append(('org.json', bad))
+        bad = json.loads(json.dumps(registry))
+        bad['roles']['CS0101']['parent'] = 'PM02'
+        cases.append(('registry.json', bad))
+        bad = json.loads(json.dumps(registry))
+        bad['roles']['CS0101']['model']['reasoning_effort'] = 'low'
+        cases.append(('registry.json', bad))
+        bad = json.loads(json.dumps(registry))
+        bad['roles']['PM01']['status'] = 'ready'
+        cases.append(('registry.json', bad))
+        bad = json.loads(json.dumps(registry))
+        del bad['roles']['CS0101']
+        cases.append(('registry.json', bad))
+        bad = json.loads(json.dumps(org))
+        bad['teams'][0]['engineers'][0], bad['teams'][1]['engineers'][0] = (
+            bad['teams'][1]['engineers'][0], bad['teams'][0]['engineers'][0]
+        )
+        cases.append(('org.json', bad))
+        bad = json.loads(json.dumps(org))
+        bad['teams'][0]['engineers'][1][0] = bad['teams'][0]['engineers'][0][0]
+        cases.append(('org.json', bad))
         for filename, bad in cases:
             with self.subTest(filename=filename, bad=bad):
                 self.save(filename, bad)

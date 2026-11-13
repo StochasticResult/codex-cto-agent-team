@@ -66,6 +66,7 @@ class RoutingTests(unittest.TestCase):
     def setUp(self):
         self.assertTrue(SCRIPT.is_file(), 'The executable selector is not implemented')
         spec = importlib.util.spec_from_file_location('model_route', SCRIPT)
+        assert spec is not None and spec.loader is not None
         self.module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.module)
         self.doc = fixture()
@@ -128,9 +129,12 @@ class RoutingTests(unittest.TestCase):
         self.assertEqual(selected['parameters'], {'model': 'gpt-6-luna', 'thinking': 'low'})
 
     def test_unknown_or_documented_only_candidates_are_rejected(self):
-        for field, value in [('account_available', None), ('host_supported', None),
-                             ('resource_scope', 'unknown'), ('capability_evidence', None),
-                             ('context', None), ('quality_capabilities', [])]:
+        cases: list[tuple[str, object]] = [
+            ('account_available', None), ('host_supported', None),
+            ('resource_scope', 'unknown'), ('capability_evidence', None),
+            ('context', None), ('quality_capabilities', []),
+        ]
+        for field, value in cases:
             with self.subTest(field=field):
                 self.doc = fixture()
                 self.doc['catalog']['models'][0][field] = value

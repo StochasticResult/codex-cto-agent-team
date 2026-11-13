@@ -4,11 +4,16 @@
 
 # codex-cto-agent-team
 
+[![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
+[![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
+
 A reusable CTO team skill with Codex and Google Antigravity integration, host capability guidance, five product managers, and fifty engineers.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
 Use it across projects with private task records, explicit permissions, advisory resource leases, and one writer for each shared resource.
 
-[Install](#install) · [Use](#use) · [Model routes](#model-routes) · [Private state](#private-state)
+[Install](#install) · [Reproducible demo](#reproducible-demo) · [Use](#use) · [Host compatibility and limits](#host-compatibility-and-limits) · [Adoption and maintenance evidence](#adoption-and-maintenance-evidence) · [Model routes](#model-routes) · [Private state](#private-state) · [License](#license)
 
 ## Organization
 
@@ -59,6 +64,22 @@ For a project installation, use `.agents/skills/cto-agent-team` in that project.
 To share a single skill installation across both Codex and Google Antigravity, register your personal skill directory (`~/.codex/skills` or `~/.agents/skills`) in `~/.gemini/config/skills.json` under `entries`; see [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md).
 See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
 Third-party skills are separate dependencies. Installing this repository does not install them or prove that any chat has read them.
+
+## Reproducible demo
+
+Run the offline end-to-end walkthrough in [examples/end_to_end_demo/run_demo.py](examples/end_to_end_demo/run_demo.py) using only Python 3.11+ standard library modules (no API keys, network access, or live host threads required):
+
+```sh
+python examples/end_to_end_demo/run_demo.py --verify
+```
+
+The demo runs inside a temporary private directory outside the repository and executes all five stages of a real task lifecycle (`CTO Intake -> PM02 Dispatch -> CS0201 Lease/Patch/Test -> PM02 SHA-256 Acceptance -> CTO Delivery`) while keeping capability layers strictly separated:
+
+- **Executed deterministically by bundled scripts:** `team_state.py` (`init`, `register`, `validate`), `model_route.py` (`demo_routing_input.json`), `agent_guard.py` (`acquire`, competing writer `CS0202` blocked with exit code `2`, `run` watchdog running `unittest`, and `release`), atomic JSON event creation, SHA-256 digest checks, and `shared/STATUS.md` output.
+- **Simulated for offline replay:** CTO / PM02 / CS0201 narrative handoff prose, deterministic synthetic `uuid5` thread IDs, and fixture catalog inputs (`dispatch_ready: false`).
+- **Provided by a host runtime in live use:** Creating actual sub-sessions or subagents (`create_thread`, `invoke_subagent`), LLM inference, account quotas, browser UI verification, and completion wakeups.
+
+See [examples/end_to_end_demo/README.md](examples/end_to_end_demo/README.md) for the complete stage diagram and sample output.
 
 ## Use
 
@@ -314,6 +335,41 @@ The standard and its dictionary are not bundled. See [handoffs.md](skills/cto-ag
 | [roster.json](skills/cto-agent-team/assets/roster.json) | Five teams, fifty engineer roles, and registration defaults |
 | [team_state.py](skills/cto-agent-team/scripts/team_state.py) | Offline registration helper |
 | [openai.yaml](skills/cto-agent-team/agents/openai.yaml) | Skill interface metadata |
+| [run_demo.py](examples/end_to_end_demo/run_demo.py) | Reproducible five-stage offline workflow demonstration |
+| [validate_repo.py](scripts/validate_repo.py) | Repository integrity, link, package, and changelog verifier |
+| [CHANGELOG.md](CHANGELOG.md) | Release history and upgrade scope |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution workflow, verification commands, and PR rules |
+| [SECURITY.md](SECURITY.md) | Supported versions and private vulnerability reporting |
+| [LICENSE](LICENSE) | MIT license text |
+
+## Host compatibility and limits
+
+Do not confuse a documented host adapter guide with live end-to-end client certification. See [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) for full details.
+
+| Host | Status in this repository | Prerequisites & hard constraints |
+| --- | --- | --- |
+| **OpenAI Codex (CLI / Desktop)** | Empirically used by maintainer; local CLI scripts tested in CI | Desktop thread tools (`create_thread`, `send_message_to_thread`, `wait_threads`) depend on the desktop host environment and account quota; role configuration can override per-dispatch model flags. |
+| **Google Antigravity** | Operational dual-runtime workflow via [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) and `agent_guard.py` | Requires shared `~/.gemini/config/skills.json` registration or `.agents/skills`; parallel writers must pair `Workspace: "share"`/`"branch"` with `agent_guard.py` advisory leases and `BROWSER_HOST_FACTS` corroboration. |
+| **Claude Code / Cursor / Generic** | Documented compatibility guidance only (no live client CI) | Custom model-key schemas (`thinking`, bracket syntax, `effort`) and subagent APIs are not auto-translated by `model_route.py`; falls back to manual context loading and sequential role execution when parallel subagents are absent. |
+
+Key operational limits across every host:
+- **Permissions:** Helpers inherit existing shell, filesystem, and browser authorizations; `--state-dir` and `--lock-dir` are enforced outside public repositories and skill directories.
+- **Session creation & parallelism:** Initializing `roster.json` (`planned`) allocates zero chats; true concurrency requires host subagent/thread creation tools, account capacity, and single-writer locks (`agent_guard.py`).
+
+## Adoption and maintenance evidence
+
+This repository started on `2026-10-28` and is actively developed for multi-service engineering and dual-runtime (`Codex` + `Google Antigravity`) agent workflows. Rather than publishing unverified benchmarks or fabricated testimonials, the repository tracks concrete operational failure modes resolved in its commit history and automated test suite:
+
+- **Eliminating chat-relay noise & partial handoffs:** Atomic JSON event files (`shared/events/<ROLE>/<TASK-ID>/`) plus one clerk summary (`shared/STATUS.md`) replaced ad-hoc status relays (`beb89b5`).
+- **Preventing cross-task context leakage:** Isolated per-task execution contexts (`6194560`, `ff3b1cb`) and durable SHA-256 artifact pointers (`shared-handoffs.md`).
+- **Blocking parallel write collisions & hung commands:** `agent_guard.py` provides portable advisory leases (`RESOURCE_LOCKED` exit code `2`) and process-tree/SSH watchdogs (`1ce9ccf`), covered by regression unit tests under `tests/`.
+- **Preventing false completion & visual-acceptance drift:** Deliverable acceptance separates unit tests, artifact SHA-256 hashes, and host-verified `BROWSER_HOST_FACTS` observations before CTO delivery.
+
+Real-world feedback, host compatibility findings, and external project reports are welcome through [Bug reports](.github/ISSUE_TEMPLATE/bug_report.yml), [Use-case / compatibility feedback](.github/ISSUE_TEMPLATE/use_case_feedback.yml), and pull requests; resolved changes are tracked in [CHANGELOG.md](CHANGELOG.md).
+
+## License
+
+Licensed under the [MIT License](LICENSE). Third-party external skills and specifications linked in documentation (such as `Ponytail`, `Superpowers`, `Anthropic Frontend Design`, `emil-design-eng`, `unslop`, and `ASD-STE100`) keep their respective upstream licenses and are not redistributed inside this repository.
 
 This repository uses an English root README and explicit language links.
 See GitHub's [README documentation](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes)

@@ -1,0 +1,109 @@
+{
+  "workflow": {
+    "task_kind": "scoped_engineering",
+    "required_tools": [
+      "files"
+    ],
+    "context_min": 2000,
+    "quality_gate": "unit tests pass and SHA-256 artifact digests match",
+    "requires_parallel": false,
+    "complexity": "scoped",
+    "risk": "normal",
+    "quality_requirements": []
+  },
+  "host": {
+    "id": "demo-offline-fixture",
+    "version": "fixture-v1",
+    "skills": "manual",
+    "subagents": false,
+    "independent_chats": false,
+    "explicit_model": true,
+    "completion_notice": false,
+    "state_files": true,
+    "tools": [
+      "files"
+    ],
+    "parameter_schema_source": "fixture only"
+  },
+  "catalog": {
+    "source": "demo_routing_input.json",
+    "observed_at": "2030-01-01T00:00:00Z",
+    "expires_at": "2030-01-03T00:00:00Z",
+    "evidence_kind": "fixture",
+    "models": [
+      {
+        "id": "fixture-engineer-scoped",
+        "provider": "fixture-provider",
+        "docs_listed": null,
+        "account_available": true,
+        "availability_evidence": "fixture only",
+        "tools": [
+          "files"
+        ],
+        "context": 16000,
+        "cost": null,
+        "native_settings": [
+          {
+            "effort": "high"
+          }
+        ],
+        "host_supported": true,
+        "resource_scope": "existing",
+        "capability_evidence": "fixture only",
+        "quality_capabilities": [
+          "scoped"
+        ],
+        "route_support": [
+          {
+            "route": "scoped_engineering",
+            "native_settings": {
+              "effort": "high"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "id": "demo-scoped-engineering-policy",
+    "revision": 1,
+    "source": "demo offline fixture",
+    "allowed": [],
+    "max_cost": null,
+    "allow_unknown_cost": true,
+    "automatic_substitution": true,
+    "candidate_authority": "verified_existing_resources",
+    "profile": "demo-offline",
+    "task_routes": {
+      "scoped_engineering": "scoped_engineering"
+    },
+    "max_quality_attempts": 2,
+    "quality_steps": {
+      "scoped_engineering": "complex_engineering"
+    }
+  },
+  "mapping": {
+    "host": "demo-offline-fixture",
+    "model_key": "model",
+    "settings_keys": [
+      "effort"
+    ],
+    "verified_by": "fixture only"
+  },
+  "request": {
+    "pinned_model": "fixture-engineer-scoped",
+    "native_settings": {
+      "effort": "high"
+    },
+    "retry": null,
+    "quality_escalation": null
+  },
+  "execution": {
+    "status": "not_executed",
+    "request_accepted": false,
+    "tool_receipt": null,
+    "actual_model": null,
+    "actual_native_settings": null,
+    "execution_evidence": null
+  }
+}

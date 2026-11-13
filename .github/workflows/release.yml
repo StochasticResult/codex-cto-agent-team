@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Optional version tag to validate (e.g. v0.1.0)"
+        required: false
+        default: "dev"
+
+permissions:
+  contents: write
+
+jobs:
+  verify-and-package:
+    name: Verify & Package Skill Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install lint and type tools
+        run: python -m pip install --upgrade pip ruff mypy
+
+      - name: Run ruff and mypy
+        run: |
+          ruff check .
+          mypy skills scripts examples tests
+
+      - name: Run unittest suite and offline demo
+        run: |
+          python -m unittest discover -s tests -v
+          python examples/end_to_end_demo/run_demo.py --verify
+
+      - name: Validate repository, changelog, and build distributable archive
+        shell: bash
+        run: |
+          TAG="${{ github.ref_type == 'tag' && github.ref_name || inputs.tag }}"
+          if [[ "${{ github.ref_type }}" == "tag" ]]; then
+            python scripts/validate_repo.py --verify-package --build-dist dist --version "${TAG}" --check-changelog "${TAG#v}"
+          else
+            python scripts/validate_repo.py --verify-package --build-dist dist --version "${TAG}"
+          fi
+
+      - name: Upload workflow release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: cto-agent-team-dist
+          path: dist/
+
+      - name: Publish assets to GitHub Release on tag push
+        if: github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release upload "${TAG}" dist/cto-agent-team-"${TAG}".zip dist/SHA256SUMS.txt --clobber
+          else
+            gh release create "${TAG}" dist/cto-agent-team-"${TAG}".zip dist/SHA256SUMS.txt \
+              --title "${TAG}" \
+              --generate-notes
+          fi

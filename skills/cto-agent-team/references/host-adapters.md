@@ -6,15 +6,24 @@ The adapter must use the current tool schema and the user's authorization.
 
 ## Support boundary
 
-The following documentation was reviewed on 2026-10-28. Documentation is not an account inventory or a client execution test.
+The host documentation summary was initially reviewed on 2026-10-28 and updated on 2026-11-12 to separate empirical maintainer workflows from documented adapter guidance. Documentation is not an account inventory or a live client test matrix across third-party runtimes.
 
-| Host | Documented entry and execution | Boundary of this package |
-| --- | --- | --- |
-| Codex | Local skills and custom subagents. Role configuration can affect model-setting precedence. | Existing local state helper, advisory resource guard, and a configurable payload selector. Desktop thread tools depend on the environment. |
-| Google Antigravity | Shared local skills via `~/.gemini/config/skills.json` or `.agents/skills`, global/workspace rules, `invoke_subagent` (`self`, `research`, `browser`, `image-generator`), `send_message`, `manage_subagents`, `swarm`, `run_command`/`manage_task`, and reactive `schedule` timers/daemons. | Operational adapter guidance in [antigravity-workflow.md](antigravity-workflow.md) plus `scripts/agent_guard.py` for private advisory leases and bounded process/SSH watchdogs. |
-| Claude Code | Local `.claude/skills`, subagent model selection, foreground/background execution, and resume. Effort overrides depend on client version and configuration. | Documented integration guidance and offline native-key fixtures. No live Claude Code validation or installed native adapter. |
-| Cursor | `.cursor/skills` or `.agents/skills`, subagents, and model-dependent settings, including bracket syntax in some model IDs. | Documented integration guidance. No live Cursor validation or bracket-syntax generator. |
-| Generic or cloud | The caller must establish skill loading, tools, identity, model controls, persistence, and follow-up. | Manual context loading, serial work, or planning when required capabilities are absent. No native plugin claim. |
+| Host | Verification tier | Documented entry and execution | Boundary of this package |
+| --- | --- | --- | --- |
+| Codex (CLI / Desktop) | **Empirically used by maintainer** (CLI scripts CI-tested) | Local `.agents/skills` / `~/.codex/skills`, custom subagents, optional desktop `list_projects` / `create_thread` / `send_message_to_thread` / `wait_threads`, and thread heartbeats. Role configuration affects model-setting precedence. | Ships verified `team_state.py`, `model_route.py`, `agent_guard.py`, and explicit `compatibility-6.1` profile defaults. Desktop thread APIs remain host-environment capabilities rather than bundled code. |
+| Google Antigravity | **Operational dual-runtime workflow** (local helper scripts CI-tested) | Shared local skills via `~/.gemini/config/skills.json` or `.agents/skills`, global/workspace rules, `invoke_subagent` (`self`, `research`, `browser`, `image-generator`), `send_message`, `manage_subagents`, `swarm`, `run_command`/`manage_task`, and reactive `schedule` timers/daemons. | Operational adapter guidance in [antigravity-workflow.md](antigravity-workflow.md) plus `scripts/agent_guard.py` for private advisory leases and bounded process/SSH watchdogs. Host subagent primitives are runtime features of Antigravity. |
+| Claude Code | **Documented guidance only** (no live client CI) | Local `.claude/skills`, subagent model selection, foreground/background execution, and resume. Effort overrides depend on client version and configuration. | Documented integration guidance and offline native-key fixtures only. Do not pass Codex `reasoning_effort` blindly; confirm native Claude CLI/API schema first. |
+| Cursor | **Documented guidance only** (no live client CI) | `.cursor/skills` or `.agents/skills`, subagents, and model-dependent settings, including bracket syntax in some model IDs. | Documented integration guidance only. No live Cursor validation or bracket-syntax generator is included. |
+| Generic or cloud | **Fallback manual contract** | Caller must establish skill loading, tools, identity, model controls, persistence, and follow-up. | Manual context loading, serial work, or planning when required capabilities are absent. No native plugin claim. |
+
+## Operational prerequisites and hard limits
+
+Before promising autonomous multi-agent execution on any host, confirm these four prerequisites explicitly:
+
+1. **Permissions and filesystem boundaries:** All file edits, shell/SSH commands, browser actions, and subagent spawns execute under the host agent's sandbox and explicit user authorization. `team_state.py` and `agent_guard.py` enforce private `--state-dir` / `--lock-dir` storage strictly outside the repository and installed skill tree. Installing the skill adds no sandbox escapes, network servers, or elevated privileges.
+2. **Model selection and setting precedence:** Role snapshots (`assets/roster.json`, `registry.json`) are initial defaults, not live locks. Per-task selection uses explicit host-native keys via `model_route.py` (`--profile`, verified catalog evidence, hard budget caps), and fixed host/organization role pins can override dispatch requests. Acceptance by a dispatch tool does not verify the backend model unless readback or runtime evidence confirms it.
+3. **Session and subagent creation:** Initializing 55 subordinate roles in `registry.json` (`planned`) creates zero chats or subagents. Live concurrent execution requires an authorized creation/messaging API (such as Codex thread tools or Antigravity `invoke_subagent`); when unavailable or unauthorized, fall back transparently to scoped planning or single-session sequential execution rather than fabricating created workers.
+4. **Parallelism vs. serial fallback:** True parallel throughput requires simultaneous account quota/concurrency, isolated write scopes (disjoint files, `git worktree`, or `Workspace: "share"` / `"branch"`), and advisory single-writer leases (`agent_guard.py acquire` / `release`). Any requirement that strictly demands simultaneous multi-worker execution stays blocked if the host permits only serial execution.
 
 Official sources: [Codex subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents),
 [Claude Code skills](https://code.claude.com/docs/en/skills),

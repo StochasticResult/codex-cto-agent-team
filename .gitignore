@@ -16,3 +16,7 @@ __pycache__/
 venv/
 .DS_Store
 Thumbs.db
+dist/
+build/
+.mypy_cache/
+.ruff_cache/
