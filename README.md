@@ -2,14 +2,15 @@
 
 <a id="start"></a>
 
-# codex-cto-agent-team
+# CTO Agent Team
 
 [![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
 [![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
-A reusable CTO team skill with Codex, Google Antigravity, and Claude Code integration, host capability guidance, five product managers, and fifty engineers.
+A reusable CTO team skill for coding-agent hosts: one CTO, five product managers, and fifty engineers, with working integrations for OpenAI Codex, Google Antigravity, and Claude Code.
+The skill started in Codex, and the repository keeps the name `codex-cto-agent-team`. The organization, handoffs, private state, and guard helpers do not depend on one host. Each host has its own adapter guide.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
 Use it across projects with private task records, explicit permissions, advisory resource leases, and one writer for each shared resource.
 
@@ -39,16 +40,24 @@ Use only roles that help the current task. Engineer specialties guide assignment
 ## Install
 
 Use a host that can load the skill or accept its instructions manually. The local helpers require Python 3.11 or later and only the standard library.
-The installation commands below are for Codex. For Claude Code, copy the folder to `~/.claude/skills/cto-agent-team` and see [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md). See the [host matrix](skills/cto-agent-team/references/host-adapters.md) for Cursor and generic/cloud boundaries.
+Install the same folder in each host that you use:
+
+| Host | Personal skill location | Guide |
+| --- | --- | --- |
+| OpenAI Codex | `~/.agents/skills/cto-agent-team` or `~/.codex/skills/cto-agent-team` | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) |
+| Google Antigravity | The skill directory that `~/.gemini/config/skills.json` registers under `entries` (it can be the Codex directory) | [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) |
+| Claude Code | `~/.claude/skills/cto-agent-team` | [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) |
+| Cursor, generic, or cloud | See the host matrix | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) |
+
 Cursor and generic integrations have documented guidance, not live client validation or universal native adapters.
 Chat creation, task messages, and monitoring require supported tools and account capacity. This skill does not add those capabilities.
 
 1. Get this repository.
 2. Make a copy of the complete `skills/cto-agent-team` folder in your personal skill directory.
 3. Keep its `scripts`, `references`, `assets`, and `agents` folders.
-4. Select `cto-agent-team` in Codex. If it is absent, restart Codex.
+4. Confirm that your host lists `cto-agent-team`. If it is absent, restart the host.
 
-PowerShell example for a personal installation:
+PowerShell example for a personal installation in the Codex location. For Claude Code, set `$skillTarget` to `.claude/skills/cto-agent-team`:
 
 ```powershell
 git clone https://github.com/StochasticResult/codex-cto-agent-team.git
@@ -62,7 +71,7 @@ Copy-Item -LiteralPath $skillSource -Destination $skillTarget -Recurse
 
 For a project installation, use `.agents/skills/cto-agent-team` in that project.
 To share a single skill installation across both Codex and Google Antigravity, register your personal skill directory (`~/.codex/skills` or `~/.agents/skills`) in `~/.gemini/config/skills.json` under `entries`; see [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md).
-See the [official skill documentation](https://learn.chatgpt.com/docs/build-skills).
+See the [Codex skill documentation](https://learn.chatgpt.com/docs/build-skills) and the [Claude Code skill documentation](https://code.claude.com/docs/en/skills).
 Third-party skills are separate dependencies. Installing this repository does not install them or prove that any chat has read them.
 
 ## Reproducible demo
@@ -361,7 +370,7 @@ Key operational limits across every host:
 
 ## Adoption and maintenance evidence
 
-This repository started on `2026-10-28` and is actively developed for multi-service engineering and dual-runtime (`Codex` + `Google Antigravity`) agent workflows. Rather than publishing unverified benchmarks or fabricated testimonials, the repository tracks concrete operational failure modes resolved in its commit history and automated test suite:
+This repository started on `2026-10-28` and is actively developed for multi-service engineering and multi-host (`Codex`, `Google Antigravity`, and `Claude Code`) agent workflows. Rather than publishing unverified benchmarks or fabricated testimonials, the repository tracks concrete operational failure modes resolved in its commit history and automated test suite:
 
 - **Eliminating chat-relay noise & partial handoffs:** Atomic JSON event files (`shared/events/<ROLE>/<TASK-ID>/`) plus one clerk summary (`shared/STATUS.md`) replaced ad-hoc status relays (`beb89b5`).
 - **Preventing cross-task context leakage:** Isolated per-task execution contexts (`6194560`, `ff3b1cb`) and durable SHA-256 artifact pointers (`shared-handoffs.md`).

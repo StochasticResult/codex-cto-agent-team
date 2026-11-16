@@ -2,14 +2,14 @@
 
 <a id="start"></a>
 
-# codex-cto-agent-team
+# CTO Agent Team
 
 [![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
 [![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
-把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex、Google Antigravity 与 Claude Code 集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目、跨宿主使用的 CTO skill，已接入 OpenAI Codex、Google Antigravity 与 Claude Code，并附各宿主的能力适配说明。本 skill 起步于 Codex，仓库沿用 `codex-cto-agent-team` 这个名字；组织方式、交接、私有状态和守卫脚本不依赖单一宿主。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
 
 [安装](#安装) · [可复现端到端演示](#可复现端到端演示) · [使用](#使用) · [宿主兼容性与能力限制](#宿主兼容性与能力限制) · [采用场景与维护证据](#采用场景与维护证据) · [开源许可](#开源许可)
 
@@ -67,13 +67,22 @@ python scripts/model_route.py assets/routing.example.json --now 2030-01-02T00:00
 
 ## 安装
 
-可在支持技能加载的宿主使用，也可手动提供指令。两个本地 helper 需要 Python 3.11 或更新版本，仅使用标准库。以下安装示例针对 Codex；Claude Code 将整个文件夹复制到 `~/.claude/skills/cto-agent-team`，详见 [Claude Code 工作流](skills/cto-agent-team/references/claude-code-workflow.md)。Cursor 与 generic/cloud 的入口及能力边界见[宿主矩阵](skills/cto-agent-team/references/host-adapters.md)。Cursor 与通用宿主仅有已查证文档和本地配置夹具，不代表真实客户端全面运行或已安装原生适配器。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
+可在支持技能加载的宿主使用，也可手动提供指令。两个本地 helper 需要 Python 3.11 或更新版本，仅使用标准库。各宿主安装同一个文件夹：
 
-1. 获取本仓库，将 `skills/cto-agent-team` 整个文件夹复制到个人 skill 目录 `~/.agents/skills/cto-agent-team`，以便跨项目使用。项目内安装可放到目标仓库的 `.agents/skills/cto-agent-team`。
+| 宿主 | 个人 skill 位置 | 说明 |
+| --- | --- | --- |
+| OpenAI Codex | `~/.agents/skills/cto-agent-team` 或 `~/.codex/skills/cto-agent-team` | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) |
+| Google Antigravity | `~/.gemini/config/skills.json` 的 `entries` 中注册的 skill 目录（可直接共用 Codex 目录） | [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) |
+| Claude Code | `~/.claude/skills/cto-agent-team` | [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) |
+| Cursor、通用或云端宿主 | 见宿主矩阵 | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) |
+
+Cursor 与通用宿主仅有已查证文档和本地配置夹具，不代表真实客户端全面运行或已安装原生适配器。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
+
+1. 获取本仓库，将 `skills/cto-agent-team` 整个文件夹复制到上表对应宿主的个人 skill 目录，以便跨项目使用。项目内安装可放到目标仓库的 `.agents/skills/cto-agent-team`（Claude Code 为 `.claude/skills/cto-agent-team`）。
 2. 保留文件夹内的 `scripts/`、`references/`、`assets/` 和 `agents/`。如果已经安装同名 skill，先检查现有内容再更新。
-3. 在 Codex 的 skill 选择器中确认 `cto-agent-team` 可用；若尚未出现，重启 Codex。安装目录遵循 [官方 skill 文档](https://learn.chatgpt.com/docs/build-skills)。如需在 Codex 与 Google Antigravity 之间共享同一套本机技能目录，可在 `~/.gemini/config/skills.json` 的 `entries` 中注册该技能根目录，详见 [Antigravity 工作流](skills/cto-agent-team/references/antigravity-workflow.md)。
+3. 在宿主的 skill 列表中确认 `cto-agent-team` 可用；若尚未出现，重启宿主。安装目录遵循 [Codex skill 文档](https://learn.chatgpt.com/docs/build-skills)与 [Claude Code skill 文档](https://code.claude.com/docs/en/skills)。如需在 Codex 与 Google Antigravity 之间共享同一套本机技能目录，可在 `~/.gemini/config/skills.json` 的 `entries` 中注册该技能根目录，详见 [Antigravity 工作流](skills/cto-agent-team/references/antigravity-workflow.md)。
 
-PowerShell 安装示例：
+PowerShell 安装示例（Codex 位置；Claude Code 请把 `$skillTarget` 改为 `.claude/skills/cto-agent-team`）：
 
 ```powershell
 git clone https://github.com/StochasticResult/codex-cto-agent-team.git
@@ -292,7 +301,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 
 ## 采用场景与维护证据
 
-本项目自 `2026-10-28` 创立并持续服务于多模块工程协作与双端（`Codex` + `Google Antigravity`）智能体交付流程。本仓库不虚构外部企业案例、Star 数量或未实测省费指标，仅基于真实提交历史与单元测试记录已解决的工程痛点：
+本项目自 `2026-10-28` 创立并持续服务于多模块工程协作与多宿主（`Codex`、`Google Antigravity` 与 `Claude Code`）智能体交付流程。本仓库不虚构外部企业案例、Star 数量或未实测省费指标，仅基于真实提交历史与单元测试记录已解决的工程痛点：
 
 - **消除聊天接力刷屏与半成品交付（`beb89b5`）：** 改用原子化 `shared/events/` 不可变事件文件与单一书记员汇总 `shared/STATUS.md`。
 - **防止跨任务上下文污染（`6194560`、`ff3b1cb`）：** 新建任务默认独立无历史上下文，仅在同任务续跑或恢复时延续会话，并凭 SHA-256 锚定证据。
