@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
-A reusable CTO team skill with Codex and Google Antigravity integration, host capability guidance, five product managers, and fifty engineers.
+A reusable CTO team skill with Codex, Google Antigravity, and Claude Code integration, host capability guidance, five product managers, and fifty engineers.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
 Use it across projects with private task records, explicit permissions, advisory resource leases, and one writer for each shared resource.
 
@@ -39,8 +39,8 @@ Use only roles that help the current task. Engineer specialties guide assignment
 ## Install
 
 Use a host that can load the skill or accept its instructions manually. The local helpers require Python 3.11 or later and only the standard library.
-The installation commands below are for Codex. See the [host matrix](skills/cto-agent-team/references/host-adapters.md) for Claude Code, Cursor, and generic/cloud boundaries.
-Those integrations have documented guidance, not live client validation or universal native adapters.
+The installation commands below are for Codex. For Claude Code, copy the folder to `~/.claude/skills/cto-agent-team` and see [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md). See the [host matrix](skills/cto-agent-team/references/host-adapters.md) for Cursor and generic/cloud boundaries.
+Cursor and generic integrations have documented guidance, not live client validation or universal native adapters.
 Chat creation, task messages, and monitoring require supported tools and account capacity. This skill does not add those capabilities.
 
 1. Get this repository.
@@ -190,6 +190,7 @@ Keep explicit style, constraints, and observable acceptance in handoffs. Record 
   Select one or a combination by task rather than using a fixed single-skill priority: Frontend Design emphasizes greenfield direction, Emil governs component and interaction polish, and `unslop` audits and removes vibecoded/AI-generated tells through nine ordered redline passes.
   User requirements, multi-language layout geometry, and the existing design system govern. Read the selected content and relevant references, and record the choice privately.
 - **Google Antigravity and multi-agent guardrails:** follow [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) for `invoke_subagent` / `schedule` mapping, `BROWSER_HOST_FACTS` UI verification, concise milestone reporting, fast stop-loss, subagent model floors, `scripts/agent_guard.py` advisory resource leases and process/SSH watchdogs, multi-CTO peer queues, and production freeze windows.
+- **Claude Code:** follow [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) for the collapsed role tree, no-history subagent handoffs, worktree isolation, background dispatch, acceptance of subagent reports, model and effort boundaries, compaction checkpoints, and the optional role agents in `assets/claude-agents`.
 - **Task workflows:** use applicable [Superpowers](https://github.com/obra/superpowers) modules, such as `systematic-debugging` and `verification-before-completion`.
   Read the actual module and relevant references. Verify its availability and compatibility in your environment.
   Existing authorization, project rules, model routes, and single-writer ownership govern its use.
@@ -325,6 +326,7 @@ The standard and its dictionary are not bundled. See [handoffs.md](skills/cto-ag
 | [model-routing.md](skills/cto-agent-team/references/model-routing.md) | Task settings, escalation scope, and supervision |
 | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) | Host matrix, installation, native parameters, and evidence levels |
 | [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) | Google Antigravity dual-runtime setup, subagent mapping, cadence, leases, peer queues, and freeze windows |
+| [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) | Claude Code setup, role topology, subagent mapping, acceptance, model boundaries, and compaction checkpoints |
 | [research.md](skills/cto-agent-team/references/research.md) | Optional research and adoption |
 | [model_route.py](skills/cto-agent-team/scripts/model_route.py) | Local configurable selector, quality escalation, and exact retry payload |
 | [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py) | Private advisory resource leases and bounded process/SSH watchdog |
@@ -350,7 +352,8 @@ Do not confuse a documented host adapter guide with live end-to-end client certi
 | --- | --- | --- |
 | **OpenAI Codex (CLI / Desktop)** | Empirically used by maintainer; local CLI scripts tested in CI | Desktop thread tools (`create_thread`, `send_message_to_thread`, `wait_threads`) depend on the desktop host environment and account quota; role configuration can override per-dispatch model flags. |
 | **Google Antigravity** | Operational dual-runtime workflow via [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) and `agent_guard.py` | Requires shared `~/.gemini/config/skills.json` registration or `.agents/skills`; parallel writers must pair `Workspace: "share"`/`"branch"` with `agent_guard.py` advisory leases and `BROWSER_HOST_FACTS` corroboration. |
-| **Claude Code / Cursor / Generic** | Documented compatibility guidance only (no live client CI) | Custom model-key schemas (`thinking`, bracket syntax, `effort`) and subagent APIs are not auto-translated by `model_route.py`; falls back to manual context loading and sequential role execution when parallel subagents are absent. |
+| **Claude Code** | Operational session workflow via [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md), optional `assets/claude-agents`, and `agent_guard.py` (no live client CI) | Install to `~/.claude/skills`; subagents start without history and cannot start subagents, so the CTO session dispatches engineers directly or the user requests PM sessions; `model_route.py` emits no Claude Code tool parameters. |
+| **Cursor / Generic** | Documented compatibility guidance only (no live client CI) | Custom model-key schemas (`thinking`, bracket syntax, `effort`) and subagent APIs are not auto-translated by `model_route.py`; falls back to manual context loading and sequential role execution when parallel subagents are absent. |
 
 Key operational limits across every host:
 - **Permissions:** Helpers inherit existing shell, filesystem, and browser authorizations; `--state-dir` and `--lock-dir` are enforced outside public repositories and skill directories.

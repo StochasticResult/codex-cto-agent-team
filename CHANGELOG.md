@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Claude Code workflow:** Added [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) with skill and instruction-file locations, the collapsed role tree for no-history subagents, subagent/worktree/background/session primitives, acceptance of subagent reports, model and effort boundaries, memory and compaction checkpoints, and leases.
+- **Optional Claude Code role agents:** Added `assets/claude-agents/cto-team-pm.md` and `assets/claude-agents/cto-team-engineer.md` for `~/.claude/agents` or `.claude/agents`, with a frontmatter check in `scripts/validate_repo.py`.
+
+### Changed
+
+- **Host matrix:** Moved Claude Code from documented guidance only to an operational session workflow in [host-adapters.md](skills/cto-agent-team/references/host-adapters.md), [README.md](README.md), and [README.zh-CN.md](README.zh-CN.md). There is still no live client CI.
+- **Skill description:** `SKILL.md` now also triggers when the user addresses the session as their CTO and assigns work.
+
 ## [0.1.0] - 2026-11-12
 
 First tagged public release establishing formal licensing, CI quality gates, cross-platform helper verification, reproducible offline end-to-end demonstration, and documented host compatibility boundaries.

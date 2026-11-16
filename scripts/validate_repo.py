@@ -89,6 +89,23 @@ def validate_skill_metadata() -> None:
         fail(f'{openai_yaml} default_prompt must mention $cto-agent-team')
 
 
+def validate_claude_agents() -> None:
+    agents_dir = SKILL_DIR / 'assets' / 'claude-agents'
+    agent_files = sorted(agents_dir.glob('*.md'))
+    if not agent_files:
+        fail(f'Missing Claude Code role agents in {agents_dir}')
+    for agent_path in agent_files:
+        frontmatter, body = parse_simple_frontmatter(agent_path.read_text(encoding='utf-8'))
+        if frontmatter.get('name') != agent_path.stem:
+            fail(f'{agent_path.name} frontmatter name must equal the file name')
+        if not frontmatter.get('description'):
+            fail(f'{agent_path.name} is missing a description')
+        if frontmatter.get('model') != 'inherit':
+            fail(f'{agent_path.name} must keep model: inherit')
+        if not body.strip():
+            fail(f'{agent_path.name} has no instructions')
+
+
 def load_json_no_duplicates(path: Path) -> object:
     def reject_dupes(pairs: list[tuple[str, object]]) -> dict[str, object]:
         obj: dict[str, object] = {}
@@ -302,6 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     validate_skill_metadata()
+    validate_claude_agents()
     validate_assets_and_json()
     validate_python_compile()
     validate_markdown_links()
