@@ -54,6 +54,15 @@ class ClusterTests(unittest.TestCase):
         out = self.run_cli('claude', 'task', 'new', '--title', 't2', '--goal', 'g')
         self.assertEqual(self.task(out.split()[0])['status'], 'open')
 
+    def test_unmetered_agent_ignores_remaining(self) -> None:
+        Path(self.tmp.name, 'policy.json').write_text('{"unmetered": ["codex"]}', encoding='utf-8')
+        self.run_cli('codex', 'capacity', '--remaining', '3')
+        out = self.run_cli('claude', 'task', 'new', '--title', 't', '--goal', 'g')
+        self.assertEqual(self.task(out.split()[0])['assignee'], 'codex')
+        self.run_cli('codex', 'capacity', '--state', 'exhausted')
+        out = self.run_cli('claude', 'task', 'new', '--title', 't2', '--goal', 'g')
+        self.assertNotEqual(self.task(out.split()[0])['assignee'], 'codex')
+
     def test_member_proposal_messages_and_overlap(self) -> None:
         out = self.run_cli('codex', 'task', 'new', '--title', 'idea', '--goal', 'g', '--paths', 'a.py')
         self.assertEqual(self.task(out.split()[0])['status'], 'open')

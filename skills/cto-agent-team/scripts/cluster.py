@@ -34,6 +34,7 @@ DEFAULT_POLICY: dict[str, Any] = {
     'tiers': ['heavy', 'standard', 'light'],
     'default_order': ['codex', 'antigravity', 'claude'],
     'type_preferences': {},
+    'unmetered': [],
 }
 
 
@@ -137,6 +138,9 @@ def available(agent: str, pol: dict[str, Any]) -> tuple[bool, str]:
         return False, 'exhausted'
     if state == 'paused':
         return False, 'paused by user'
+    if agent in pol['unmetered']:
+        # The user said this agent's quota is not a constraint; only a reported limit stops it.
+        return True, 'unmetered'
     if remaining is not None and remaining < pol['min_remaining_pct']:
         return False, f'only {remaining}% left'
     if age_hours(cap.get('reported_at')) > pol['capacity_stale_hours']:

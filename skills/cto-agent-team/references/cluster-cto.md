@@ -70,6 +70,8 @@ Each agent reports its own capacity. No agent guesses for another agent.
 
 For a new task, the script reads the order for the task's type from `type_preferences`, or `default_order`. It skips an agent that is `exhausted` or `paused`, or that has less than `min_remaining_pct`. It puts an agent with capacity data older than `capacity_stale_hours` after agents with fresh data, and it moves an agent with three or more unfinished tasks to the end. The task then gets the `model` and `effort` of the selected agent's tier. The assignee uses those settings, or writes the settings it actually used in its `task claim` note. The user's explicit choice of an agent overrides routing.
 
+List an agent in `unmetered` when the user states that its quota is not a constraint. Routing then ignores that agent's remaining percentage and the age of its report. A reported `exhausted` or `paused` state still stops it.
+
 The order in `type_preferences` is the user's policy. The example file is a starting point, not a measured ranking.
 
 ## Wakeups

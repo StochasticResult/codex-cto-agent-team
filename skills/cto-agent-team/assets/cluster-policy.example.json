@@ -5,6 +5,7 @@
   "capacity_stale_hours": 24,
   "task_stale_hours": 6,
   "tiers": ["heavy", "standard", "light"],
+  "unmetered": [],
   "default_order": ["codex", "antigravity-a", "antigravity-b", "claude"],
   "type_preferences": {
     "frontend": ["antigravity-a", "antigravity-b", "codex", "claude"],
