@@ -1,0 +1,14 @@
+{
+  "cto": "claude",
+  "agents": ["claude", "codex", "antigravity-a", "antigravity-b"],
+  "min_remaining_pct": 15,
+  "capacity_stale_hours": 24,
+  "task_stale_hours": 6,
+  "tiers": ["heavy", "standard", "light"],
+  "default_order": ["codex", "antigravity-a", "antigravity-b", "claude"],
+  "type_preferences": {
+    "frontend": ["antigravity-a", "antigravity-b", "codex", "claude"],
+    "release": ["antigravity-a"],
+    "review": ["claude", "codex", "antigravity-b"]
+  }
+}

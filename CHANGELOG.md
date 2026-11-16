@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Claude Code workflow:** Added [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) with skill and instruction-file locations, the collapsed role tree for no-history subagents, subagent/worktree/background/session primitives, acceptance of subagent reports, model and effort boundaries, memory and compaction checkpoints, and leases.
+- **Cluster CTO across hosts:** Added [cluster-cto.md](skills/cto-agent-team/references/cluster-cto.md), `scripts/cluster.py` (a shared private task board with tasks, status, capacity, messages, and routing by remaining usage, model tier, and effort), `assets/cluster-policy.example.json`, and `tests/test_cluster.py`.
 - **Optional Claude Code role agents:** Added `assets/claude-agents/cto-team-pm.md` and `assets/claude-agents/cto-team-engineer.md` for `~/.claude/agents` or `.claude/agents`, with a frontmatter check in `scripts/validate_repo.py`.
 
 ### Changed

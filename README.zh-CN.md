@@ -172,6 +172,8 @@ Ponytail 控制实现复杂度，UI 指导按任务选择。独立核心技能�
 
 在 Claude Code 宿主下，遵循 [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md)：子代理无历史上下文且不能再派生子代理，默认由 CTO 会话直接派发工程师并保留主责 PM 记录；并行写入使用工作树隔离与租约锁；子代理报告须核对实际 diff 与检查输出后才验收；默认继承会话模型，不套用其他厂商的模型或推理字段；长会话在压缩前写入任务记录与续接检查点。
 
+多个宿主开发同一个产品、需要一个 CTO 统一管控时，遵循 [cluster-cto.md](skills/cto-agent-team/references/cluster-cto.md)：其中一个宿主担任集群 CTO，其余为成员，通过 [cluster.py](skills/cto-agent-team/scripts/cluster.py) 读写同一个私有调度板（任务、状态、额度、消息）。成员没有工单不改产品，方向性决定交给 CTO；CTO 按各成员上报的剩余额度、模型档位和推理强度派单，各宿主用自己的定时任务运行 `poll`。
+
 新页面或信息结构通常可结合两份指导，整体视觉侧重 Frontend Design，组件和交互侧重 Emil；局部文案或静态层次可只选适用的一份。这是内容与适用性选择，不是实测性能排名。设计示例不能推翻既有产品体系，也不构成卡片、标签或箭头的通用禁令。
 
 负责人按实际产物验收。安装、目录存在、技能名称、读取记录或代码测试通过，均不能单独证明技能已应用或视觉与业务合格。视觉结论需要对应产物修订的实际观察；已发布外观的结论需要对应服务版本证据。记录未观察项，按变化范围开展检查，不增加统一浏览器门槛、整站重审或逐项用户审批。
@@ -270,6 +272,8 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [host-adapters.md](skills/cto-agent-team/references/host-adapters.md)：宿主安装/能力矩阵、原生参数及证据等级。
 - [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md)：Google Antigravity 双端共享、子代理映射、反馈节奏、租约锁、多 CTO 队列与发布冻结窗口。
 - [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md)：Claude Code 安装、角色拓扑、子代理映射、验收、模型边界与压缩检查点。
+- [cluster-cto.md](skills/cto-agent-team/references/cluster-cto.md)：跨宿主集群 CTO：共享调度板、集中管控、按额度派单与定时唤醒。
+- [cluster.py](skills/cto-agent-team/scripts/cluster.py)：多宿主集群的共享任务板：任务、状态、额度、消息与路由。
 - [research.md](skills/cto-agent-team/references/research.md)：可选研究与采纳。
 - [model_route.py](skills/cto-agent-team/scripts/model_route.py)：标准库选择、有限质量升级与精确重试参数。
 - [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py)：私有文件租约锁与受限进程树/SSH 超时看门狗。

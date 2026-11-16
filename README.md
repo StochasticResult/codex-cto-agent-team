@@ -200,6 +200,7 @@ Keep explicit style, constraints, and observable acceptance in handoffs. Record 
   User requirements, multi-language layout geometry, and the existing design system govern. Read the selected content and relevant references, and record the choice privately.
 - **Google Antigravity and multi-agent guardrails:** follow [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) for `invoke_subagent` / `schedule` mapping, `BROWSER_HOST_FACTS` UI verification, concise milestone reporting, fast stop-loss, subagent model floors, `scripts/agent_guard.py` advisory resource leases and process/SSH watchdogs, multi-CTO peer queues, and production freeze windows.
 - **Claude Code:** follow [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) for the collapsed role tree, no-history subagent handoffs, worktree isolation, background dispatch, acceptance of subagent reports, model and effort boundaries, compaction checkpoints, and the optional role agents in `assets/claude-agents`.
+- **Cluster CTO across hosts:** when several hosts work on the same product, follow [cluster-cto.md](skills/cto-agent-team/references/cluster-cto.md). One host is the cluster CTO; the others are members that read a shared private board through [cluster.py](skills/cto-agent-team/scripts/cluster.py). The board carries tasks, status, capacity, and messages. Members change the product only with a task, and the CTO routes each task by remaining usage, model tier, and effort.
 - **Task workflows:** use applicable [Superpowers](https://github.com/obra/superpowers) modules, such as `systematic-debugging` and `verification-before-completion`.
   Read the actual module and relevant references. Verify its availability and compatibility in your environment.
   Existing authorization, project rules, model routes, and single-writer ownership govern its use.
@@ -336,6 +337,8 @@ The standard and its dictionary are not bundled. See [handoffs.md](skills/cto-ag
 | [host-adapters.md](skills/cto-agent-team/references/host-adapters.md) | Host matrix, installation, native parameters, and evidence levels |
 | [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) | Google Antigravity dual-runtime setup, subagent mapping, cadence, leases, peer queues, and freeze windows |
 | [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) | Claude Code setup, role topology, subagent mapping, acceptance, model boundaries, and compaction checkpoints |
+| [cluster-cto.md](skills/cto-agent-team/references/cluster-cto.md) | One CTO across several hosts: shared board, change control, capacity routing, and wakeups |
+| [cluster.py](skills/cto-agent-team/scripts/cluster.py) | Shared task board for a multi-host cluster: tasks, status, capacity, messages, and routing |
 | [research.md](skills/cto-agent-team/references/research.md) | Optional research and adoption |
 | [model_route.py](skills/cto-agent-team/scripts/model_route.py) | Local configurable selector, quality escalation, and exact retry payload |
 | [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py) | Private advisory resource leases and bounded process/SSH watchdog |
