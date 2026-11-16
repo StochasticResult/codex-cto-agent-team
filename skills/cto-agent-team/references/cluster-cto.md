@@ -35,6 +35,7 @@ Each command names the caller: `python cluster.py --agent NAME COMMAND`.
 | Command | Use |
 | --- | --- |
 | `poll` | Show what needs this agent's attention. It prints `NOTHING` when there is none. |
+| `wait --interval 10 --timeout 3600` | Block with no model call until new work or a message arrives, then print it and exit. |
 | `board` | Show each agent's capacity and current work, and all open tasks. |
 | `route --type T --tier TIER` | Show which agent a new task would go to, without making a task. |
 | `task new --title --goal --accept ... --type --tier --project --paths ...` | Make a task. The CTO can add `--assign NAME`; the default is automatic routing. |
@@ -76,13 +77,17 @@ The order in `type_preferences` is the user's policy. The example file is a star
 
 ## Wakeups
 
-A message does not wake an agent. Each host needs its own scheduled check that runs `poll`, with the user's authorization:
+A message does not wake an agent. Use two mechanisms, with the user's authorization.
+
+**Background wait (fast).** Run `wait` as a background command in a host that wakes its agent when a background command exits. The script reads the board at each interval and makes no model call, so a short interval such as 10 seconds costs no quota. It exits when there is new work, a message, or, for the CTO, a task to review or assign. Tasks that the agent already holds do not end the wait. After the agent handles the output, it starts the wait again. Keep one wait for each agent. Confirm on each host that the exit of a background command does wake the agent; if it does not, that host has only the scheduled check.
+
+**Scheduled check (fallback).** Each host also keeps a scheduled check that runs `poll` and starts the wait again when it is not running:
 
 - Claude Code: a scheduled task where the session exposes one.
 - Google Antigravity: a `schedule` daemon, as [antigravity-workflow.md](antigravity-workflow.md) describes.
 - Codex: an automation or thread heartbeat.
 
-On `NOTHING`, the check ends quietly. The delay between agents equals the check interval. The board is for assignment and handoff, not for conversation. Each host application must be running for its check to start.
+On `NOTHING`, the check ends quietly. With a running wait, the delay between agents is about the wait interval; without it, the delay equals the scheduled interval. The board is for assignment and handoff, not for conversation. Each host application must be running for its check to start.
 
 ## CTO duties
 

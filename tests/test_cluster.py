@@ -63,6 +63,14 @@ class ClusterTests(unittest.TestCase):
         out = self.run_cli('claude', 'task', 'new', '--title', 't2', '--goal', 'g')
         self.assertNotEqual(self.task(out.split()[0])['assignee'], 'codex')
 
+    def test_wait_returns_on_new_work_and_times_out(self) -> None:
+        self.assertEqual(self.run_cli('codex', 'wait', '--interval', '1', '--timeout', '1').strip(), 'NOTHING')
+        out = self.run_cli('claude', 'task', 'new', '--title', 't', '--goal', 'g', '--assign', 'codex')
+        self.assertIn('TODO', self.run_cli('codex', 'wait', '--interval', '1', '--timeout', '30'))
+        self.run_cli('codex', 'task', 'claim', out.split()[0])
+        # Work the agent already holds does not end the wait.
+        self.assertEqual(self.run_cli('codex', 'wait', '--interval', '1', '--timeout', '1').strip(), 'NOTHING')
+
     def test_member_proposal_messages_and_overlap(self) -> None:
         out = self.run_cli('codex', 'task', 'new', '--title', 'idea', '--goal', 'g', '--paths', 'a.py')
         self.assertEqual(self.task(out.split()[0])['status'], 'open')

@@ -327,6 +327,24 @@ def cmd_poll(a: argparse.Namespace) -> None:
     print('\n'.join(items) if items else 'NOTHING')
 
 
+def cmd_wait(a: argparse.Namespace) -> None:
+    """Block without any model call until something needs this agent, then print it and exit.
+
+    Run it as a background command: the host wakes the agent when the command exits.
+    Work the agent already holds (YOURS) and stale reminders do not end the wait.
+    """
+    deadline = time.monotonic() + a.timeout
+    while True:
+        items = [i for i in poll_items(a.agent) if not i.startswith(('YOURS', 'STALE'))]
+        if items:
+            print('\n'.join(items))
+            return
+        if time.monotonic() >= deadline:
+            print('NOTHING')
+            return
+        time.sleep(max(1.0, a.interval))
+
+
 def cmd_board(a: argparse.Namespace) -> None:
     pol = policy()
     print(f'== cluster board {stamp()}  (CTO: {pol["cto"]})')
@@ -359,6 +377,10 @@ def build_parser() -> argparse.ArgumentParser:
     sub = p.add_subparsers(dest='cmd', required=True)
 
     sub.add_parser('poll', help='what needs my attention; prints NOTHING when idle').set_defaults(fn=cmd_poll)
+    w = sub.add_parser('wait', help='block until something needs me (checks every --interval seconds, no model use)')
+    w.add_argument('--interval', type=float, default=10.0)
+    w.add_argument('--timeout', type=float, default=3600.0, help='seconds; prints NOTHING when it expires')
+    w.set_defaults(fn=cmd_wait)
     sub.add_parser('board', help='everyone: capacity, current work, open tasks').set_defaults(fn=cmd_board)
     r = sub.add_parser('route', help='show who would get a task')
     r.add_argument('--type', default='general')
