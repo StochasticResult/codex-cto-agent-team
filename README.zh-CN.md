@@ -9,7 +9,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
-把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex 与 Google Antigravity 双端集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目使用的 CTO skill，包含 Codex、Google Antigravity 与 Claude Code 集成及宿主能力适配说明。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
 
 [安装](#安装) · [可复现端到端演示](#可复现端到端演示) · [使用](#使用) · [宿主兼容性与能力限制](#宿主兼容性与能力限制) · [采用场景与维护证据](#采用场景与维护证据) · [开源许可](#开源许可)
 
@@ -67,7 +67,7 @@ python scripts/model_route.py assets/routing.example.json --now 2030-01-02T00:00
 
 ## 安装
 
-可在支持技能加载的宿主使用，也可手动提供指令。两个本地 helper 需要 Python 3.11 或更新版本，仅使用标准库。以下安装示例针对 Codex；Claude Code、Cursor 与 generic/cloud 的入口及能力边界见[宿主矩阵](skills/cto-agent-team/references/host-adapters.md)。这些宿主仅有已查证文档和本地配置夹具，不代表真实客户端全面运行或已安装原生适配器。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
+可在支持技能加载的宿主使用，也可手动提供指令。两个本地 helper 需要 Python 3.11 或更新版本，仅使用标准库。以下安装示例针对 Codex；Claude Code 将整个文件夹复制到 `~/.claude/skills/cto-agent-team`，详见 [Claude Code 工作流](skills/cto-agent-team/references/claude-code-workflow.md)。Cursor 与 generic/cloud 的入口及能力边界见[宿主矩阵](skills/cto-agent-team/references/host-adapters.md)。Cursor 与通用宿主仅有已查证文档和本地配置夹具，不代表真实客户端全面运行或已安装原生适配器。独立聊天的创建与派单还取决于当前环境提供的工具和账号额度；安装 skill 不会增加这些权限或额度。
 
 1. 获取本仓库，将 `skills/cto-agent-team` 整个文件夹复制到个人 skill 目录 `~/.agents/skills/cto-agent-team`，以便跨项目使用。项目内安装可放到目标仓库的 `.agents/skills/cto-agent-team`。
 2. 保留文件夹内的 `scripts/`、`references/`、`assets/` 和 `agents/`。如果已经安装同名 skill，先检查现有内容再更新。
@@ -160,6 +160,8 @@ Ponytail 控制实现复杂度，UI 指导按任务选择。独立核心技能�
 保留产品要求、现有设计系统、多语言零跳动/防碰撞布局几何、可用性、可访问性和任务速度；动画须有实际用途。其他上游技能仍按各自适用条件与显式调用规则使用。选择规则适用于未完成的 UI 工作，不因此重启已验收工作或重复发布检查；纯后端、不可见构建配置等无关工作不强制加载完整设计技能。安装与依赖发现方法见[UI 指南](skills/cto-agent-team/references/ui-design.md)，本仓库不复制第三方技能全文或本机安装路径。
 
 在 Google Antigravity 宿主或双 CTO 协同场景下，遵循 [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md)：映射 `invoke_subagent` / `schedule` 与 `BROWSER_HOST_FACTS` 浏览器验收凭据，保持关键节点简短播报与快速止损，执行子代理高阶模型底线，使用标准库 [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py) 管理私有文件租约锁（`acquire`/`release`）与进程树/SSH 超时看门狗，并遵守多 CTO 队列协同及生产发布冻结窗口。
+
+在 Claude Code 宿主下，遵循 [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md)：子代理无历史上下文且不能再派生子代理，默认由 CTO 会话直接派发工程师并保留主责 PM 记录；并行写入使用工作树隔离与租约锁；子代理报告须核对实际 diff 与检查输出后才验收；默认继承会话模型，不套用其他厂商的模型或推理字段；长会话在压缩前写入任务记录与续接检查点。
 
 新页面或信息结构通常可结合两份指导，整体视觉侧重 Frontend Design，组件和交互侧重 Emil；局部文案或静态层次可只选适用的一份。这是内容与适用性选择，不是实测性能排名。设计示例不能推翻既有产品体系，也不构成卡片、标签或箭头的通用禁令。
 
@@ -258,6 +260,7 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 - [coding.md](skills/cto-agent-team/references/coding.md)：Ponytail 核心指导、完整实现及平台能力边界。
 - [host-adapters.md](skills/cto-agent-team/references/host-adapters.md)：宿主安装/能力矩阵、原生参数及证据等级。
 - [antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md)：Google Antigravity 双端共享、子代理映射、反馈节奏、租约锁、多 CTO 队列与发布冻结窗口。
+- [claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md)：Claude Code 安装、角色拓扑、子代理映射、验收、模型边界与压缩检查点。
 - [research.md](skills/cto-agent-team/references/research.md)：可选研究与采纳。
 - [model_route.py](skills/cto-agent-team/scripts/model_route.py)：标准库选择、有限质量升级与精确重试参数。
 - [agent_guard.py](skills/cto-agent-team/scripts/agent_guard.py)：私有文件租约锁与受限进程树/SSH 超时看门狗。
@@ -282,7 +285,8 @@ python "$skillTarget/scripts/team_state.py" validate --state-dir "$teamStateDir"
 | --- | --- | --- |
 | **OpenAI Codex (CLI / Desktop)** | 维护者实操使用 + 本地 CLI 脚本已纳入 CI 测试 | Desktop 多线程创建（`create_thread` 等）依赖宿主当前版本、权限与账号额度；组织/角色固定配置会覆盖单次派单参数。 |
 | **Google Antigravity** | 双端共享工作流（[antigravity-workflow.md](skills/cto-agent-team/references/antigravity-workflow.md) + `agent_guard.py`） | 需将同一技能目录注册至 `~/.gemini/config/skills.json`；多写入并行须配合隔离工作区、`agent_guard.py` 租约锁与 `BROWSER_HOST_FACTS` 证据核验。 |
-| **Claude Code / Cursor / 通用宿主** | 仅兼容性文档指南（未接入对应客户端实机 CI） | 不同厂商参数键名与嵌套语法不被 `model_route.py` 自动翻译；缺少并行子代理能力时自动退化为串行执行或纯规划模式。 |
+| **Claude Code** | 会话工作流（[claude-code-workflow.md](skills/cto-agent-team/references/claude-code-workflow.md) + 可选 `assets/claude-agents` + `agent_guard.py`，未接入客户端实机 CI） | 安装到 `~/.claude/skills`；子代理无历史上下文且不能再派生子代理，因此由 CTO 会话直接派发工程师，或在用户要求时使用独立 PM 会话；`model_route.py` 不输出 Claude Code 工具参数。 |
+| **Cursor / 通用宿主** | 仅兼容性文档指南（未接入对应客户端实机 CI） | 不同厂商参数键名与嵌套语法不被 `model_route.py` 自动翻译；缺少并行子代理能力时自动退化为串行执行或纯规划模式。 |
 
 通用前置条件：脚本直接继承宿主沙盒与用户授权，不绕过安全边界；初始化 `roster.json` 不会自动创建聊天，真正并发需要宿主会话创建能力、并发额度与单写入隔离同时满足。
 

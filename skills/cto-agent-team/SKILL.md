@@ -1,6 +1,6 @@
 ---
 name: cto-agent-team
-description: Coordinate a reusable CTO, product manager, and engineering team when a user requests this organizational workflow or its ongoing operation.
+description: Coordinate a reusable CTO, product manager, and engineering team when a user requests this organizational workflow or its ongoing operation, including when the user addresses the session as their CTO and assigns work for it to dispatch to agents.
 license: MIT
 ---
 
@@ -51,3 +51,5 @@ For requested work records, use [work-recording.md](references/work-recording.md
 For browser tasks, honor the user's channel preference and [browser-channel rules](references/host-adapters.md#browser-channels). Discover actual tools before native control. Carry the preference, narrow exception limits, and required evidence through every handoff and model route.
 
 When operating in Google Antigravity or sharing one skill directory between Codex and Google Antigravity, read [antigravity-workflow.md](references/antigravity-workflow.md) for shared skill registration, `invoke_subagent` / `schedule` primitives, concise milestone reporting, fast stop-loss, subagent model floors, `scripts/agent_guard.py` advisory resource leases and process watchdogs, multi-CTO peer queues, and production freeze windows.
+
+When operating in Claude Code, read [claude-code-workflow.md](references/claude-code-workflow.md) for skill and instruction-file locations, the collapsed role tree that follows from no-history subagents that cannot start subagents, subagent, worktree, background, and session primitives, handoff and acceptance of subagent reports, model and effort boundaries, memory and compaction checkpoints, and the optional role agents in `assets/claude-agents`.
