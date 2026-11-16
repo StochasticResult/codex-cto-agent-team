@@ -45,7 +45,7 @@ Per the repository's [evidence discipline](../../skills/cto-agent-team/reference
 ## Sample output
 
 ```text
-=== codex-cto-agent-team :: Reproducible Offline End-to-End Demo ===
+=== cto-agent-team :: Reproducible Offline End-to-End Demo ===
 Task ID : TASK-DEMO-001
 Outcome : accepted_and_delivered_locally
 

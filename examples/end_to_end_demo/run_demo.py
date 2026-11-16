@@ -426,7 +426,7 @@ def format_human_report(report: dict[str, object]) -> str:
     assert isinstance(stages, dict)
     assert isinstance(boundaries, dict)
     lines = [
-        '=== codex-cto-agent-team :: Reproducible Offline End-to-End Demo ===',
+        '=== cto-agent-team :: Reproducible Offline End-to-End Demo ===',
         f"Task ID : {report['task_id']}",
         f"Outcome : {report['status']}",
         '',

@@ -4,13 +4,13 @@
 
 # CTO Agent Team
 
-[![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
-[![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
+[![Tests](https://github.com/StochasticResult/cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/cto-agent-team/actions/workflows/tests.yml)
+[![Release](https://img.shields.io/github/v/release/StochasticResult/cto-agent-team?display_name=tag)](https://github.com/StochasticResult/cto-agent-team/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
 A reusable CTO team skill for coding-agent hosts: one CTO, five product managers, and fifty engineers, with working integrations for OpenAI Codex, Google Antigravity, and Claude Code.
-The skill started in Codex, and the repository keeps the name `codex-cto-agent-team`. The organization, handoffs, private state, and guard helpers do not depend on one host. Each host has its own adapter guide.
+The skill started in Codex, and the repository was named `codex-cto-agent-team` until 2026-11-16; GitHub redirects the old address. The organization, handoffs, private state, and guard helpers do not depend on one host. Each host has its own adapter guide.
 The CTO gives work to the team and makes cross-team decisions. Product managers (PMs) divide tasks and review results. Engineers return outputs and evidence.
 Use it across projects with private task records, explicit permissions, advisory resource leases, and one writer for each shared resource.
 
@@ -60,8 +60,8 @@ Chat creation, task messages, and monitoring require supported tools and account
 PowerShell example for a personal installation in the Codex location. For Claude Code, set `$skillTarget` to `.claude/skills/cto-agent-team`:
 
 ```powershell
-git clone https://github.com/StochasticResult/codex-cto-agent-team.git
-Set-Location codex-cto-agent-team
+git clone https://github.com/StochasticResult/cto-agent-team.git
+Set-Location cto-agent-team
 $skillSource = Join-Path (Get-Location) 'skills/cto-agent-team'
 $skillTarget = Join-Path $env:USERPROFILE '.agents/skills/cto-agent-team'
 if (Test-Path -LiteralPath $skillTarget) { throw 'The target exists. Review it before updating.' }

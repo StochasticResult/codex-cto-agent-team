@@ -13,7 +13,7 @@
 
 Report suspected vulnerabilities privately using GitHub Private Vulnerability Reporting:
 
-- [Open a private security advisory](https://github.com/StochasticResult/codex-cto-agent-team/security/advisories/new)
+- [Open a private security advisory](https://github.com/StochasticResult/cto-agent-team/security/advisories/new)
 
 When reporting an issue, please include:
 
@@ -26,7 +26,7 @@ We aim to acknowledge new reports within **5 business days** and coordinate a fi
 
 ## Security model and boundaries
 
-`codex-cto-agent-team` is a documentation-and-helper Agent Skill repository. Understanding its trust boundaries is essential before running it in any environment:
+`cto-agent-team` is a documentation-and-helper Agent Skill repository. Understanding its trust boundaries is essential before running it in any environment:
 
 1. **Inherits host agent permissions:** Installing this skill grants no additional privileges, background services, or network servers. All file edits, shell commands, subagent spawns, and browser actions execute strictly under the host agent's existing sandbox and user authorization.
 2. **Private state isolation:** Both `team_state.py` and `agent_guard.py` refuse to create state or lock directories inside the repository or installed skill tree. Never store API keys, tokens, passwords, or raw secrets in `registry.json`, lease files, shared event documents, or `STATUS.md`.

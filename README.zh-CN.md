@@ -4,12 +4,12 @@
 
 # CTO Agent Team
 
-[![Tests](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/codex-cto-agent-team/actions/workflows/tests.yml)
-[![Release](https://img.shields.io/github/v/release/StochasticResult/codex-cto-agent-team?display_name=tag)](https://github.com/StochasticResult/codex-cto-agent-team/releases)
+[![Tests](https://github.com/StochasticResult/cto-agent-team/actions/workflows/tests.yml/badge.svg)](https://github.com/StochasticResult/cto-agent-team/actions/workflows/tests.yml)
+[![Release](https://img.shields.io/github/v/release/StochasticResult/cto-agent-team?display_name=tag)](https://github.com/StochasticResult/cto-agent-team/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB.svg)](https://www.python.org/downloads/)
 
-把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目、跨宿主使用的 CTO skill，已接入 OpenAI Codex、Google Antigravity 与 Claude Code，并附各宿主的能力适配说明。本 skill 起步于 Codex，仓库沿用 `codex-cto-agent-team` 这个名字；组织方式、交接、私有状态和守卫脚本不依赖单一宿主。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
+把 CTO → 5 名产品经理 → 每队 10 名 CS 工程师的组织方式封装为可跨项目、跨宿主使用的 CTO skill，已接入 OpenAI Codex、Google Antigravity 与 Claude Code，并附各宿主的能力适配说明。本 skill 起步于 Codex，仓库在 2026-11-16 之前名为 `codex-cto-agent-team`，旧地址由 GitHub 自动跳转；组织方式、交接、私有状态和守卫脚本不依赖单一宿主。CTO 统筹目标和跨队依赖，PM 拆解与验收，工程师执行有明确范围的工单。
 
 [安装](#安装) · [可复现端到端演示](#可复现端到端演示) · [使用](#使用) · [宿主兼容性与能力限制](#宿主兼容性与能力限制) · [采用场景与维护证据](#采用场景与维护证据) · [开源许可](#开源许可)
 
@@ -85,8 +85,8 @@ Cursor 与通用宿主仅有已查证文档和本地配置夹具，不代表真�
 PowerShell 安装示例（Codex 位置；Claude Code 请把 `$skillTarget` 改为 `.claude/skills/cto-agent-team`）：
 
 ```powershell
-git clone https://github.com/StochasticResult/codex-cto-agent-team.git
-Set-Location codex-cto-agent-team
+git clone https://github.com/StochasticResult/cto-agent-team.git
+Set-Location cto-agent-team
 $skillSource = Join-Path (Get-Location) 'skills/cto-agent-team'
 $skillTarget = Join-Path $env:USERPROFILE '.agents/skills/cto-agent-team'
 if (Test-Path -LiteralPath $skillTarget) { throw '目标已存在，请先检查再更新。' }

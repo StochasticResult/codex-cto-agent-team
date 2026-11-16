@@ -15,7 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Host matrix:** Moved Claude Code from documented guidance only to an operational session workflow in [host-adapters.md](skills/cto-agent-team/references/host-adapters.md), [README.md](README.md), and [README.zh-CN.md](README.zh-CN.md). There is still no live client CI.
-- **Positioning:** `README.md` and `README.zh-CN.md` now present the skill as multi-host (Codex, Google Antigravity, Claude Code) with a per-host install table. The repository name is unchanged.
+- **Positioning:** `README.md` and `README.zh-CN.md` now present the skill as multi-host (Codex, Google Antigravity, Claude Code) with a per-host install table. 
+- **Repository name:** Renamed the repository from `codex-cto-agent-team` to `cto-agent-team`. GitHub redirects the old address. The demo role identifiers and the example private state path keep the old string so that existing output and state stay stable.
 - **CI matrix:** macOS now runs the unit tests and demo on Python 3.12 only, because queued macOS runner jobs were cancelled before they started. Ubuntu and Windows still run Python 3.11, 3.12, and 3.13.
 - **Skill description:** `SKILL.md` now also triggers when the user addresses the session as their CTO and assigns work.
 

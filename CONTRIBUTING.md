@@ -1,6 +1,6 @@
-# Contributing to codex-cto-agent-team
+# Contributing to cto-agent-team
 
-Thank you for helping improve `codex-cto-agent-team`. This repository contains both the distributable Agent Skill package and its engineering test, validation, and documentation harness.
+Thank you for helping improve `cto-agent-team`. This repository contains both the distributable Agent Skill package and its engineering test, validation, and documentation harness.
 
 ## Repository layout
 
