@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Host matrix:** Moved Claude Code from documented guidance only to an operational session workflow in [host-adapters.md](skills/cto-agent-team/references/host-adapters.md), [README.md](README.md), and [README.zh-CN.md](README.zh-CN.md). There is still no live client CI.
+- **CI matrix:** macOS now runs the unit tests and demo on Python 3.12 only, because queued macOS runner jobs were cancelled before they started. Ubuntu and Windows still run Python 3.11, 3.12, and 3.13.
 - **Skill description:** `SKILL.md` now also triggers when the user addresses the session as their CTO and assigns work.
 
 ## [0.1.0] - 2026-11-12
